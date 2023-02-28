@@ -223,26 +223,26 @@ BEGIN
     CTEXT           "sigma'(r) [kPa] ",IDC_STATIC,81,183,59,8
     CTEXT           "sigma'(q) [kPa]",IDC_STATIC,149,183,59,8
     CTEXT           "tau(zq) [kPa]",IDC_STATIC,221,183,57,8
-    CTEXT           "sigma'(2)=sigma'(r) [kPa]",IDC_STATIC,501,210,58,8
+    CTEXT           "sigma'(3) [kPa]",IDC_STATIC,501,210,58,8
     CTEXT           "epsilon(z) [%]",IDC_STATIC,360,183,58,8
     CTEXT           "epsilon(vol) [%]",IDC_STATIC,291,184,58,8
-    CTEXT           "WtBottom[g]",IDC_STATIC,430,183,62,8
-    CTEXT           "WtUpper[g]",IDC_STATIC,500,183,60,8
-    CTEXT           "CG2 [mm]",IDC_STATIC,14,210,61,8
-    CTEXT           "p' [kPa]",IDC_STATIC,290,209,59,8
-    CTEXT           "q [kPa]",IDC_STATIC,381,209,22,8
-    CTEXT           "gamma1(zq) [%]",IDC_STATIC,83,210,61,8
-    CTEXT           "gamma2(zq) [%]",IDC_STATIC,138,210,84,8
-    CTEXT           "CG1[mm]",IDC_STATIC,219,210,62,8
-    CTEXT           "sigma'(3) [kPa]",IDC_STATIC,13,240,64,8
-    CTEXT           "alfa[rad]",IDC_STATIC,78,240,64,8
+    CTEXT           "LDT1 [mm]",IDC_STATIC,430,183,62,8
+    CTEXT           "LDT2 [mm]",IDC_STATIC,500,183,60,8
+    CTEXT           "CG1 [mm]",IDC_STATIC,14,210,61,8
+    CTEXT           "q [kPa]",IDC_STATIC,290,209,59,8
+    CTEXT           "sigma'(1) [kPa]",IDC_STATIC,366,209,45,8
+    CTEXT           "CG2 [mm]",IDC_STATIC,83,210,61,8
+    CTEXT           "CG3 [mm]",IDC_STATIC,138,210,84,8
+    CTEXT           "p' [kPa]",IDC_STATIC,218,210,62,8
+    CTEXT           "gamma1(zq) [%]",IDC_STATIC,13,240,64,8
+    CTEXT           "gamma2(zq) [%]",IDC_STATIC,78,240,64,8
     CTEXT           "Inner Cell Pre.[kPa]",IDC_STATIC,149,240,62,8
     CTEXT           "Outer Cell Pre.[kPa]",IDC_STATIC,218,240,63,8
     CTEXT           "Inner diameter (mm)",IDC_STATIC,286,240,67,8
     CTEXT           "Outer diameter [mm]",IDC_STATIC,358,240,62,8
-    CTEXT           "sigma'(1) [kPa]",IDC_STATIC,430,210,59,8
-    CTEXT           "P. Air Pressure [kPa]",IDC_STATIC,429,240,63,8
-    CTEXT           "P. Water Pressure [kPa]",IDC_STATIC,494,240,72,8
+    CTEXT           "sigma'(2)=sigma'(r)",IDC_STATIC,431,210,59,8
+    CTEXT           "Height [mm]",IDC_STATIC,440,239,37,8
+    CTEXT           "Volume [mm3]",IDC_STATIC,493,239,72,8
     EDITTEXT        IDC_EDIT_Ctrl_ID,73,347,32,14,ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY
     EDITTEXT        IDC_EDIT_NowTime,73,381,56,14,ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY
     EDITTEXT        IDC_EDIT_SeqTime,73,398,56,14,ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY

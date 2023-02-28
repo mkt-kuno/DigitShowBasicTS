@@ -159,20 +159,21 @@ CDigitShowBasicDoc::CDigitShowBasicDoc()
 	Flag_FIFO=FALSE;
 	NUMAD=1;		// The Number of A/D Board ( NUMAD=0-2 )
 	NUMDA=1;		// The Number of D/A Board ( NUMDA=0-1 )
-//
+
+//  @note Hashimoto modified 2022.2.28
 	NameV[0]=_T("V.Load");		NameP[0]=_T("V.Load,N");
 	NameV[1]=_T("T.Load ");		NameP[1]=_T("Torque,Ncm");
 	NameV[2]=_T("POT1");		NameP[2]=_T("POT1,rad");
 	NameV[3]=_T("POT2");		NameP[3]=_T("POT2,rad");
 	NameV[4]=_T("HCDPT");		NameP[4]=_T("EffectiveStress,kPa");
 	NameV[5]=_T("ExtLVDT");		NameP[5]=_T("V.DispEXT,mm");
-	NameV[6]=_T("WtBottom");	NameP[6]=_T("WtBottom,g");
-	NameV[7]=_T("CH8");			NameP[7]=_T("CH8");
-	NameV[8]=_T("CG2");			NameP[8]=_T("CG2,mm");
-	NameV[9]=_T("P.A.P");		NameP[9]=_T("P.A.Pressure,kPa");
-	NameV[10]=_T("CG1");		NameP[10]=_T("CG1,mm");
-	NameV[11]=_T("WtUpper");	NameP[11]=_T("WtUpper,g");
-	NameV[12]=_T("P.W.P");		NameP[12]=_T("P.W.Pressure,kPa");
+	NameV[6]=_T("LDT1");	    NameP[6]=_T("LDT1,mm");
+	NameV[7]=_T("CH7");			NameP[7]=_T("CH7");
+	NameV[8]=_T("CG1");			NameP[8]=_T("CG1,mm");
+	NameV[9]=_T("CG2");		NameP[9]=_T("CG2,mm");
+	NameV[10]=_T("CG3");		NameP[10]=_T("CG3,mm");
+	NameV[11]=_T("LDT2");	NameP[11]=_T("LDT2,mm");
+	NameV[12]=_T("CH12");		NameP[12]=_T("CH12");
 	NameV[13]=_T("LCDPT");		NameP[13]=_T("DeltaVol.,mm3");
 	NameV[14]=_T("CH14");		NameP[14]=_T("CH14");
 	NameV[15]=_T("CH15");		NameP[15]=_T("CH15");
@@ -211,12 +212,12 @@ CDigitShowBasicDoc::CDigitShowBasicDoc()
 	for(j=0;j<4;j++){
 		SpecimenData.DiameterIn[j]=60.0;
 		SpecimenData.DiameterOut[j]=100.0;
-		SpecimenData.Height[j]=100.0;
-		SpecimenData.Volume[j]=3.141592*(100.0*100.0-60.0*60.0)/4*100.0;
+		SpecimenData.Height[j]=150.0;
+		SpecimenData.Volume[j]=3.141592*(100.0*100.0-60.0*60.0)/4*150.0;
 		SpecimenData.DiaInMembrane[j]=60.0;
 		SpecimenData.DiaOutMembrane[j]=100.0;
-		SpecimenData.HeightInMembrane[j]=100.0;
-		SpecimenData.HeightOutMembrane[j]=100.0;
+		SpecimenData.HeightInMembrane[j]=150.0;
+		SpecimenData.HeightOutMembrane[j]=150.0;
 	}
 	SpecimenData.MembraneModulus=1400.0;
 	SpecimenData.MembraneThickness=0.3;
@@ -224,8 +225,8 @@ CDigitShowBasicDoc::CDigitShowBasicDoc()
 	//SpecimenData.RDiaOutM=100.0;
 	SpecimenData.RDiaInM = 59.85; //@note Hashimoto fixed 2022.12.22
 	SpecimenData.RDiaOutM = 100.15; //@note Hashimoto fixed 2022.12.22
-	SpecimenData.RHeightInM=100.0;
-	SpecimenData.RHeightOutM=100.0;
+	SpecimenData.RHeightInM=150.0; //@note Hashimoto fixed 2022.12.22
+	SpecimenData.RHeightOutM=150.0; //@note Hashimoto fixed 2022.12.22
 	SpecimenData.RodArea=0.0;
 	SpecimenData.CapWeight=0.0;
 //
@@ -555,8 +556,8 @@ void CDigitShowBasicDoc::Cal_Param()
 	eqOutM=(SpecimenData.RDiaOutM-diameterOutM)/SpecimenData.RDiaOutM;
 	//gzqInM=diameter_in*rotation1/SpecimenData.RHeightInM;
 	//gzqOutM=diameter_out*rotation1/SpecimenData.RHeightOutM;
-	gzqInM = diameterInM * rotation1 / SpecimenData.RHeightInM; //@note Hashimoto fixed 2022.12.22
-	gzqOutM = diameterOutM * rotation1 / SpecimenData.RHeightOutM; //@note Hashimoto fixed 2022.12.22
+	gzqInM = diameterInM / 2.0 * rotation1 / SpecimenData.RHeightInM; //@note Hashimoto modified 2022.2.28
+	gzqOutM = diameterOutM / 2.0 * rotation1 / SpecimenData.RHeightOutM; //@note Hashimoto modified 2022.2.28
 	//Membrane force 
 	//@note Hashimoto modified 2022.12.28 (only considering TorqueM)
 	//PressureInM=4.0/3.0*SpecimenData.MembraneModulus*SpecimenData.MembraneThickness*(ezInM+2.0*eqInM)/diameter_in;
@@ -586,25 +587,37 @@ void CDigitShowBasicDoc::Cal_Param()
 	CalParam[3]=szq;
 	CalParam[4]=ev*100.0;
 	CalParam[5]=ez*100.0;
-	CalParam[6]=Phyout[6];
-	CalParam[7]=Phyout[11];
-	CalParam[8]=Phyout[8];
-	CalParam[9]=gzq1*100.0;
-	CalParam[10]=gzq2*100.0;
-	CalParam[11]=Phyout[10];
-	CalParam[12]=p;
-	CalParam[13]=q;
-	CalParam[14]=(sz+sq)/2.0+sqrt((sz-sq)*(sz-sq)/4+szq*szq);
-	CalParam[15]=sr;
-	CalParam[16]=(sz+sq)/2.0-sqrt((sz-sq)*(sz-sq)/4+szq*szq);
+	CalParam[6]=Phyout[6]; // LDT1
+	CalParam[7]=Phyout[11]; // LDT2
+	CalParam[8]=Phyout[8]; // CG1
+	CalParam[9]=Phyout[9]; // CG2
+	CalParam[10]=Phyout[10]; // CG3
+	CalParam[11] = p;
+	CalParam[12] = q;
+	CalParam[13] = (sz + sq) / 2.0 + sqrt((sz - sq) * (sz - sq) / 4 + szq * szq); // sigma 1
+	CalParam[14] = sr; // sigma 2
+	CalParam[15] = (sz + sq) / 2.0 - sqrt((sz - sq) * (sz - sq) / 4 + szq * szq); // sigma 3
+	CalParam[16] = gzq1 * 100.0;
+	CalParam[17] = gzq2 * 100.0;
+	//CalParam[9]=gzq1*100.0;
+	//CalParam[10]=gzq2*100.0;
+	//CalParam[11]=Phyout[10];
+	//CalParam[12]=p;
+	//CalParam[13]=q;
+	//CalParam[14]=(sz+sq)/2.0+sqrt((sz-sq)*(sz-sq)/4+szq*szq);
+	//CalParam[15]=sr;
+	//CalParam[16]=(sz+sq)/2.0-sqrt((sz-sq)*(sz-sq)/4+szq*szq);
 	//CalParam[17]=atan2(szq,(sz-sq)/2.0);
-	CalParam[17] = 0.5 * atan2(szq, (sz - sq) / 2.0);  //@note Hashimoto modified 2022.12.22
+	//CalParam[17] = 0.5 * atan2(szq, (sz - sq) / 2.0);  //@note Hashimoto modified 2022.12.22
 	CalParam[18]=cell_in;
 	CalParam[19]=cell_out;
 	CalParam[20]=diameter_in;
 	CalParam[21]=diameter_out;
-	CalParam[22]=Phyout[9];
-	CalParam[23]=Phyout[12];
+	//CalParam[22]=Phyout[9];
+	//CalParam[23]=Phyout[12];
+	CalParam[22] = height;
+	CalParam[23] = volume;
+
 	// 2021.12.07 Edited by M.Kuno
 	StepDisplay = CURNUM;
 }

@@ -57,8 +57,8 @@ CSpecimen::CSpecimen(CWnd* pParent /*=NULL*/)
 	m_HeightInM2 = SpecimenData.HeightInMembrane[2];
 	m_HeightInM3 = SpecimenData.HeightInMembrane[3];
 	m_HeightOutM0 = SpecimenData.HeightOutMembrane[0];
-	m_HeightOutM1 = SpecimenData.HeightOutMembrane[0];
-	m_HeightOutM2 = SpecimenData.HeightOutMembrane[0];
+	m_HeightOutM1 = SpecimenData.HeightOutMembrane[1];
+	m_HeightOutM2 = SpecimenData.HeightOutMembrane[2];
 	m_HeightOutM3 = SpecimenData.HeightOutMembrane[3];
 	m_Volume0 = SpecimenData.Volume[0];
 	m_Volume1 = SpecimenData.Volume[1];
@@ -170,8 +170,8 @@ void CSpecimen::Load()
 	m_HeightInM2 = SpecimenData.HeightInMembrane[2];
 	m_HeightInM3 = SpecimenData.HeightInMembrane[3];
 	m_HeightOutM0 = SpecimenData.HeightOutMembrane[0];
-	m_HeightOutM1 = SpecimenData.HeightOutMembrane[0];
-	m_HeightOutM2 = SpecimenData.HeightOutMembrane[0];
+	m_HeightOutM1 = SpecimenData.HeightOutMembrane[1];
+	m_HeightOutM2 = SpecimenData.HeightOutMembrane[2];
 	m_HeightOutM3 = SpecimenData.HeightOutMembrane[3];
 	UpdateData(FALSE);
 }
@@ -217,8 +217,8 @@ void CSpecimen::OnBUTTONUpdate()
 	SpecimenData.HeightInMembrane[2] = m_HeightInM2;
 	SpecimenData.HeightInMembrane[3] = m_HeightInM3;
 	SpecimenData.HeightOutMembrane[0] = m_HeightOutM0;
-	SpecimenData.HeightOutMembrane[0] = m_HeightOutM1;
-	SpecimenData.HeightOutMembrane[0] = m_HeightOutM2;
+	SpecimenData.HeightOutMembrane[1] = m_HeightOutM1;
+	SpecimenData.HeightOutMembrane[2] = m_HeightOutM2;
 	SpecimenData.HeightOutMembrane[3] = m_HeightOutM3;
 	Load();
 }

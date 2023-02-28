@@ -647,6 +647,7 @@ void CDigitShowBasicView::OnBUTTONStartSave()
 			}
 			fprintf(FileSaveData0,"\n");
 			// File for saving the parameter data
+			// @ Hashimoto modified 2023.02.28
 			pFileName2=pFileName1;
 			pFileName2.Replace(".dat",".out");
 			FileSaveData2 = fopen((LPCSTR)pFileName2 , "w" );
@@ -657,24 +658,26 @@ void CDigitShowBasicView::OnBUTTONStartSave()
 			fprintf(FileSaveData2,"%s	","tau(zq)(kPa)");
 			fprintf(FileSaveData2,"%s	","e_(vol.)");
 			fprintf(FileSaveData2,"%s	","e_(z)");
-			fprintf(FileSaveData2,"%s	","WtBottom(g)");
-			fprintf(FileSaveData2,"%s	","WtUpper(g)");
-			fprintf(FileSaveData2,"%s	","CG2(mm)");
-			fprintf(FileSaveData2,"%s	","g1_(zq)");
-			fprintf(FileSaveData2,"%s	","g2_(zq)");
+			fprintf(FileSaveData2,"%s	","LDT1(mm)");
+			fprintf(FileSaveData2,"%s	","LDT2(mm)");
 			fprintf(FileSaveData2,"%s	","CG1(mm)");
+			fprintf(FileSaveData2,"%s	","CG2(mm)");
+			fprintf(FileSaveData2,"%s	","CG3(mm)");
 			fprintf(FileSaveData2,"%s	","p_(kPa)");
 			fprintf(FileSaveData2,"%s	","q_(kPa)");
 			fprintf(FileSaveData2,"%s	","sigma(1)(kPa)");
 			fprintf(FileSaveData2,"%s	","sigma(2)(kPa)");
 			fprintf(FileSaveData2,"%s	","sigma(3)(kPa)");
-			fprintf(FileSaveData2,"%s	","alfa(rad)");
+			fprintf(FileSaveData2,"%s	","g1_(zq)");
+			fprintf(FileSaveData2,"%s	","g2_(zq)");
 			fprintf(FileSaveData2,"%s	","InCellPre(kPa)");
 			fprintf(FileSaveData2,"%s	","OutCellPre(kPa)");
 			fprintf(FileSaveData2,"%s	","InnerDia.(mm)");
 			fprintf(FileSaveData2,"%s	","OuterDia.(mm)");
-			fprintf(FileSaveData2,"%s	","PoreAirPre(kPa)");
-			fprintf(FileSaveData2,"%s	","PoreWaterPre(kPa)");
+			fprintf(FileSaveData2,"%s	","Height(mm)");
+			fprintf(FileSaveData2,"%s	","Volume(mm3)");
+
+			
 			// 2021.12.07 Edited by M.Kuno
 			// customize for Sanjei
 			fprintf(FileSaveData2, "%s	", "ControlStep");
