@@ -845,7 +845,14 @@ void CDigitShowBasicDoc::Control_DA()
 		break;
 	case 15:
 		{ 
-			if( CFNUM[CURNUM]==0 ){}
+			if( CFNUM[CURNUM]==0 ){
+				// 2023.11.29 Edited by Hashimoto
+				// stop any loading if control Number is 0
+				DAVout[CH_AxisMotor] = 0.0f;
+				DAVout[CH_AxisSpeed] = 0.0f;
+				DAVout[CH_TorsionMotor] = 0.0f;
+				DAVout[CH_TorsionSpeed] = 0.0f;
+			}
 			else if( CFNUM[CURNUM]==1 ) EffectiveStressPathLoading();
 			else if( CFNUM[CURNUM]==2 ) MonotonicTorsionalLoading();
 			else if( CFNUM[CURNUM]==3 ) MonotonicTorsionalLoadingCNS();
@@ -893,7 +900,7 @@ void CDigitShowBasicDoc::FileControlableConsolidation()
 	// 5: tau_zq_end.
 	// 6: Axial Motor Speed	(RPM)
 	// 7: Torsion Motor Speed (RPM)
-	// 8: Cell Pressure Rate (min/kPa),
+	// 8: Cell Pressure Rate (min/kPa)
 	StepTime = StepTime + CtrlStepTime / 60.0;
 	
 	if (CFPARA[CURNUM][8] > 0.0) {
@@ -1610,7 +1617,7 @@ void CDigitShowBasicDoc::MonotonicTorsionalLoadingConstPA()
 	DAVout[CH_AxisSpeed]=float(DA_Cal_a[CH_AxisSpeed]*CFPARA[CURNUM][4]+DA_Cal_b[CH_AxisSpeed]);
 	DAVout[CH_TorsionMotor]=5.0f;
 	DAVout[CH_TorsionSpeed]=float(DA_Cal_a[CH_TorsionSpeed]*CFPARA[CURNUM][3]+DA_Cal_b[CH_TorsionSpeed]);
-//
+
 	if(CFPARA[CURNUM][0]==0.0){
 		if(szq < CFPARA[CURNUM][1] && gzq1 < CFPARA[CURNUM][2])	{
 			DAVout[CH_TorsionClutch] = VoltCW;
@@ -1622,15 +1629,15 @@ void CDigitShowBasicDoc::MonotonicTorsionalLoadingConstPA()
 			else	DAVout[CH_AxisSpeed]=0.0f;
 		}
 		else {
-			StepTime=0.0;
-			CURNUM=CURNUM+1;
+			StepTime = 0.0;
+			CURNUM = CURNUM + 1;
 		}
 	}
-	else if(CFPARA[CURNUM][0]==1.0){
-		if(szq > CFPARA[CURNUM][1] && gzq1 > CFPARA[CURNUM][2])	{
+	else if (CFPARA[CURNUM][0] == 1.0) {
+		if (szq > CFPARA[CURNUM][1] && gzq1 > CFPARA[CURNUM][2]) {
 			DAVout[CH_TorsionClutch] = VoltCCW;
-			Target_sr= (3.0*CFPARA[CURNUM][5] - 2.0*szq/CFPARA[CURNUM][6])/3.0 -ErrorStressAir;
-			DAVout[CH_EP_Cell]= DAVout[CH_EP_Cell] + float(0.1*DA_Cal_a[CH_EP_Cell]*(Target_sr-sr));
+			Target_sr = (3.0 * CFPARA[CURNUM][5] - 2.0 * szq / CFPARA[CURNUM][6]) / 3.0 - ErrorStressAir;
+			DAVout[CH_EP_Cell] = DAVout[CH_EP_Cell] + float(0.1 * DA_Cal_a[CH_EP_Cell] * (Target_sr - sr));
 			Target_sz= (3.0*CFPARA[CURNUM][5] + 4.0*szq/CFPARA[CURNUM][6])/3.0 -ErrorStressMotor;
 			if(sz > Target_sz+ErrorStressMotor)	DAVout[CH_AxisClutch]=VoltUp;
 			else if(sz < Target_sz-ErrorStressMotor)	DAVout[CH_AxisClutch]=VoltDown;
