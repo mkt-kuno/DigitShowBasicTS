@@ -1,12 +1,13 @@
-# DigitShowBasic(TorsionalShear) 中空ねじり三軸試験版
+# DigitShowBasicTS 中空ねじり三軸試験版
 
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+![Github License](https://img.shields.io/github/license/mkt-kuno/DigitShowBasicTS)  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 ## 簡単な説明
 
 東京大学の地盤研で使用されている、三軸試験機制御ソフトウェア [DigitShowBasic](https://github.com/mkt-kuno/DigitShowBasic)（以降DSB）を、**中空ねじり三軸試験（中空円筒供試体への軸荷重とねじりトルクの独立制御）用に拡張した版**です。  
 ContecのAD/DAボードで動作させることを前提としています。  
 オリジナルのDSB（一般三軸試験版）は[こちら](https://github.com/mkt-kuno/DigitShowBasic)。ModbusRTUのAD/DAは[DigitShowBasicM](https://github.com/mkt-kuno/DigitShowBasicM)まで。  
+このリポジトリはDSBと同じく **GPLv3** です。注意してください。    
 
 ## 本バージョンの特徴
 
@@ -74,13 +75,18 @@ ADボードのデバイス名は`AIO000`、DAボードのデバイス名は`AIO0
 
 ## ライセンスについて
 
-このリポジトリにはライセンスを設定していません。  
-当時(2010年頃)配布されたDigitShowBasicがそうであったように、何もライセンスが決められていない状態とします。  
-GitHubの利用規約の範囲を超えた複製・改変・再配布等を希望する場合は、東大地盤研までご連絡ください。
+一部の大学・企業・研究所では秘伝のタレ状態のDigitShowBasicをお持ちだと思います。  
+当時(2010年頃)配布されたDigitShowBasicのソースコードは何もライセンスが決められていませんでした。  
+そのため、お持ちの古いDigitShowBasicは高確率でライセンスフリーのハズです。  
+ですが、このリポジトリはDSBと同じくGPLv3です。このコードを安易に参考・参照・引用した場合GPLv3に感染するので、  
+GPLv3とは何か知ったうえで、覚悟して使い始めてください。  
+ざっくりといえば、改変部分がある場合、ソースコードを公開する必要があります。
 
 ## バグ報告やプルリクエストについて
 
 基本的な方針は[DSB本体](https://github.com/mkt-kuno/DigitShowBasic)に準じます。  
 「どう使うの？」「ボードが認識しない」「設定方法を教えてほしい」などの初歩的な質問は避けてください。無視します。  
 貢献する意思のある、オープンソースの理念に沿った要求は大歓迎します。  
-本バージョン固有の不具合（ねじり載荷、メンブレン補正等）については、このリポジトリのIssueへお願いします。
+本バージョン固有の不具合（ねじり載荷、メンブレン補正等）については、このリポジトリのIssueへお願いします。  
+「うちのコードとかなり違う」「そもそも動作しないし落ちる」などの場合は、  
+AI協業でリファクタリングする前の[legacy版](https://github.com/mkt-kuno/DigitShowBasicTS/tree/legacy)で試してみて下さい。
