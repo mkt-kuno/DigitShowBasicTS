@@ -25,30 +25,6 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-//---Specimen Data---
-typedef	struct{	
-		double	DiameterIn[4];			double	DiameterOut[4];	
-		double	Height[4];
-		double	Volume[4];
-		double	MembraneModulus;		double	MembraneThickness;
-		double	RodArea;				double	CapWeight;
-		double	RDiaInM;				double	RDiaOutM;	
-		double	RHeightInM;				double	RHeightOutM;
-		double	DiaInMembrane[4];		double	DiaOutMembrane[4];
-		double	HeightInMembrane[4];	double	HeightOutMembrane[4];
-	} Specimen;
-		
-//---Control Data---	
-typedef	struct{
-		bool	flag[3];	int		time[3];
-		double	p[3];		double	q[3];			double	u[3];
-		double	sigma[3];	double	sigmaRate[3];	double	sigmaAmp[3];
-		double	strain[3];	double	strainRate[3];	double	strainAmp[3];
-		double	K0;
-		double	AxisClutch;		double	AxisSpeed;
-		double	TorsionClutch;	double	TorsionSpeed;
-	} Control;
-
 class CDigitShowBasicDoc : public CDocument
 {
 protected: // シリアライズ機能のみから作成します。
