@@ -1,4 +1,4 @@
-// SamplingSettings.cpp : ・ｽC・ｽ・ｽ・ｽv・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽe・ｽ[・ｽV・ｽ・ｽ・ｽ・ｽ ・ｽt・ｽ@・ｽC・ｽ・ｽ
+// SamplingSettings.cpp : インプリメンテーション ファイル
 //
 
 #include "stdafx.h"
@@ -15,7 +15,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CSamplingSettings ・ｽ_・ｽC・ｽA・ｽ・ｽ・ｽO
+// CSamplingSettings ダイアログ
 
 
 
@@ -23,6 +23,7 @@ static char THIS_FILE[] = __FILE__;
 CSamplingSettings::CSamplingSettings(CWnd* pParent /*=NULL*/)
 	: CDialog(CSamplingSettings::IDD, pParent)
 {
+	DigitShowContext* ctx = GetContext();
 	//{{AFX_DATA_INIT(CSamplingSettings)
 	m_TimeInterval1 = 0;
 	m_TimeInterval2 = 0;
@@ -65,13 +66,13 @@ BEGIN_MESSAGE_MAP(CSamplingSettings, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CSamplingSettings ・ｽ・ｽ・ｽb・ｽZ・ｽ[・ｽW ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ
+// CSamplingSettings メッセージ ハンドラ
 
 BOOL CSamplingSettings::OnInitDialog() 
 {	DigitShowContext* ctx = GetContext();
 	CDialog::OnInitDialog();
 	
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾌ補足・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置に初期化の補足処理を追加してください
 	m_TimeInterval1 = ctx->timeSettings.Interval1;
 	m_TimeInterval2 = ctx->timeSettings.Interval2;
 	m_TimeInterval3 = ctx->timeSettings.Interval3;
@@ -92,13 +93,13 @@ BOOL CSamplingSettings::OnInitDialog()
 	if(ctx->flags.FIFO==TRUE)	myBTN1->EnableWindow(FALSE);
 	myBTN2->EnableWindow(FALSE);
 
-	return TRUE;  // ・ｽR・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾉフ・ｽH・ｽ[・ｽJ・ｽX・ｽ・ｽﾝ定し・ｽﾈゑｿｽ・ｽﾆゑｿｽ・ｽA・ｽﾟゑｿｽl・ｽ・ｽ TRUE ・ｽﾆなゑｿｽﾜゑｿｽ
-	              // ・ｽ・ｽO: OCX ・ｽv・ｽ・ｽ・ｽp・ｽe・ｽB ・ｽy・ｽ[・ｽW・ｽﾌ戻ゑｿｽl・ｽ・ｽ FALSE ・ｽﾆなゑｿｽﾜゑｿｽ
+	return TRUE;  // コントロールにフォーカスを設定しないとき、戻り値は TRUE となります
+	              // 例外: OCX プロパティ ページの戻り値は FALSE となります
 }
 
 void CSamplingSettings::OnBUTTONCheck() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	UpdateData(TRUE);
 	m_TotalSamplingTimes=long(m_SavingTime*1000/m_SamplingClock);
 	m_AllocatedMemory.Format("%.1f",4*ctx->AdMaxCH*m_TotalSamplingTimes/1024.0f/1024.0f);
@@ -112,11 +113,9 @@ void CSamplingSettings::OnBUTTONCheck()
 
 void CSamplingSettings::OnOK() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉゑｿｽ・ｽﾌ托ｿｽ・ｽﾌ鯉ｿｽ・ｽﾘ用・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にその他の検証用のコードを追加してください
 	UpdateData(TRUE);
 	ctx->ad[0].SamplingClock = m_SamplingClock*1000.0f;
-	ctx->ad[0].ScanClock = long(ctx->ad[0].SamplingClock/ctx->ad[0].Channels);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
-	if(ctx->ad[0].ScanClock<1){ ctx->ad[0].ScanClock=1; }
 	ctx->SavingTime = m_SavingTime;
 	ctx->ad[0].SamplingTimes = m_EventSamplingTimes;
 	ctx->TotalSamplingTimes=long(ctx->SavingTime*1000000/ctx->ad[0].SamplingClock);
@@ -127,8 +126,6 @@ void CSamplingSettings::OnOK()
 
 	if(ctx->NumAD>1){
 		ctx->ad[1].SamplingClock=ctx->ad[0].SamplingClock;
-		ctx->ad[1].ScanClock=long(ctx->ad[1].SamplingClock/ctx->ad[1].Channels);
-		if(ctx->ad[1].ScanClock<1){ ctx->ad[1].ScanClock=1; }
 		ctx->ad[1].SamplingTimes=ctx->ad[0].SamplingTimes;
 	}
 	CDialog::OnOK();

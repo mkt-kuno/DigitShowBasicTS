@@ -1,4 +1,4 @@
-// Control_File.cpp : ・ｽC・ｽ・ｽ・ｽv・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽe・ｽ[・ｽV・ｽ・ｽ・ｽ・ｽ ・ｽt・ｽ@・ｽC・ｽ・ｽ
+// Control_File.cpp : インプリメンテーション ファイル
 //
 
 #include "stdafx.h"
@@ -14,7 +14,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CControl_File ・ｽ_・ｽC・ｽA・ｽ・ｽ・ｽO
+// CControl_File ダイアログ
 
 CControl_File::CControl_File(CWnd* pParent /*=NULL*/)
 	: CDialog(CControl_File::IDD, pParent)
@@ -88,28 +88,28 @@ BEGIN_MESSAGE_MAP(CControl_File, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CControl_File ・ｽ・ｽ・ｽb・ｽZ・ｽ[・ｽW ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ
+// CControl_File メッセージ ハンドラ
 
 /////////////////////////////////////////////////////////////////////////////
-// CControl_File ・ｽ・ｽ・ｽb・ｽZ・ｽ[・ｽW ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ
+// CControl_File メッセージ ハンドラ
 BOOL CControl_File::OnInitDialog() 
 {	DigitShowContext* ctx = GetContext();
 	CDialog::OnInitDialog();
 	
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾌ補足・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置に初期化の補足処理を追加してください
 	CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_StepDec);
 	CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_StepInc);
 	myBTN1->EnableWindow(FALSE);
 	myBTN2->EnableWindow(FALSE);
 	CButton* chkbox1=(CButton*)GetDlgItem(IDC_CHECK_ChangeNo);
 	chkbox1->SetCheck(0);
-	return TRUE;  // ・ｽR・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾉフ・ｽH・ｽ[・ｽJ・ｽX・ｽ・ｽﾝ定し・ｽﾈゑｿｽ・ｽﾆゑｿｽ・ｽA・ｽﾟゑｿｽl・ｽ・ｽ TRUE ・ｽﾆなゑｿｽﾜゑｿｽ
-	              // ・ｽ・ｽO: OCX ・ｽv・ｽ・ｽ・ｽp・ｽe・ｽB ・ｽy・ｽ[・ｽW・ｽﾌ戻ゑｿｽl・ｽ・ｽ FALSE ・ｽﾆなゑｿｽﾜゑｿｽ
+	return TRUE;  // コントロールにフォーカスを設定しないとき、戻り値は TRUE となります
+	              // 例外: OCX プロパティ ページの戻り値は FALSE となります
 }
 
 void CControl_File::OnBUTTONReadFile() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	ctx->controlFile.CurrentNum=0;
 	CString	pFileName;
 	FILE	*FileCtlData;
@@ -160,7 +160,7 @@ void CControl_File::OnBUTTONReadFile()
 
 void CControl_File::OnBUTTONSaveFile() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	CString	pFileName;
 	FILE	*FileCtlData;
 	errno_t err;
@@ -189,7 +189,7 @@ void CControl_File::OnBUTTONSaveFile()
 
 void CControl_File::OnBUTTONLoad() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	UpdateData(TRUE);
 	m_CtrlNo = ctx->controlFile.Num[m_StepNo];
 	m_CFPARA0 = ctx->controlFile.Para[m_StepNo][0];
@@ -213,7 +213,7 @@ void CControl_File::OnBUTTONLoad()
 
 void CControl_File::OnBUTTONUpdate() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	UpdateData(TRUE);
 	ctx->controlFile.Num[m_StepNo] = m_CtrlNo;
 	ctx->controlFile.Para[m_StepNo][0] = m_CFPARA0;
@@ -237,7 +237,7 @@ void CControl_File::OnBUTTONUpdate()
 
 void CControl_File::OnCHECKChangeNo() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_StepDec);
 	CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_StepInc);
 	CButton* chkbox1=(CButton*)GetDlgItem(IDC_CHECK_ChangeNo);
@@ -253,7 +253,7 @@ void CControl_File::OnCHECKChangeNo()
 
 void CControl_File::OnBUTTONStepDec() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	ctx->controlFile.CurrentNum=ctx->controlFile.CurrentNum-1;
 	ctx->NumCyclic=0;
 	ctx->StepTime=0.0;
@@ -270,7 +270,7 @@ void CControl_File::OnBUTTONStepDec()
 
 void CControl_File::OnBUTTONStepInc() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	ctx->controlFile.CurrentNum=ctx->controlFile.CurrentNum+1;
 	ctx->NumCyclic=0;
 	ctx->StepTime=0.0;

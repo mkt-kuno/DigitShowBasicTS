@@ -42,7 +42,15 @@ A change counts as complete only after a clean build (**0 errors**) with the Rel
 - `src/MainFrm.cpp`: main window and menu command routing for control dialogs.
 - `src/DigitShowBasicView.cpp`: form view UI + timer-driven runtime loop.
 - `src/DigitShowBasicDoc.cpp`: hardware I/O, calibration math, control algorithms, torque membrane correction, data saving.
-- Dialogs (`Control_*.cpp`, `Specimen.cpp`, `CalibrationFactor.cpp`, `BoardSettings.cpp`, `DA_Channel.cpp`, `DA_Vout.cpp`, `SamplingSettings.cpp`) read shared state from `CDigitShowBasicDoc` on init and write it back in `OnOK` / update handlers after `UpdateData(TRUE)`.
+- `src/DigitShowContext.h/.cpp`: **global runtime state singleton** (`GetContext()` / `InitContext()`). All former extern globals live here.
+- Dialogs (`Control_*.cpp`, `Specimen.cpp`, `CalibrationFactor.cpp`, `BoardSettings.cpp`, `DA_Channel.cpp`, `DA_Vout.cpp`, `SamplingSettings.cpp`) read shared state from the context on init and write it back in `OnOK` / update handlers after `UpdateData(TRUE)`.
+
+### Global runtime state and hardware singletons
+
+- `DigitShowContext` (`DigitShowContext.h`) is a lazily initialized global singleton via `GetContext()`.
+- Each function that needs state starts with `DigitShowContext* ctx = GetContext();`.
+- Hardware board handles are stored in `ctx->ad[i].Id` (AI board `"AIO000"`, up to 2 boards) and `ctx->da[0].Id` (AO board `"AIO001"`).
+- Do **not** reintroduce file-scope globals or `extern` declarations; add fields to `DigitShowContext` instead.
 
 ### Hardware
 
@@ -99,7 +107,7 @@ Primary board (typical wiring): CH0 vertical load [N], CH1 torque [Ncm], CH2/CH3
 
 1. **File encoding is Shift-JIS (CP932) legacy.** Most `.cpp/.h/.rc` files contain Shift-JIS Japanese comments. Preserve each file's original encoding when editing; converting encodings casually will corrupt comments and string literals. Do not run global encodings conversions or "fix mojibake" rewrites.
 
-2. **Do not write DA output directly from dialogs/control logic.** Control code updates output values; actual hardware writes happen in `DA_OUTPUT()` via the CAIO API.
+2. **Do not write DA output directly from dialogs/control logic.** Control code updates `ctx->ao.raw[]` (in volts). Actual hardware writes happen in `DA_OUTPUT()` via the CAIO API.
 
 3. **Board lifecycle safety:** boards are opened once (`AioInit`) and closed at exit; keep AO outputs zeroed before open/close where possible.
 

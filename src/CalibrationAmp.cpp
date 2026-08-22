@@ -1,4 +1,4 @@
-// CalibrationAmp.cpp : ・ｽC・ｽ・ｽ・ｽv・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽe・ｽ[・ｽV・ｽ・ｽ・ｽ・ｽ ・ｽt・ｽ@・ｽC・ｽ・ｽ
+// CalibrationAmp.cpp : インプリメンテーション ファイル
 //
 
 #include "stdafx.h"
@@ -13,7 +13,8 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CCalibrationAmp 繝繧､繧｢繝ｭ繧ｰ
+// CCalibrationAmp ダイアログ
+
 
 CCalibrationAmp::CCalibrationAmp(CWnd* pParent /*=NULL*/)
 	: CDialog(CCalibrationAmp::IDD, pParent)
@@ -50,11 +51,11 @@ BEGIN_MESSAGE_MAP(CCalibrationAmp, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CCalibrationAmp ・ｽ・ｽ・ｽb・ｽZ・ｽ[・ｽW ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ
+// CCalibrationAmp メッセージ ハンドラ
 
 void CCalibrationAmp::OnBUTTONAmpBase() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	UpdateData(TRUE);
 	pDoc->AD_INPUT();
 	m_AmpVB=ctx->ai.raw[ctx->AmpID-1];
@@ -63,7 +64,7 @@ void CCalibrationAmp::OnBUTTONAmpBase()
 
 void CCalibrationAmp::OnBUTTONAmpOffset() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	UpdateData(TRUE);
 	pDoc->AD_INPUT();
 	m_AmpVO=ctx->ai.raw[ctx->AmpID-1];
@@ -72,7 +73,7 @@ void CCalibrationAmp::OnBUTTONAmpOffset()
 
 void CCalibrationAmp::OnBUTTONAmpUpdate() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	UpdateData(TRUE);
 	if(m_AmpVO-m_AmpVB==0.0){
 		AfxMessageBox("Can not get calibration factors!",MB_ICONEXCLAMATION | MB_OK );

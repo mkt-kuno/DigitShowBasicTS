@@ -1,4 +1,4 @@
-// DigitShowBasicView.cpp : CDigitShowBasicView ・ｽN・ｽ・ｽ・ｽX・ｽﾌ難ｿｽ・ｽ・ｽﾌ抵ｿｽ`・ｽ・ｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽB
+// DigitShowBasicView.cpp : CDigitShowBasicView クラスの動作の定義を行います。
 //
 
 #include "stdafx.h"
@@ -60,7 +60,7 @@ BEGIN_MESSAGE_MAP(CDigitShowBasicView, CFormView)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicView ・ｽN・ｽ・ｽ・ｽX・ｽﾌ構・ｽz/・ｽ・ｽ・ｽ・ｽ
+// CDigitShowBasicView クラスの構築/消滅
 
 CDigitShowBasicView::CDigitShowBasicView()
 	: CFormView(CDigitShowBasicView::IDD)
@@ -166,7 +166,7 @@ CDigitShowBasicView::CDigitShowBasicView()
 	m_VLT15 = _T("");
 	m_DChannel = _T("Ch.00-15");
 	//}}AFX_DATA_INIT
-	// TODO: ・ｽ・ｽ・ｽﾌ場所・ｽﾉ構・ｽz・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+	// TODO: この場所に構築用のコードを追加してください。
 	Flag_Ctrl=FALSE;
 	m_pEditBrush= new CBrush(RGB(255,255,255));
 	m_pStaticBrush= new CBrush(RGB(0,128,128));	
@@ -287,8 +287,8 @@ void CDigitShowBasicView::DoDataExchange(CDataExchange* pDX)
 
 BOOL CDigitShowBasicView::PreCreateWindow(CREATESTRUCT& cs)
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽ・ｽ CREATESTRUCT cs ・ｽ・ｽ・ｽC・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ Window ・ｽN・ｽ・ｽ・ｽX・ｽﾜゑｿｽ・ｽﾍス・ｽ^・ｽC・ｽ・ｽ・ｽ・ｽ
-	//  ・ｽC・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
+	// TODO: この位置で CREATESTRUCT cs を修正して Window クラスまたはスタイルを
+	//  修正してください。
 	return CFormView::PreCreateWindow(cs);
 }
 
@@ -373,7 +373,7 @@ void CDigitShowBasicView::OnInitialUpdate()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicView ・ｽN・ｽ・ｽ・ｽX・ｽﾌ診・ｽf
+// CDigitShowBasicView クラスの診断
 
 #ifdef _DEBUG
 void CDigitShowBasicView::AssertValid() const
@@ -386,7 +386,7 @@ void CDigitShowBasicView::Dump(CDumpContext& dc) const
 	CFormView::Dump(dc);
 }
 
-CDigitShowBasicDoc* CDigitShowBasicView::GetDocument() // ・ｽ・ｽf・ｽo・ｽb・ｽO ・ｽo・ｽ[・ｽW・ｽ・ｽ・ｽ・ｽ・ｽﾍイ・ｽ・ｽ・ｽ・ｽ・ｽC・ｽ・ｽ・ｽﾅゑｿｽ・ｽB
+CDigitShowBasicDoc* CDigitShowBasicView::GetDocument() // 非デバッグ バージョンはインラインです。
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CDigitShowBasicDoc)));
 	return (CDigitShowBasicDoc*)m_pDocument;
@@ -394,7 +394,7 @@ CDigitShowBasicDoc* CDigitShowBasicView::GetDocument() // ・ｽ・ｽf・ｽo・ｽb・ｽO ・
 #endif //_DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicView ・ｽN・ｽ・ｽ・ｽX・ｽﾌ・ｿｽ・ｽb・ｽZ・ｽ[・ｽW ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ
+// CDigitShowBasicView クラスのメッセージ ハンドラ
 
 HBRUSH CDigitShowBasicView::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
 {	DigitShowContext* ctx = GetContext();
@@ -418,14 +418,14 @@ HBRUSH CDigitShowBasicView::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 void CDigitShowBasicView::OnDestroy() 
 {	DigitShowContext* ctx = GetContext();
 	CFormView::OnDestroy();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉ・ｿｽ・ｽb・ｽZ・ｽ[・ｽW ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にメッセージ ハンドラ用のコードを追加してください
 	delete	m_pEditBrush;
 	delete	m_pStaticBrush;	
 	delete	m_pDlgBrush;
 }
 void CDigitShowBasicView::OnTimer(UINT_PTR nIDEvent)
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉ・ｿｽ・ｽb・ｽZ・ｽ[・ｽW ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽ驍ｩ・ｽﾜゑｿｽ・ｽﾍデ・ｽt・ｽH・ｽ・ｽ・ｽg・ｽﾌ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾄび出・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にメッセージ ハンドラ用のコードを追加するかまたはデフォルトの処理を呼び出してください
 
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 
@@ -540,7 +540,7 @@ void CDigitShowBasicView::ShowData()
 
 void CDigitShowBasicView::OnBUTTONCtrlOn() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 	if(ctx->flags.SetBoard){
 		SetTimer(2,ctx->timeSettings.Interval2,NULL);
@@ -554,7 +554,7 @@ void CDigitShowBasicView::OnBUTTONCtrlOn()
 
 void CDigitShowBasicView::OnBUTTONCtrlOff() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 	KillTimer(2);
 	Flag_Ctrl=FALSE;
@@ -567,7 +567,7 @@ void CDigitShowBasicView::OnBUTTONCtrlOff()
 
 void CDigitShowBasicView::OnBUTTONStartSave() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 
 	CString	pFileName0, pFileName1, pFileName2, TmpString;
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
@@ -705,7 +705,7 @@ void CDigitShowBasicView::OnBUTTONStartSave()
 
 void CDigitShowBasicView::OnBUTTONStopSave() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 
@@ -942,7 +942,7 @@ void CDigitShowBasicView::OnBUTTONWriteData()
 }
 void CDigitShowBasicView::OnBUTTONSetCtrlID() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	CString		tmp;
 	CComboBox* m_Combo1 = (CComboBox*)GetDlgItem(IDC_COMBO_Control_ID);
 	m_Combo1->GetWindowText(tmp);
@@ -951,7 +951,7 @@ void CDigitShowBasicView::OnBUTTONSetCtrlID()
 
 void CDigitShowBasicView::OnBUTTONSetSamplingTime() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ・ｽ・ｽg・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾊ知・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	CString		tmp;
 	CComboBox* m_Combo1 = (CComboBox*)GetDlgItem(IDC_COMBO_SamplingTime);
 	m_Combo1->GetWindowText(tmp);
@@ -1011,7 +1011,7 @@ void CDigitShowBasicView::Reflesh()
 
 LRESULT CDigitShowBasicView::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉ固有・ｽﾌ擾ｿｽ・ｽ・ｽ・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽ驍ｩ・ｽA・ｽﾜゑｿｽ・ｽﾍ奇ｿｽ{・ｽN・ｽ・ｽ・ｽX・ｽ・ｽ・ｽﾄび出・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// TODO: この位置に固有の処理を追加するか、または基本クラスを呼び出してください
 	int	i,j;
 
 	switch(message){
