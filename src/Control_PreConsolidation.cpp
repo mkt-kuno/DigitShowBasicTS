@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "DigitShowBasic.h"
 #include "Control_PreConsolidation.h"
+#include "DigitShowContext.h"
 #include "DigitShowBasicDoc.h"
 
 #ifdef _DEBUG
@@ -14,23 +15,23 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // CControl_PreConsolidation ダイアログ
-extern	Control		ControlData[16];
 
 
 CControl_PreConsolidation::CControl_PreConsolidation(CWnd* pParent /*=NULL*/)
 	: CDialog(CControl_PreConsolidation::IDD, pParent)
 {
+	DigitShowContext* ctx = GetContext();
 	//{{AFX_DATA_INIT(CControl_PreConsolidation)
-	m_CellPreRate = ControlData[1].sigmaRate[1];
-	m_CellPreTarget = ControlData[1].sigma[1];
-	m_AxisMotorSpeed = ControlData[1].AxisSpeed;
-	m_q = ControlData[1].q[0];
+	m_CellPreRate = ctx->control[1].sigmaRate[1];
+	m_CellPreTarget = ctx->control[1].sigma[1];
+	m_AxisMotorSpeed = ctx->control[1].AxisSpeed;
+	m_q = ctx->control[1].q[0];
 	//}}AFX_DATA_INIT
 }
 
 
 void CControl_PreConsolidation::DoDataExchange(CDataExchange* pDX)
-{
+{	DigitShowContext* ctx = GetContext();
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CControl_PreConsolidation)
 	DDX_Text(pDX, IDC_EDIT_CellPreRate, m_CellPreRate);
@@ -51,11 +52,11 @@ END_MESSAGE_MAP()
 // CControl_PreConsolidation メッセージ ハンドラ
 
 void CControl_PreConsolidation::OnBUTTONUpdate() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	UpdateData(TRUE);
-	ControlData[1].AxisSpeed = m_AxisMotorSpeed;
-	ControlData[1].q[0] = m_q;
-	ControlData[1].sigmaRate[1] = m_CellPreRate;
-	ControlData[1].sigma[1] = m_CellPreTarget;
+	ctx->control[1].AxisSpeed = m_AxisMotorSpeed;
+	ctx->control[1].q[0] = m_q;
+	ctx->control[1].sigmaRate[1] = m_CellPreRate;
+	ctx->control[1].sigma[1] = m_CellPreTarget;
 }

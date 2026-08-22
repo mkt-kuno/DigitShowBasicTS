@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "DigitShowBasic.h"
 #include "Control_General.h"
+#include "DigitShowContext.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -13,23 +14,22 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // CControl_General ダイアログ
-extern	double	ErrorStressMotor,ErrorStressAir;
-extern	double	ErrorStrainEz,ErrorStrainGzq;
 
 CControl_General::CControl_General(CWnd* pParent /*=NULL*/)
 	: CDialog(CControl_General::IDD, pParent)
 {
+	DigitShowContext* ctx = GetContext();
 	//{{AFX_DATA_INIT(CControl_General)
-	m_ErrorStressAir = ErrorStressAir;
-	m_ErrorStressMotor = ErrorStressMotor;
-	m_ErrorStrainEz = ErrorStrainEz;
-	m_ErrorStrainGzq = ErrorStrainGzq;
+	m_ErrorStressAir = ctx->err.StressAir;
+	m_ErrorStressMotor = ctx->err.StressMotor;
+	m_ErrorStrainEz = ctx->err.StrainEz;
+	m_ErrorStrainGzq = ctx->err.StrainGzq;
 	//}}AFX_DATA_INIT
 }
 
 
 void CControl_General::DoDataExchange(CDataExchange* pDX)
-{
+{	DigitShowContext* ctx = GetContext();
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CControl_General)
 	DDX_Text(pDX, IDC_EDIT_ErrorStressAir, m_ErrorStressAir);
@@ -49,13 +49,13 @@ END_MESSAGE_MAP()
 // CControl_General メッセージ ハンドラ
 
 void CControl_General::OnOK() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にその他の検証用のコードを追加してください
 	UpdateData(TRUE);
-	ErrorStressAir = m_ErrorStressAir;
-	ErrorStressMotor = m_ErrorStressMotor;
-	ErrorStrainEz = m_ErrorStrainEz;
-	ErrorStrainGzq = m_ErrorStrainGzq;
+	ctx->err.StressAir = m_ErrorStressAir;
+	ctx->err.StressMotor = m_ErrorStressMotor;
+	ctx->err.StrainEz = m_ErrorStrainEz;
+	ctx->err.StrainGzq = m_ErrorStrainGzq;
 	CDialog::OnOK();
 }
 

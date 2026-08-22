@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "DigitShowBasic.h"
 #include "Control_Consolidation.h"
+#include "DigitShowContext.h"
 #include "DigitShowBasicDoc.h"
 
 #ifdef _DEBUG
@@ -14,23 +15,23 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // CControl_Consolidation ダイアログ
-extern	Control		ControlData[16];
 
 
 CControl_Consolidation::CControl_Consolidation(CWnd* pParent /*=NULL*/)
 	: CDialog(CControl_Consolidation::IDD, pParent)
 {
+	DigitShowContext* ctx = GetContext();
 	//{{AFX_DATA_INIT(CControl_Consolidation)
-	m_K0 = ControlData[2].K0;
-	m_sr_rate = ControlData[2].sigmaRate[2];
-	m_sa = ControlData[2].sigma[0];
-	m_AxialMotorSpeed = ControlData[2].AxisSpeed;
+	m_K0 = ctx->control[2].K0;
+	m_sr_rate = ctx->control[2].sigmaRate[2];
+	m_sa = ctx->control[2].sigma[0];
+	m_AxialMotorSpeed = ctx->control[2].AxisSpeed;
 	//}}AFX_DATA_INIT
 }
 
 
 void CControl_Consolidation::DoDataExchange(CDataExchange* pDX)
-{
+{	DigitShowContext* ctx = GetContext();
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CControl_Consolidation)
 	DDX_Text(pDX, IDC_EDIT_K0, m_K0);
@@ -51,11 +52,11 @@ END_MESSAGE_MAP()
 // CControl_Consolidation メッセージ ハンドラ
 
 void CControl_Consolidation::OnBUTTONUpdate() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	UpdateData(TRUE);
-	ControlData[2].sigma[0] = m_sa;
-	ControlData[2].K0 = m_K0;
-	ControlData[2].AxisSpeed = m_AxialMotorSpeed;
-	ControlData[2].sigmaRate[2] = m_sr_rate;	
+	ctx->control[2].sigma[0] = m_sa;
+	ctx->control[2].K0 = m_K0;
+	ctx->control[2].AxisSpeed = m_AxialMotorSpeed;
+	ctx->control[2].sigmaRate[2] = m_sr_rate;	
 }
