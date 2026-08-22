@@ -282,7 +282,7 @@ void CDigitShowBasicDoc::Cal_Param()
 {	DigitShowContext* ctx = GetContext();
  	//---Calculation of Parameter Data--- 
 	//Current specimen size
-	if(ctx->flags.SetBalance == FALSE) ctx->phys.BW2 = ctx->ai.phy[13];	// Volume change from LCDPT
+	ctx->phys.BW2 = ctx->ai.phy[13];	// volume change from LCDPT (RS232C balance removed)	// Volume change from LCDPT
 	ctx->phys.height=ctx->specimen.Height[0]-ctx->ai.phy[5];
 	ctx->phys.volume=ctx->specimen.Volume[0]-ctx->phys.BW2;
 	ctx->phys.area=ctx->phys.volume/ctx->phys.height;
@@ -1469,78 +1469,5 @@ void CDigitShowBasicDoc::CyclicAxialLoading_OR()
 	}
 }
 
-void CDigitShowBasicDoc::Rs232c_Open()
-{	DigitShowContext* ctx = GetContext();
-//---Open RS232C: COM1---
-	ctx->rs232c.hEvent=CreateEvent(0, TRUE, FALSE, NULL);
-	//Open COM1
-	ctx->rs232c.hComm[0] = CreateFile(ctx->rs232c.CommName[0],GENERIC_READ | GENERIC_WRITE,0,NULL,OPEN_EXISTING,0,NULL);
-	if(ctx->rs232c.hComm[0]!=INVALID_HANDLE_VALUE){
-		AfxMessageBox("Succeded in open of COM1", MB_ICONINFORMATION | MB_OK );
-		ctx->flags.COM[0]=TRUE;
-		GetCommState(ctx->rs232c.hComm[0],&ctx->rs232c.CommDCB[0]);
-		ctx->rs232c.CommDCB[0].fBinary=TRUE;
-		ctx->rs232c.CommDCB[0].fRtsControl = RTS_CONTROL_ENABLE;
-		ctx->rs232c.CommDCB[0].fDtrControl = DTR_CONTROL_ENABLE;
-		ctx->rs232c.CommDCB[0].BaudRate=CBR_2400;				// BaudRate 2400;
-		ctx->rs232c.CommDCB[0].ByteSize=7;						// Bit length:7bit 
-		ctx->rs232c.CommDCB[0].Parity=2;						// 0-4=no,odd,even,mark,space 
-		ctx->rs232c.CommDCB[0].StopBits=0;						// 0,1,2 = 1Bit, 1.5Bit, 2Bit 
-		SetCommState(ctx->rs232c.hComm[0],&ctx->rs232c.CommDCB[0]);
-		ctx->flags.SetRs232c=TRUE;
-	}
-	ctx->rs232c.ReadBuffer1.Empty();
-	ctx->rs232c.ReadBuffer2.Empty();
-	ctx->rs232c.WriteBuffer1.Empty();
-	ctx->rs232c.WriteBuffer2.Empty();
-	ctx->rs232c.TmpBuffer.Empty();
-}
-
-void CDigitShowBasicDoc::Rs232c_Close()
-{	DigitShowContext* ctx = GetContext();
-	if(ctx->flags.SetRs232c){
-		if(ctx->flags.COM[0])	{
-			CloseHandle(ctx->rs232c.hComm[0]);
-			ctx->flags.COM[0]=FALSE;
-		}
-		ctx->flags.SetRs232c=FALSE;
-	}
-	CloseHandle(ctx->rs232c.hEvent);
-}
-
-void CDigitShowBasicDoc::Rs232c_SendData()
-{	DigitShowContext* ctx = GetContext();
-	DWORD	NoOfByte;
-	ctx->rs232c.WriteBuffer1+="\r\n";
-	WriteFile(ctx->rs232c.hComm[0],ctx->rs232c.WriteBuffer1,ctx->rs232c.WriteBuffer1.GetLength(),&NoOfByte,NULL);
-//	WaitForSingleObject(ctx->rs232c.hEvent,300);
-//	ResetEvent(ctx->rs232c.hEvent);
-}
-
-void CDigitShowBasicDoc::Rs232c_GetData()
-{	DigitShowContext* ctx = GetContext();
-	DWORD NoOfByte,Error;
-	ctx->rs232c.ReadBuffer1.Empty();
-	ClearCommError(ctx->rs232c.hComm[0],&Error,&ctx->rs232c.Comstat1);
-	if(ctx->rs232c.Comstat1.cbInQue){
-		ReadFile(ctx->rs232c.hComm[0],ctx->rs232c.ReadBuffer1.GetBuffer(ctx->rs232c.Comstat1.cbInQue),ctx->rs232c.Comstat1.cbInQue,&NoOfByte,NULL);
-		ctx->rs232c.ReadBuffer1.ReleaseBuffer();
-	}
-}
-
-void CDigitShowBasicDoc::Rs232c_GetWeight()
-{	DigitShowContext* ctx = GetContext();
-	int		i,j;
-	Rs232c_GetData();
-	ctx->rs232c.TmpBuffer = ctx->rs232c.TmpBuffer + ctx->rs232c.ReadBuffer1;
-	i=ctx->rs232c.TmpBuffer.Find('S',0);
-	j=ctx->rs232c.TmpBuffer.Find('g',i+1);
-	if( i != -1 && j != -1 ){
-		ctx->rs232c.TmpBuffer = ctx->rs232c.TmpBuffer.Mid(i+4,8);
-		ctx->phys.BW1=atof(ctx->rs232c.TmpBuffer)*1000.0;
-		ctx->rs232c.TmpBuffer.Empty();
-	}
-	ctx->phys.BW2=ctx->phys.BW1;
-}
 
 

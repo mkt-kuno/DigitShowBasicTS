@@ -27,7 +27,6 @@
 
 #include "CAIO.H"
 #include "SamplingSettings.h"
-#include "RS232C.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -194,7 +193,6 @@ CDigitShowBasicView::~CDigitShowBasicView()
 {
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 	pDoc->CloseBoard();
-	pDoc->Rs232c_Close();
 }
 
 void CDigitShowBasicView::DoDataExchange(CDataExchange* pDX)
@@ -385,8 +383,6 @@ void CDigitShowBasicView::OnInitialUpdate()
 		if(ctx->NumAD>1) ctx->Ret = AioStartAi(ctx->ad[1].Id);
 	}
 	SetTimer(1,ctx->timeSettings.Interval1,NULL);
-	CRS232C RS232C;
-	RS232C.DoModal();	
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -456,8 +452,7 @@ void CDigitShowBasicView::OnTimer(UINT_PTR nIDEvent)
 				ctx->SpanTime=ctx->NowTime-ctx->StartTime;
 				ctx->SequentTime1=ctx->SpanTime.GetTotalSeconds();
 			}	
-			if(ctx->flags.SetBalance)	pDoc -> Rs232c_GetWeight();
-			if(ctx->flags.SetBoard)	pDoc -> AD_INPUT();
+				if(ctx->flags.SetBoard)	pDoc -> AD_INPUT();
 			pDoc -> Cal_Physical();
 			pDoc -> Cal_Param();
 			ShowData();

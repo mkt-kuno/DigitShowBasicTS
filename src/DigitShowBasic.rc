@@ -85,10 +85,6 @@ BEGIN
         MENUITEM "Board Settings",              ID_BoardSettings
         MENUITEM "Sampling Settings",           ID_SamplingSettings
     END
-    POPUP "RS232C"
-    BEGIN
-        MENUITEM "Setting Pannel",              ID_Rs232cPannel
-    END
     POPUP "Calibration"
     BEGIN
         MENUITEM "Factors",                     ID_Calibration_Factor
@@ -909,32 +905,6 @@ BEGIN
     LTEXT           "2nd.",IDC_STATIC,153,20,12,8
 END
 
-IDD_RS232C DIALOG 0, 0, 246, 259
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Settings of Electric Balance"
-FONT 9, "ＭＳ Ｐゴシック"
-BEGIN
-    DEFPUSHBUTTON   "Close",IDOK,189,238,50,14
-    PUSHBUTTON      "Initialize",IDC_BUTTON_initialize,129,46,51,14
-    PUSHBUTTON      "Receive",IDC_BUTTON_receive,130,144,51,14
-    PUSHBUTTON      "Send Data",IDC_BUTTON_send,130,113,51,14
-    EDITTEXT        IDC_EDIT_SendData,7,128,174,12,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_ReceiveData,7,158,176,93,ES_MULTILINE | ES_AUTOHSCROLL
-    LTEXT           "BaudRate: 2400 bps,",IDC_STATIC,12,79,64,8
-    LTEXT           "Length of bit: 7 bit,",IDC_STATIC,90,79,58,8
-    LTEXT           "Parity: Even",IDC_STATIC,12,91,39,8
-    LTEXT           "StopBit: 1 bit,",IDC_STATIC,90,92,41,8
-    LTEXT           "Initialize the interface of Rs232c, COM1.",IDC_STATIC,10,50,123,8
-    GROUPBOX        "Settings of Rs232c",IDC_STATIC,7,67,173,38
-    LTEXT           "Send data",IDC_STATIC,11,120,58,8
-    LTEXT           "Get data",IDC_STATIC,10,150,58,8
-    GROUPBOX        "Select the method to measure the volume change",IDC_STATIC,7,3,173,33
-    CONTROL         "LCDPT",IDC_RADIO_LCDPT,"Button",BS_AUTORADIOBUTTON,14,18,37,10
-    CONTROL         "Elecric balance",IDC_RADIO_Balance,"Button",BS_AUTORADIOBUTTON,88,18,61,10
-    PUSHBUTTON      "Balance On",IDC_BUTTON_BalanceOn,189,45,50,14
-    PUSHBUTTON      "Balance Off",IDC_BUTTON_BalanceOff,189,65,50,14
-END
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1094,13 +1064,6 @@ BEGIN
         BOTTOMMARGIN, 166
     END
 
-    IDD_RS232C, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 239
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 252
-    END
 END
 #endif    // APSTUDIO_INVOKED
 

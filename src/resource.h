@@ -18,7 +18,6 @@
 #define IDD_Control_PreConsolidation    149
 #define IDD_Control_Consolidation       151
 #define IDD_BoardSettings               158
-#define IDD_RS232C                      159
 #define IDC_EDIT_Vout01                 1156
 #define IDC_EDIT_Vout02                 1157
 #define IDC_EDIT_Vout04                 1158
@@ -444,7 +443,6 @@
 #define ID_Control_PreConsolidation     32798
 #define ID_Consolidation                32799
 #define ID_BoardSettings                32806
-#define ID_Rs232cPannel                 32807
 
 // Next default values for new objects
 // 

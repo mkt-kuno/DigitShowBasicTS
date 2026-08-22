@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -182,7 +182,6 @@
     <ClCompile Include="DigitShowBasicView.cpp" />
     <ClCompile Include="DigitShowContext.cpp" />
     <ClCompile Include="MainFrm.cpp" />
-    <ClCompile Include="RS232C.cpp" />
     <ClCompile Include="SamplingSettings.cpp" />
     <ClCompile Include="Specimen.cpp" />
     <ClCompile Include="StdAfx.cpp">
@@ -213,7 +212,6 @@
     <ClInclude Include="DigitShowBasicView.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="RS232C.h" />
     <ClInclude Include="SamplingSettings.h" />
     <ClInclude Include="Specimen.h" />
     <ClInclude Include="StdAfx.h" />

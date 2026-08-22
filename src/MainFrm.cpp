@@ -26,7 +26,6 @@
 #include "DigitShowContext.h"
 #include "BoardSettings.h"
 #include "SamplingSettings.h"
-#include "RS232C.h"
 #include "CalibrationFactor.h"
 #include "Specimen.h"
 #include "Control_ID.h"
@@ -63,7 +62,6 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_COMMAND(ID_Calibration_Factor, OnCalibrationFactor)
 	ON_COMMAND(ID_SamplingSettings, OnSamplingSettings)
 	ON_COMMAND(ID_BoardSettings, OnBoardSettings)
-	ON_COMMAND(ID_Rs232cPannel, OnRs232cPannel)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -131,14 +129,6 @@ void CMainFrame::OnSamplingSettings()
 	int	nResult;
 	CSamplingSettings SamplingSettings;
 	nResult = SamplingSettings.DoModal();
-}
-
-void CMainFrame::OnRs232cPannel() 
-{	DigitShowContext* ctx = GetContext();
-	// TODO: Add your command handler code here
-	int	nResult;
-	CRS232C RS232C;
-	nResult = RS232C.DoModal();	
 }
 
 void CMainFrame::OnCalibrationFactor() 
