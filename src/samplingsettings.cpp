@@ -1,4 +1,4 @@
-// SamplingSettings.cpp : ï¿½Cï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½eï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ ï¿½tï¿½@ï¿½Cï¿½ï¿½
+// SamplingSettings.cpp : E½CE½E½E½vE½E½E½E½E½E½E½eE½[E½VE½E½E½E½ E½tE½@E½CE½E½
 //
 
 #include "stdafx.h"
@@ -6,6 +6,7 @@
 #include "DigitShowBasicDoc.h"
 
 #include "SamplingSettings.h"
+#include "DigitShowContext.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -14,24 +15,9 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CSamplingSettings ï¿½_ï¿½Cï¿½Aï¿½ï¿½ï¿½O
-extern	int			NUMAD;
-extern	int			AdMaxCH;
-extern	short		AdMemoryType[2];
-extern	float		AdSamplingClock[2];
-extern	short		AdChannels[2];
-extern	float		AdScanClock[2];
-extern	long		AdSamplingTimes[2];
-extern	int			SavingTime;
-extern	long		TotalSamplingTimes;
-extern	float		AllocatedMemory;
-extern	int			AvSmplNum;
+// CSamplingSettings E½_E½CE½AE½E½E½O
 
-extern	bool		Flag_FIFO;
 
-extern	unsigned int	TimeInterval_1;	// Time interval (ms) to display output data.		
-extern	unsigned int	TimeInterval_2;	// Time interval (ms) to feed back.		
-extern	unsigned int	TimeInterval_3;	// Time interval (ms) to save the data.
 
 
 CSamplingSettings::CSamplingSettings(CWnd* pParent /*=NULL*/)
@@ -54,7 +40,7 @@ CSamplingSettings::CSamplingSettings(CWnd* pParent /*=NULL*/)
 
 
 void CSamplingSettings::DoDataExchange(CDataExchange* pDX)
-{
+{	DigitShowContext* ctx = GetContext();
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CSamplingSettings)
 	DDX_Text(pDX, IDC_EDIT_TimeInterval1, m_TimeInterval1);
@@ -79,44 +65,44 @@ BEGIN_MESSAGE_MAP(CSamplingSettings, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CSamplingSettings ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½W ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
+// CSamplingSettings E½E½E½bE½ZE½[E½W E½nE½E½E½hE½E½
 
 BOOL CSamplingSettings::OnInitDialog() 
-{
+{	DigitShowContext* ctx = GetContext();
 	CDialog::OnInitDialog();
 	
-	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì•â‘«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	m_TimeInterval1 = TimeInterval_1;
-	m_TimeInterval2 = TimeInterval_2;
-	m_TimeInterval3 = TimeInterval_3;
+	// TODO: E½E½E½ÌˆÊ’uE½Éï¿½E½E½E½E½E½Ì•â‘«E½E½E½E½E½E½Ç‰ï¿½E½E½E½Ä‚ï¿½E½E½E½E½E½E½
+	m_TimeInterval1 = ctx->timeSettings.Interval1;
+	m_TimeInterval2 = ctx->timeSettings.Interval2;
+	m_TimeInterval3 = ctx->timeSettings.Interval3;
 //
-	m_AllocatedMemory.Format("%.1f",AllocatedMemory);
-	m_Channels = AdMaxCH;
-	m_EventSamplingTimes = AdSamplingTimes[0];
-	m_AvSmplNum = AvSmplNum;
-	if(AdMemoryType[0]==0) m_MemoryType = _T("FIFO");
-	if(AdMemoryType[0]==1) m_MemoryType = _T("RING");
-	m_SamplingClock = AdSamplingClock[0]/1000.0f;
-	m_SavingTime = SavingTime;
-	m_TotalSamplingTimes = TotalSamplingTimes;
+	m_AllocatedMemory.Format("%.1f",ctx->AllocatedMemory);
+	m_Channels = ctx->AdMaxCH;
+	m_EventSamplingTimes = ctx->ad[0].SamplingTimes;
+	m_AvSmplNum = ctx->AvSmplNum;
+	if(ctx->ad[0].MemoryType==0) m_MemoryType = _T("FIFO");
+	if(ctx->ad[0].MemoryType==1) m_MemoryType = _T("RING");
+	m_SamplingClock = ctx->ad[0].SamplingClock/1000.0f;
+	m_SavingTime = ctx->SavingTime;
+	m_TotalSamplingTimes = ctx->TotalSamplingTimes;
 	UpdateData(FALSE);
 //
 	CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_Check);
 	CButton* myBTN2=(CButton*)GetDlgItem(IDOK);
-	if(Flag_FIFO==TRUE)	myBTN1->EnableWindow(FALSE);
+	if(ctx->flags.FIFO==TRUE)	myBTN1->EnableWindow(FALSE);
 	myBTN2->EnableWindow(FALSE);
 
-	return TRUE;  // ï¿½Rï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Éƒtï¿½Hï¿½[ï¿½Jï¿½Xï¿½ï¿½İ’è‚µï¿½È‚ï¿½ï¿½Æ‚ï¿½ï¿½Aï¿½ß‚ï¿½lï¿½ï¿½ TRUE ï¿½Æ‚È‚ï¿½Ü‚ï¿½
-	              // ï¿½ï¿½O: OCX ï¿½vï¿½ï¿½ï¿½pï¿½eï¿½B ï¿½yï¿½[ï¿½Wï¿½Ì–ß‚ï¿½lï¿½ï¿½ FALSE ï¿½Æ‚È‚ï¿½Ü‚ï¿½
+	return TRUE;  // E½RE½E½E½gE½E½E½[E½E½E½ÉƒtE½HE½[E½JE½XE½E½İ’è‚µE½È‚ï¿½E½Æ‚ï¿½E½AE½ß‚ï¿½lE½E½ TRUE E½Æ‚È‚ï¿½Ü‚ï¿½
+	              // E½E½O: OCX E½vE½E½E½pE½eE½B E½yE½[E½WE½Ì–ß‚ï¿½lE½E½ FALSE E½Æ‚È‚ï¿½Ü‚ï¿½
 }
 
 void CSamplingSettings::OnBUTTONCheck() 
-{
-	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉƒRï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê’mï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+{	DigitShowContext* ctx = GetContext();
+	// TODO: E½E½E½ÌˆÊ’uE½ÉƒRE½E½E½gE½E½E½[E½E½E½Ê’mE½nE½E½E½hE½E½E½pE½ÌƒRE½[E½hE½E½Ç‰ï¿½E½E½E½Ä‚ï¿½E½E½E½E½E½E½
 	UpdateData(TRUE);
 	m_TotalSamplingTimes=long(m_SavingTime*1000/m_SamplingClock);
-	m_AllocatedMemory.Format("%.1f",4*AdMaxCH*m_TotalSamplingTimes/1024.0f/1024.0f);
-	m_EventSamplingTimes=long(TimeInterval_1/m_SamplingClock);
+	m_AllocatedMemory.Format("%.1f",4*ctx->AdMaxCH*m_TotalSamplingTimes/1024.0f/1024.0f);
+	m_EventSamplingTimes=long(ctx->timeSettings.Interval1/m_SamplingClock);
 	UpdateData(FALSE);
 
 	CButton* myBTN1=(CButton*)GetDlgItem(IDOK);
@@ -125,25 +111,25 @@ void CSamplingSettings::OnBUTTONCheck()
 }
 
 void CSamplingSettings::OnOK() 
-{
-	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½É‚ï¿½ï¿½Ì‘ï¿½ï¿½ÌŒï¿½ï¿½Ø—pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+{	DigitShowContext* ctx = GetContext();
+	// TODO: E½E½E½ÌˆÊ’uE½É‚ï¿½E½Ì‘ï¿½E½ÌŒï¿½E½Ø—pE½ÌƒRE½[E½hE½E½Ç‰ï¿½E½E½E½Ä‚ï¿½E½E½E½E½E½E½
 	UpdateData(TRUE);
-	AdSamplingClock[0] = m_SamplingClock*1000.0f;
-	AdScanClock[0] = long(AdSamplingClock[0]/AdChannels[0]);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
-	if(AdScanClock[0]<1){ AdScanClock[0]=1; }
-	SavingTime = m_SavingTime;
-	AdSamplingTimes[0] = m_EventSamplingTimes;
-	TotalSamplingTimes=long(SavingTime*1000000/AdSamplingClock[0]);
-	AllocatedMemory=4*AdMaxCH*m_TotalSamplingTimes/1024.0f/1024.0f;
-	m_AllocatedMemory.Format("%.1f",AllocatedMemory);
-	m_TotalSamplingTimes=TotalSamplingTimes;
+	ctx->ad[0].SamplingClock = m_SamplingClock*1000.0f;
+	ctx->ad[0].ScanClock = long(ctx->ad[0].SamplingClock/ctx->ad[0].Channels);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
+	if(ctx->ad[0].ScanClock<1){ ctx->ad[0].ScanClock=1; }
+	ctx->SavingTime = m_SavingTime;
+	ctx->ad[0].SamplingTimes = m_EventSamplingTimes;
+	ctx->TotalSamplingTimes=long(ctx->SavingTime*1000000/ctx->ad[0].SamplingClock);
+	ctx->AllocatedMemory=4*ctx->AdMaxCH*m_TotalSamplingTimes/1024.0f/1024.0f;
+	m_AllocatedMemory.Format("%.1f",ctx->AllocatedMemory);
+	m_TotalSamplingTimes=ctx->TotalSamplingTimes;
 	UpdateData(FALSE);
 
-	if(NUMAD>1){
-		AdSamplingClock[1]=AdSamplingClock[0];
-		AdScanClock[1]=long(AdSamplingClock[1]/AdChannels[1]);
-		if(AdScanClock[1]<1){ AdScanClock[1]=1; }
-		AdSamplingTimes[1]=AdSamplingTimes[0];
+	if(ctx->NumAD>1){
+		ctx->ad[1].SamplingClock=ctx->ad[0].SamplingClock;
+		ctx->ad[1].ScanClock=long(ctx->ad[1].SamplingClock/ctx->ad[1].Channels);
+		if(ctx->ad[1].ScanClock<1){ ctx->ad[1].ScanClock=1; }
+		ctx->ad[1].SamplingTimes=ctx->ad[0].SamplingTimes;
 	}
 	CDialog::OnOK();
 }
