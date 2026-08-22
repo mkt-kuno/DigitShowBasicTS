@@ -2,6 +2,8 @@
 
 ![Github License](https://img.shields.io/github/license/mkt-kuno/DigitShowBasicTS)  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) 
 
+<img width="1021" height="722" alt="Screenshot 2026-08-22 205927" src="https://github.com/user-attachments/assets/ce4530ed-263e-4517-8498-f80bac3726bd" />
+
 ## 簡単な説明
 東京大学の地盤研で使用されている、中空ねじり三軸試験機制御ソフトウェアのオープンソース版です。  
 [DigitShowBasic](https://github.com/mkt-kuno/DigitShowBasic)を中空ねじり三軸試験用に拡張した版で、中空円筒供試体に軸荷重とねじりトルクを独立して負荷します。  
