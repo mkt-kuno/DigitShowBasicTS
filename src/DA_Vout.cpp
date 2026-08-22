@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "DigitShowBasic.h"
 #include "DA_Vout.h"
+#include "DigitShowContext.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -13,8 +14,6 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // CDA_Vout ダイアログ
-extern	float		DAVout[16];				// Output Voltage to D/A board
-extern	CString		NameDV[8];
 
 CDA_Vout::CDA_Vout(CWnd* pParent /*=NULL*/)
 	: CDialog(CDA_Vout::IDD, pParent)
@@ -41,7 +40,7 @@ CDA_Vout::CDA_Vout(CWnd* pParent /*=NULL*/)
 
 
 void CDA_Vout::DoDataExchange(CDataExchange* pDX)
-{
+{	DigitShowContext* ctx = GetContext();
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDA_Vout)
 	DDX_Text(pDX, IDC_EDIT_DAVout01, m_DAVout01);
@@ -74,57 +73,57 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CDA_Vout メッセージ ハンドラ
 BOOL CDA_Vout::OnInitDialog() 
-{
+{	DigitShowContext* ctx = GetContext();
 	CDialog::OnInitDialog();
 	
 	// TODO: Add extra initialization here
-	m_DAVout01 = DAVout[0];
-	m_DAVout02 = DAVout[1];
-	m_DAVout03 = DAVout[2];
-	m_DAVout04 = DAVout[3];
-	m_DAVout05 = DAVout[4];
-	m_DAVout06 = DAVout[5];
-	m_DAVout07 = DAVout[6];
-	m_DAVout08 = DAVout[7];
-	m_CH01 = NameDV[0];
-	m_CH02 = NameDV[1];
-	m_CH03 = NameDV[2];
-	m_CH04 = NameDV[3];
-	m_CH05 = NameDV[4];
-	m_CH06 = NameDV[5];
-	m_CH07 = NameDV[6];
-	m_CH08 = NameDV[7];
+	m_DAVout01 = ctx->ao.raw[0];
+	m_DAVout02 = ctx->ao.raw[1];
+	m_DAVout03 = ctx->ao.raw[2];
+	m_DAVout04 = ctx->ao.raw[3];
+	m_DAVout05 = ctx->ao.raw[4];
+	m_DAVout06 = ctx->ao.raw[5];
+	m_DAVout07 = ctx->ao.raw[6];
+	m_DAVout08 = ctx->ao.raw[7];
+	m_CH01 = ctx->NameDV[0];
+	m_CH02 = ctx->NameDV[1];
+	m_CH03 = ctx->NameDV[2];
+	m_CH04 = ctx->NameDV[3];
+	m_CH05 = ctx->NameDV[4];
+	m_CH06 = ctx->NameDV[5];
+	m_CH07 = ctx->NameDV[6];
+	m_CH08 = ctx->NameDV[7];
 	UpdateData(FALSE);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 void CDA_Vout::OnBUTTONDAVout() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	UpdateData(TRUE);
-	DAVout[0]=m_DAVout01;
-	DAVout[1]=m_DAVout02;
-	DAVout[2]=m_DAVout03;
-	DAVout[3]=m_DAVout04;
-	DAVout[4]=m_DAVout05;
-	DAVout[5]=m_DAVout06;
-	DAVout[6]=m_DAVout07;
-	DAVout[7]=m_DAVout08;
+	ctx->ao.raw[0]=m_DAVout01;
+	ctx->ao.raw[1]=m_DAVout02;
+	ctx->ao.raw[2]=m_DAVout03;
+	ctx->ao.raw[3]=m_DAVout04;
+	ctx->ao.raw[4]=m_DAVout05;
+	ctx->ao.raw[5]=m_DAVout06;
+	ctx->ao.raw[6]=m_DAVout07;
+	ctx->ao.raw[7]=m_DAVout08;
 	pDoc->DA_OUTPUT();
 }
 
 void CDA_Vout::OnBUTTONReflesh() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
-	m_DAVout01 = DAVout[0];
-	m_DAVout02 = DAVout[1];
-	m_DAVout03 = DAVout[2];
-	m_DAVout04 = DAVout[3];
-	m_DAVout05 = DAVout[4];
-	m_DAVout06 = DAVout[5];
-	m_DAVout07 = DAVout[6];
-	m_DAVout08 = DAVout[7];
+	m_DAVout01 = ctx->ao.raw[0];
+	m_DAVout02 = ctx->ao.raw[1];
+	m_DAVout03 = ctx->ao.raw[2];
+	m_DAVout04 = ctx->ao.raw[3];
+	m_DAVout05 = ctx->ao.raw[4];
+	m_DAVout06 = ctx->ao.raw[5];
+	m_DAVout07 = ctx->ao.raw[6];
+	m_DAVout08 = ctx->ao.raw[7];
 	UpdateData(FALSE);
 }
 

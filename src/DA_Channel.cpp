@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "DigitShowBasic.h"
 #include "DA_Channel.h"
+#include "DigitShowContext.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -13,8 +14,6 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // CDA_Channel ダイアログ
-extern	double		DA_Cal_a[16],DA_Cal_b[16];		// D/A Calibration Factor
-extern	CString		NameDV[8];
 CDA_Channel::CDA_Channel(CWnd* pParent /*=NULL*/)
 	: CDialog(CDA_Channel::IDD, pParent)
 {
@@ -48,7 +47,7 @@ CDA_Channel::CDA_Channel(CWnd* pParent /*=NULL*/)
 
 
 void CDA_Channel::DoDataExchange(CDataExchange* pDX)
-{
+{	DigitShowContext* ctx = GetContext();
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDA_Channel)
 	DDX_Text(pDX, IDC_EDIT_DACala1, m_DACala1);
@@ -87,59 +86,59 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CDA_Channel メッセージ ハンドラ
 BOOL CDA_Channel::OnInitDialog() 
-{
+{	DigitShowContext* ctx = GetContext();
 	CDialog::OnInitDialog();
 	
 	// TODO: Add extra initialization here
-	m_DACala1 = DA_Cal_a[0];
-	m_DACala2 = DA_Cal_a[1];
-	m_DACala3 = DA_Cal_a[2];
-	m_DACala4 = DA_Cal_a[3];
-	m_DACala5 = DA_Cal_a[4];
-	m_DACala6 = DA_Cal_a[5];
-	m_DACala7 = DA_Cal_a[6];
-	m_DACala8 = DA_Cal_a[7];
-	m_DACalb1 = DA_Cal_b[0];
-	m_DACalb2 = DA_Cal_b[1];
-	m_DACalb3 = DA_Cal_b[2];
-	m_DACalb4 = DA_Cal_b[3];
-	m_DACalb5 = DA_Cal_b[4];
-	m_DACalb6 = DA_Cal_b[5];
-	m_DACalb7 = DA_Cal_b[6];
-	m_DACalb8 = DA_Cal_b[7];
-	m_CH01 = NameDV[0];
-	m_CH02 = NameDV[1];
-	m_CH03 = NameDV[2];
-	m_CH04 = NameDV[3];
-	m_CH05 = NameDV[4];
-	m_CH06 = NameDV[5];
-	m_CH07 = NameDV[6];
-	m_CH08 = NameDV[7];	
+	m_DACala1 = ctx->ao.cal.a[0];
+	m_DACala2 = ctx->ao.cal.a[1];
+	m_DACala3 = ctx->ao.cal.a[2];
+	m_DACala4 = ctx->ao.cal.a[3];
+	m_DACala5 = ctx->ao.cal.a[4];
+	m_DACala6 = ctx->ao.cal.a[5];
+	m_DACala7 = ctx->ao.cal.a[6];
+	m_DACala8 = ctx->ao.cal.a[7];
+	m_DACalb1 = ctx->ao.cal.b[0];
+	m_DACalb2 = ctx->ao.cal.b[1];
+	m_DACalb3 = ctx->ao.cal.b[2];
+	m_DACalb4 = ctx->ao.cal.b[3];
+	m_DACalb5 = ctx->ao.cal.b[4];
+	m_DACalb6 = ctx->ao.cal.b[5];
+	m_DACalb7 = ctx->ao.cal.b[6];
+	m_DACalb8 = ctx->ao.cal.b[7];
+	m_CH01 = ctx->NameDV[0];
+	m_CH02 = ctx->NameDV[1];
+	m_CH03 = ctx->NameDV[2];
+	m_CH04 = ctx->NameDV[3];
+	m_CH05 = ctx->NameDV[4];
+	m_CH06 = ctx->NameDV[5];
+	m_CH07 = ctx->NameDV[6];
+	m_CH08 = ctx->NameDV[7];	
 	UpdateData(FALSE);
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 void CDA_Channel::OnOK() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にその他の検証用のコードを追加してください
 	UpdateData(TRUE);
-	DA_Cal_a[0] = m_DACala1;
-	DA_Cal_a[1] = m_DACala2;
-	DA_Cal_a[2] = m_DACala3;
-	DA_Cal_a[3] = m_DACala4;
-	DA_Cal_a[4] = m_DACala5;
-	DA_Cal_a[5] = m_DACala6;
-	DA_Cal_a[6] = m_DACala7;
-	DA_Cal_a[7] = m_DACala8;
-	DA_Cal_b[0] = m_DACalb1;
-	DA_Cal_b[1] = m_DACalb2;
-	DA_Cal_b[2] = m_DACalb3;
-	DA_Cal_b[3] = m_DACalb4;
-	DA_Cal_b[4] = m_DACalb5;
-	DA_Cal_b[5] = m_DACalb6;
-	DA_Cal_b[6] = m_DACalb7;
-	DA_Cal_b[7] = m_DACalb8;
+	ctx->ao.cal.a[0] = m_DACala1;
+	ctx->ao.cal.a[1] = m_DACala2;
+	ctx->ao.cal.a[2] = m_DACala3;
+	ctx->ao.cal.a[3] = m_DACala4;
+	ctx->ao.cal.a[4] = m_DACala5;
+	ctx->ao.cal.a[5] = m_DACala6;
+	ctx->ao.cal.a[6] = m_DACala7;
+	ctx->ao.cal.a[7] = m_DACala8;
+	ctx->ao.cal.b[0] = m_DACalb1;
+	ctx->ao.cal.b[1] = m_DACalb2;
+	ctx->ao.cal.b[2] = m_DACalb3;
+	ctx->ao.cal.b[3] = m_DACalb4;
+	ctx->ao.cal.b[4] = m_DACalb5;
+	ctx->ao.cal.b[5] = m_DACalb6;
+	ctx->ao.cal.b[6] = m_DACalb7;
+	ctx->ao.cal.b[7] = m_DACalb8;
 	CDialog::OnOK();
 }
 

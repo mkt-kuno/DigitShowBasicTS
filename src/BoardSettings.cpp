@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "DigitShowBasic.h"
 #include "BoardSettings.h"
+#include "DigitShowContext.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -14,11 +15,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CBoardSettings ダイアログ
 //---boards---
-extern	int			NUMAD,NUMDA;
-extern	short		AdChannels[2],DaChannels[1];		// The Number of Channel
-extern	short		AdRange[2],DaRange[1];				// Range of A/D and D/A boards
-extern	short		AdResolution[2],DaResolution[1];	// Resolution of A/D and D/A Boards
-extern	short		AdInputMethod[2];					// Input Method of A/D
 
 
 CBoardSettings::CBoardSettings(CWnd* pParent /*=NULL*/)
@@ -41,7 +37,7 @@ CBoardSettings::CBoardSettings(CWnd* pParent /*=NULL*/)
 
 
 void CBoardSettings::DoDataExchange(CDataExchange* pDX)
-{
+{	DigitShowContext* ctx = GetContext();
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CBoardSettings)
 	DDX_Text(pDX, IDC_EDIT_AdMaxChannel1, m_AdMaxChannel1);
@@ -68,36 +64,36 @@ END_MESSAGE_MAP()
 // CBoardSettings メッセージ ハンドラ
 
 BOOL CBoardSettings::OnInitDialog() 
-{
+{	DigitShowContext* ctx = GetContext();
 	CDialog::OnInitDialog();
 	
 	// TODO: この位置に初期化の補足処理を追加してください
-	if(NUMAD >0 && AdInputMethod[0]==0) m_AdMethod1="Single Input";
-	if(NUMAD >0 && AdInputMethod[0]==1) m_AdMethod1="Differential Input";
-	if(NUMAD >0 && AdResolution[0]==12) m_AdResolution1="12 bit";
-	if(NUMAD >0 && AdResolution[0]==16) m_AdResolution1="16 bit";
-	if(NUMAD >0 && AdRange[0]==0)  m_AdRange1="-10V   +10V";
-	if(NUMAD >0 && AdRange[0]==1)  m_AdRange1="-5V   +5V";
-	if(NUMAD >0 && AdRange[0]==50) m_AdRange1="0V   +10V";
-	if(NUMAD >0 && AdRange[0]==51) m_AdRange1="0V   +5V";
-	if(NUMAD >0) m_AdMaxChannel1.Format("%3d",AdChannels[0]);
-	if(NUMAD >1 && AdInputMethod[1]==0) m_AdMethod2="Single Input";
-	if(NUMAD >1 && AdInputMethod[1]==1) m_AdMethod2="Differential Input";
-	if(NUMAD >1 && AdResolution[1]==12) m_AdResolution2="12 bit";
-	if(NUMAD >1 && AdResolution[1]==16) m_AdResolution2="16 bit";
-	if(NUMAD >1 && AdRange[1]==0)  m_AdRange2="-10V   +10V";
-	if(NUMAD >1 && AdRange[1]==1)  m_AdRange2="-5V   +5V";
-	if(NUMAD >1 && AdRange[1]==50) m_AdRange2="0V   +10V";
-	if(NUMAD >1 && AdRange[1]==51) m_AdRange2="0V   +5V";
-	if(NUMAD >1) m_AdMaxChannel2.Format("%3d",AdChannels[1]);
+	if(ctx->NumAD >0 && ctx->ad[0].InputMethod==0) m_AdMethod1="Single Input";
+	if(ctx->NumAD >0 && ctx->ad[0].InputMethod==1) m_AdMethod1="Differential Input";
+	if(ctx->NumAD >0 && ctx->ad[0].Resolution==12) m_AdResolution1="12 bit";
+	if(ctx->NumAD >0 && ctx->ad[0].Resolution==16) m_AdResolution1="16 bit";
+	if(ctx->NumAD >0 && ctx->ad[0].Range==0)  m_AdRange1="-10V   +10V";
+	if(ctx->NumAD >0 && ctx->ad[0].Range==1)  m_AdRange1="-5V   +5V";
+	if(ctx->NumAD >0 && ctx->ad[0].Range==50) m_AdRange1="0V   +10V";
+	if(ctx->NumAD >0 && ctx->ad[0].Range==51) m_AdRange1="0V   +5V";
+	if(ctx->NumAD >0) m_AdMaxChannel1.Format("%3d",ctx->ad[0].Channels);
+	if(ctx->NumAD >1 && ctx->ad[1].InputMethod==0) m_AdMethod2="Single Input";
+	if(ctx->NumAD >1 && ctx->ad[1].InputMethod==1) m_AdMethod2="Differential Input";
+	if(ctx->NumAD >1 && ctx->ad[1].Resolution==12) m_AdResolution2="12 bit";
+	if(ctx->NumAD >1 && ctx->ad[1].Resolution==16) m_AdResolution2="16 bit";
+	if(ctx->NumAD >1 && ctx->ad[1].Range==0)  m_AdRange2="-10V   +10V";
+	if(ctx->NumAD >1 && ctx->ad[1].Range==1)  m_AdRange2="-5V   +5V";
+	if(ctx->NumAD >1 && ctx->ad[1].Range==50) m_AdRange2="0V   +10V";
+	if(ctx->NumAD >1 && ctx->ad[1].Range==51) m_AdRange2="0V   +5V";
+	if(ctx->NumAD >1) m_AdMaxChannel2.Format("%3d",ctx->ad[1].Channels);
 	
-	if(NUMDA >0 && DaResolution[0]==12) m_DaResolution="12 bit";
-	if(NUMDA >0 && DaResolution[0]==16) m_DaResolution="16 bit";
-	if(NUMDA >0 && DaRange[0]==0)  m_DaRange="-10V   +10V";
-	if(NUMDA >0 && DaRange[0]==1)  m_DaRange="-5V   +5V";
-	if(NUMDA >0 && DaRange[0]==50) m_DaRange="0V   +10V";
-	if(NUMDA >0 && DaRange[0]==51) m_DaRange="0V   +5V";
-	if(NUMDA >0) m_DaMaxChannel.Format("%3d",DaChannels[0]);
+	if(ctx->NumDA >0 && ctx->da[0].Resolution==12) m_DaResolution="12 bit";
+	if(ctx->NumDA >0 && ctx->da[0].Resolution==16) m_DaResolution="16 bit";
+	if(ctx->NumDA >0 && ctx->da[0].Range==0)  m_DaRange="-10V   +10V";
+	if(ctx->NumDA >0 && ctx->da[0].Range==1)  m_DaRange="-5V   +5V";
+	if(ctx->NumDA >0 && ctx->da[0].Range==50) m_DaRange="0V   +10V";
+	if(ctx->NumDA >0 && ctx->da[0].Range==51) m_DaRange="0V   +5V";
+	if(ctx->NumDA >0) m_DaMaxChannel.Format("%3d",ctx->da[0].Channels);
 	UpdateData(FALSE);	
 	return TRUE;  // コントロールにフォーカスを設定しないとき、戻り値は TRUE となります
 	              // 例外: OCX プロパティ ページの戻り値は FALSE となります
