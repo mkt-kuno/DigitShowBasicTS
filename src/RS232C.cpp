@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "DigitShowBasic.h"
 #include "RS232C.h"
+#include "DigitShowContext.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -13,10 +14,6 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // CRS232C dialog
-extern	bool		Flag_SetRs232c;
-extern	bool		Flag_SetBalance;
-extern	CString		ReadBuffer1,ReadBuffer2;
-extern	CString		WriteBuffer1,WriteBuffer2;
 
 CRS232C::CRS232C(CWnd* pParent /*=NULL*/)
 	: CDialog(CRS232C::IDD, pParent)
@@ -53,7 +50,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CRS232C message handlers
 BOOL CRS232C::OnInitDialog() 
-{
+{	DigitShowContext* ctx = GetContext();
 	CDialog::OnInitDialog();
 	
 	// TODO: Add extra initialization here
@@ -65,7 +62,7 @@ BOOL CRS232C::OnInitDialog()
 	CButton* myBTN6=(CButton*)GetDlgItem(IDOK);
 	CButton* radio1=(CButton*)GetDlgItem(IDC_RADIO_LCDPT);
 	CButton* radio2=(CButton*)GetDlgItem(IDC_RADIO_Balance);
-	if(Flag_SetBalance){
+	if(ctx->flags.SetBalance){
 		radio2->SetCheck(1);
 		myBTN1->EnableWindow(FALSE);
 		myBTN2->EnableWindow(FALSE);
@@ -88,7 +85,7 @@ BOOL CRS232C::OnInitDialog()
 }
 
 void CRS232C::OnRadioLcdpt() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: Add your control notification handler code here
 	CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_initialize);
 	CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_send);
@@ -105,7 +102,7 @@ void CRS232C::OnRadioLcdpt()
 }
 
 void CRS232C::OnRADIOBalance() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: Add your control notification handler code here
 	CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_initialize);
 	CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_send);
@@ -114,8 +111,8 @@ void CRS232C::OnRADIOBalance()
 	CButton* myBTN5=(CButton*)GetDlgItem(IDC_BUTTON_BalanceOff);
 	CButton* myBTN6=(CButton*)GetDlgItem(IDOK);
 //
-	if(Flag_SetRs232c){
-		if(Flag_SetBalance){
+	if(ctx->flags.SetRs232c){
+		if(ctx->flags.SetBalance){
 			myBTN1->EnableWindow(FALSE);
 			myBTN2->EnableWindow(FALSE);
 			myBTN3->EnableWindow(FALSE);
@@ -143,7 +140,7 @@ void CRS232C::OnRADIOBalance()
 }
 
 void CRS232C::OnBUTTONinitialize() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: Add your control notification handler code here
 	CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_initialize);
 	CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_send);
@@ -152,7 +149,7 @@ void CRS232C::OnBUTTONinitialize()
 	CButton* myBTN5=(CButton*)GetDlgItem(IDC_BUTTON_BalanceOff);
 	CButton* myBTN6=(CButton*)GetDlgItem(IDOK);
 	pDoc->Rs232c_Open();
-	if(Flag_SetRs232c){
+	if(ctx->flags.SetRs232c){
 		myBTN1->EnableWindow(FALSE);
 		myBTN2->EnableWindow(TRUE);
 		myBTN3->EnableWindow(TRUE);
@@ -163,27 +160,27 @@ void CRS232C::OnBUTTONinitialize()
 }
 
 void CRS232C::OnBUTTONreceive() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: Add your control notification handler code here
 	pDoc->Rs232c_GetData();
-	m_ReceiveData=ReadBuffer1;
+	m_ReceiveData=ctx->rs232c.ReadBuffer1;
 	UpdateData(FALSE);	
 }
 
 void CRS232C::OnBUTTONsend() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: Add your control notification handler code here
 	UpdateData(TRUE);
-	WriteBuffer1=m_SendData;
+	ctx->rs232c.WriteBuffer1=m_SendData;
 	pDoc->Rs232c_SendData();
 }
 
 void CRS232C::OnBUTTONBalanceOn() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: Add your control notification handler code here
-	WriteBuffer1=_T("SIR");
+	ctx->rs232c.WriteBuffer1=_T("SIR");
 	pDoc->Rs232c_SendData();
-	Flag_SetBalance=TRUE;
+	ctx->flags.SetBalance=TRUE;
 	CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_initialize);
 	CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_send);
 	CButton* myBTN3=(CButton*)GetDlgItem(IDC_BUTTON_receive);
@@ -201,11 +198,11 @@ void CRS232C::OnBUTTONBalanceOn()
 }
 
 void CRS232C::OnBUTTONBalanceOff() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: Add your control notification handler code here
-	WriteBuffer1=_T("SI");
+	ctx->rs232c.WriteBuffer1=_T("SI");
 	pDoc->Rs232c_SendData();
-	Flag_SetBalance=FALSE;
+	ctx->flags.SetBalance=FALSE;
 	CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_initialize);
 	CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_send);
 	CButton* myBTN3=(CButton*)GetDlgItem(IDC_BUTTON_receive);

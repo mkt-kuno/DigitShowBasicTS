@@ -1,9 +1,10 @@
-// MainFrm.cpp : CMainFrame クラスの動作の定義を行います。
+// MainFrm.cpp : CMainFrame ・ｽN・ｽ・ｽ・ｽX・ｽﾌ難ｿｽ・ｽ・ｽﾌ抵ｿｽ`・ｽ・ｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽB
 //
 
 #include "stdafx.h"
 #include "DigitShowBasic.h"
 #include "DigitShowBasicDoc.h"
+#include "DigitShowContext.h"
 
 #include "MainFrm.h"
 #include "BoardSettings.h"
@@ -26,8 +27,6 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 //---Flag---
-extern	bool		Flag_SetBoard;
-extern	bool		Flag_SetRs232c;
 
 /////////////////////////////////////////////////////////////////////////////
 // CMainFrame
@@ -52,11 +51,11 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CMainFrame クラスの構築/消滅
+// CMainFrame ・ｽN・ｽ・ｽ・ｽX・ｽﾌ構・ｽz/・ｽ・ｽ・ｽ・ｽ
 
 CMainFrame::CMainFrame()
 {
-	// TODO: この位置にメンバの初期化処理コードを追加してください。
+	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉ・ｿｽ・ｽ・ｽ・ｽo・ｽﾌ擾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽR・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
 }
 
 CMainFrame::~CMainFrame()
@@ -65,8 +64,8 @@ CMainFrame::~CMainFrame()
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
-	// TODO: この位置で CREATESTRUCT cs を修正して、Window クラスやスタイルを
-	//       修正してください。
+	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽ・ｽ CREATESTRUCT cs ・ｽ・ｽ・ｽC・ｽ・ｽ・ｽ・ｽ・ｽﾄ、Window ・ｽN・ｽ・ｽ・ｽX・ｽ・ｽX・ｽ^・ｽC・ｽ・ｽ・ｽ・ｽ
+	//       ・ｽC・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽB
 
 	//Get system height and widths- added later
 	cs.cy = ::GetSystemMetrics(SM_CYSCREEN);
@@ -83,7 +82,7 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CMainFrame クラスの診断
+// CMainFrame ・ｽN・ｽ・ｽ・ｽX・ｽﾌ診・ｽf
 
 #ifdef _DEBUG
 void CMainFrame::AssertValid() const
@@ -99,26 +98,26 @@ void CMainFrame::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
-// CMainFrame メッセージ ハンドラ
+// CMainFrame ・ｽ・ｽ・ｽb・ｽZ・ｽ[・ｽW ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ
 
 void CMainFrame::OnBoardSettings() 
-{
-	// TODO: この位置にコマンド ハンドラ用のコードを追加してください
+{	DigitShowContext* ctx = GetContext();
+	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ}・ｽ・ｽ・ｽh ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 	int	nResult;
 	CBoardSettings BoardSettings;
 	nResult = BoardSettings.DoModal();
 }
 
 void CMainFrame::OnSamplingSettings() 
-{
-	// TODO: この位置にコマンド ハンドラ用のコードを追加してください
+{	DigitShowContext* ctx = GetContext();
+	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ}・ｽ・ｽ・ｽh ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 	int	nResult;
 	CSamplingSettings SamplingSettings;
 	nResult = SamplingSettings.DoModal();
 }
 
 void CMainFrame::OnRs232cPannel() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: Add your command handler code here
 	int	nResult;
 	CRS232C RS232C;
@@ -126,10 +125,10 @@ void CMainFrame::OnRs232cPannel()
 }
 
 void CMainFrame::OnCalibrationFactor() 
-{
-	// TODO: この位置にコマンド ハンドラ用のコードを追加してください
+{	DigitShowContext* ctx = GetContext();
+	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ}・ｽ・ｽ・ｽh ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 	int	nResult;
-	if(Flag_SetBoard==FALSE){
+	if(ctx->flags.SetBoard==FALSE){
 		AfxMessageBox("SamplingCondition has not been accomplished !",MB_ICONEXCLAMATION | MB_OK );
 		return;
 	}
@@ -140,26 +139,26 @@ void CMainFrame::OnCalibrationFactor()
 }
 
 void CMainFrame::OnSpecimenData() 
-{
-	// TODO: この位置にコマンド ハンドラ用のコードを追加してください
+{	DigitShowContext* ctx = GetContext();
+	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ}・ｽ・ｽ・ｽh ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 	int	nResult;
 	CSpecimen Specimen;
 	nResult = Specimen.DoModal();		
 }
 
 void CMainFrame::OnDAChannel() 
-{
-	// TODO: この位置にコマンド ハンドラ用のコードを追加してください
+{	DigitShowContext* ctx = GetContext();
+	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ}・ｽ・ｽ・ｽh ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 	int	nResult;
 	CDA_Channel DA_Channel;
 	nResult = DA_Channel.DoModal();	
 }
 
 void CMainFrame::OnDAVout() 
-{
-	// TODO: この位置にコマンド ハンドラ用のコードを追加してください
+{	DigitShowContext* ctx = GetContext();
+	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ}・ｽ・ｽ・ｽh ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 	int	nResult;
-	if(Flag_SetBoard==FALSE){
+	if(ctx->flags.SetBoard==FALSE){
 		AfxMessageBox("SamplingCondition has not been accomplished !",MB_ICONEXCLAMATION | MB_OK );
 		return;
 	}
@@ -168,40 +167,40 @@ void CMainFrame::OnDAVout()
 }
 
 void CMainFrame::OnControlID() 
-{
-	// TODO: この位置にコマンド ハンドラ用のコードを追加してください
+{	DigitShowContext* ctx = GetContext();
+	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ}・ｽ・ｽ・ｽh ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 	int	nResult;
-	CControl_ID Control_ID;
-	nResult = Control_ID.DoModal();	
+	CControl_ID CtrlIDDlg;
+	nResult = CtrlIDDlg.DoModal();
 }
 
 void CMainFrame::OnControlFile() 
-{
-	// TODO: この位置にコマンド ハンドラ用のコードを追加してください
+{	DigitShowContext* ctx = GetContext();
+	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ}・ｽ・ｽ・ｽh ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 	int	nResult;
 	CControl_File Control_File;
 	nResult = Control_File.DoModal();	
 }
 
 void CMainFrame::OnControlGeneral() 
-{
-	// TODO: この位置にコマンド ハンドラ用のコードを追加してください
+{	DigitShowContext* ctx = GetContext();
+	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ}・ｽ・ｽ・ｽh ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 	int	nResult;
 	CControl_General Control_General;
 	nResult = Control_General.DoModal();	
 }
 
 void CMainFrame::OnControlPreConsolidation() 
-{
-	// TODO: この位置にコマンド ハンドラ用のコードを追加してください
+{	DigitShowContext* ctx = GetContext();
+	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ}・ｽ・ｽ・ｽh ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 	int	nResult;
 	CControl_PreConsolidation Control_PreConsolidation;
 	nResult = Control_PreConsolidation.DoModal();	
 }
 
 void CMainFrame::OnConsolidation() 
-{
-	// TODO: この位置にコマンド ハンドラ用のコードを追加してください
+{	DigitShowContext* ctx = GetContext();
+	// TODO: ・ｽ・ｽ・ｽﾌ位置・ｽﾉコ・ｽ}・ｽ・ｽ・ｽh ・ｽn・ｽ・ｽ・ｽh・ｽ・ｽ・ｽp・ｽﾌコ・ｽ[・ｽh・ｽ・ｽﾇ会ｿｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 	int	nResult;
 	CControl_Consolidation Control_Consolidation;
 	nResult = Control_Consolidation.DoModal();	
