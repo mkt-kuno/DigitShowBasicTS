@@ -1,4 +1,4 @@
-// Control_PreConsolidation.cpp : ƒCƒ“ƒvƒŠƒƒ“ƒe[ƒVƒ‡ƒ“ ƒtƒ@ƒCƒ‹
+ï»¿// Control_PreConsolidation.cpp : ã‚¤ãƒ³ãƒ—ãƒªãƒ¡ãƒ³ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
 #include "stdafx.h"
@@ -14,7 +14,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CControl_PreConsolidation ƒ_ƒCƒAƒƒO
+// CControl_PreConsolidation ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 
 CControl_PreConsolidation::CControl_PreConsolidation(CWnd* pParent /*=NULL*/)
@@ -49,11 +49,11 @@ BEGIN_MESSAGE_MAP(CControl_PreConsolidation, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CControl_PreConsolidation ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰
+// CControl_PreConsolidation ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©
 
 void CControl_PreConsolidation::OnBUTTONUpdate() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	UpdateData(TRUE);
 	ctx->control[1].AxisSpeed = m_AxisMotorSpeed;
 	ctx->control[1].q[0] = m_q;

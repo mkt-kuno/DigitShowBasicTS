@@ -1,4 +1,4 @@
-// DigitShowBasicView.h : CDigitShowBasicView ƒNƒ‰ƒX‚ÌéŒ¾‚¨‚æ‚ÑƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ì’è‹`‚ğ‚µ‚Ü‚·B
+ï»¿// DigitShowBasicView.h : CDigitShowBasicView ã‚¯ãƒ©ã‚¹ã®å®£è¨€ãŠã‚ˆã³ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã®å®šç¾©ã‚’ã—ã¾ã™ã€‚
 //
 /////////////////////////////////////////////////////////////////////////////
 
@@ -16,7 +16,7 @@
 
 class CDigitShowBasicView : public CFormView
 {
-protected: // ƒVƒŠƒAƒ‰ƒCƒY‹@”\‚Ì‚İ‚©‚çì¬‚µ‚Ü‚·B
+protected: // ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚ºæ©Ÿèƒ½ã®ã¿ã‹ã‚‰ä½œæˆã—ã¾ã™ã€‚
 	CDigitShowBasicView();
 	DECLARE_DYNCREATE(CDigitShowBasicView)
 
@@ -123,27 +123,27 @@ public:
 	CString	m_DChannel;
 	//}}AFX_DATA
 
-// ƒAƒgƒŠƒrƒ…[ƒg
+// ã‚¢ãƒˆãƒªãƒ“ãƒ¥ãƒ¼ãƒˆ
 public:
 	CDigitShowBasicDoc* GetDocument();
 	struct _timeb StartTime2,NowTime2;
 	struct _timeb StepTime0, StepTime1;
 
-// ƒIƒyƒŒ[ƒVƒ‡ƒ“
+// ã‚ªãƒšãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³
 public:
 CBrush	*m_pEditBrush,*m_pStaticBrush,*m_pDlgBrush;
-// ƒI[ƒo[ƒ‰ƒCƒh
-	// ClassWizard ‚Í‰¼‘zŠÖ”‚ÌƒI[ƒo[ƒ‰ƒCƒh‚ğ¶¬‚µ‚Ü‚·B
+// ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
+	// ClassWizard ã¯ä»®æƒ³é–¢æ•°ã®ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
 	//{{AFX_VIRTUAL(CDigitShowBasicView)
 	public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ‚ÌƒTƒ|[ƒg
-	virtual void OnInitialUpdate(); // \’zŒã‚ÌÅ‰‚Ì‚P“x‚¾‚¯ŒÄ‚Ño‚³‚ê‚Ü‚·B
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ã®ã‚µãƒãƒ¼ãƒˆ
+	virtual void OnInitialUpdate(); // æ§‹ç¯‰å¾Œã®æœ€åˆã®ï¼‘åº¦ã ã‘å‘¼ã³å‡ºã•ã‚Œã¾ã™ã€‚
 	virtual LRESULT DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 	//}}AFX_VIRTUAL
 
-// ƒCƒ“ƒvƒŠƒƒ“ƒe[ƒVƒ‡ƒ“
+// ã‚¤ãƒ³ãƒ—ãƒªãƒ¡ãƒ³ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³
 public:
 	void Reflesh();
 	void ShowData();
@@ -156,7 +156,7 @@ public:
 protected:
 private:
 
-// ¶¬‚³‚ê‚½ƒƒbƒZ[ƒW ƒ}ƒbƒvŠÖ”
+// ç”Ÿæˆã•ã‚ŒãŸãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒƒãƒ—é–¢æ•°
 protected:
 	//{{AFX_MSG(CDigitShowBasicView)
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
@@ -177,7 +177,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
-#ifndef _DEBUG  // DigitShowBasicView.cpp ƒtƒ@ƒCƒ‹‚ªƒfƒoƒbƒOŠÂ‹«‚Ìg—p‚³‚ê‚Ü‚·B
+#ifndef _DEBUG  // DigitShowBasicView.cpp ãƒ•ã‚¡ã‚¤ãƒ«ãŒãƒ‡ãƒãƒƒã‚°ç’°å¢ƒã®æ™‚ä½¿ç”¨ã•ã‚Œã¾ã™ã€‚
 inline CDigitShowBasicDoc* CDigitShowBasicView::GetDocument()
    { return (CDigitShowBasicDoc*)m_pDocument; }
 #endif
@@ -185,6 +185,6 @@ inline CDigitShowBasicDoc* CDigitShowBasicView::GetDocument()
 /////////////////////////////////////////////////////////////////////////////
 
 //{{AFX_INSERT_LOCATION}}
-// Microsoft Visual C++ ‚Í‘Os‚Ì’¼‘O‚É’Ç‰Á‚ÌéŒ¾‚ğ‘}“ü‚µ‚Ü‚·B
+// Microsoft Visual C++ ã¯å‰è¡Œã®ç›´å‰ã«è¿½åŠ ã®å®£è¨€ã‚’æŒ¿å…¥ã—ã¾ã™ã€‚
 
 #endif // !defined(AFX_DIGITSHOWBASICVIEW_H__44354AEA_B72E_464C_AAD2_A696AA19EF89__INCLUDED_)

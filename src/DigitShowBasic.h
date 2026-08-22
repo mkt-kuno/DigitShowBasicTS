@@ -1,4 +1,4 @@
-// DigitShowBasic.h : DIGITSHOWBASIC �A�v���P�[�V�����̃��C�� �w�b�_�[ �t�@�C��
+﻿// DigitShowBasic.h : DIGITSHOWBASIC アプリケーションのメイン ヘッダー ファイル
 //
 
 #if !defined(AFX_DIGITSHOWBASIC_H__022B46E0_9575_4547_950E_44664C9C23DA__INCLUDED_)
@@ -12,11 +12,11 @@
 	#error include 'stdafx.h' before including this file for PCH
 #endif
 
-#include "resource.h"       // ���C�� �V���{��
+#include "resource.h"       // メイン シンボル
 
 /////////////////////////////////////////////////////////////////////////////
 // CDigitShowBasicApp:
-// ���̃N���X�̓���̒�`�Ɋւ��Ă� DigitShowBasic.cpp �t�@�C�����Q�Ƃ��Ă��������B
+// このクラスの動作の定義に関しては DigitShowBasic.cpp ファイルを参照してください。
 //
 
 class CDigitShowBasicApp : public CWinApp
@@ -24,18 +24,18 @@ class CDigitShowBasicApp : public CWinApp
 public:
 	CDigitShowBasicApp();
 
-// �I�[�o�[���C�h
-	// ClassWizard �͉��z�֐��̃I�[�o�[���C�h�𐶐����܂��B
+// オーバーライド
+	// ClassWizard は仮想関数のオーバーライドを生成します。
 	//{{AFX_VIRTUAL(CDigitShowBasicApp)
 	public:
 	virtual BOOL InitInstance();
 	//}}AFX_VIRTUAL
 
-// �C���v�������e�[�V����
+// インプリメンテーション
 	//{{AFX_MSG(CDigitShowBasicApp)
 	afx_msg void OnAppAbout();
-		// ���� - ClassWizard �͂��̈ʒu�Ƀ����o�֐���ǉ��܂��͍폜���܂��B
-		//        ���̈ʒu�ɐ��������R�[�h��ҏW���Ȃ��ł��������B
+		// メモ - ClassWizard はこの位置にメンバ関数を追加または削除します。
+		//        この位置に生成されるコードを編集しないでください。
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -44,6 +44,6 @@ public:
 /////////////////////////////////////////////////////////////////////////////
 
 //{{AFX_INSERT_LOCATION}}
-// Microsoft Visual C++ �͑O�s�̒��O�ɒǉ��̐錾��}�����܂��B
+// Microsoft Visual C++ は前行の直前に追加の宣言を挿入します。
 
 #endif // !defined(AFX_DIGITSHOWBASIC_H__022B46E0_9575_4547_950E_44664C9C23DA__INCLUDED_)

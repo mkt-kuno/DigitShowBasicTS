@@ -1,4 +1,4 @@
-/*
+﻿/*
  * DigitShowBasicTS - Hollow Torsional Shear Triaxial Test Control Software
  * Copyright (C) 2026 Makoto KUNO
  *

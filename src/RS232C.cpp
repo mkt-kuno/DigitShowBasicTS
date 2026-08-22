@@ -1,4 +1,4 @@
-// RS232C.cpp : implementation file
+﻿// RS232C.cpp : implementation file
 //
 
 #include "stdafx.h"

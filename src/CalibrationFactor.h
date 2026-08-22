@@ -1,4 +1,4 @@
-#if !defined(AFX_CALIBRATIONFACTOR_H__180C3E2C_AEA3_469C_B493_87EF9EE3B75D__INCLUDED_)
+ï»¿#if !defined(AFX_CALIBRATIONFACTOR_H__180C3E2C_AEA3_469C_B493_87EF9EE3B75D__INCLUDED_)
 #define AFX_CALIBRATIONFACTOR_H__180C3E2C_AEA3_469C_B493_87EF9EE3B75D__INCLUDED_
 
 #include "DigitShowBasicDoc.h"
@@ -6,20 +6,20 @@
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
-// CalibrationFactor.h : ƒwƒbƒ_[ ƒtƒ@ƒCƒ‹
+// CalibrationFactor.h : ãƒ˜ãƒƒãƒ€ãƒ¼ ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
 /////////////////////////////////////////////////////////////////////////////
-// CCalibrationFactor ƒ_ƒCƒAƒƒO
+// CCalibrationFactor ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 class CCalibrationFactor : public CDialog
 {
-// ƒRƒ“ƒXƒgƒ‰ƒNƒVƒ‡ƒ“
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚·ãƒ§ãƒ³
 public:
 	void Load();
-	CCalibrationFactor(CWnd* pParent = NULL);   // •W€‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	CCalibrationFactor(CWnd* pParent = NULL);   // æ¨™æº–ã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	CDigitShowBasicDoc* pDoc;
-// ƒ_ƒCƒAƒƒO ƒf[ƒ^
+// ãƒ€ã‚¤ã‚¢ãƒ­ã‚° ãƒ‡ãƒ¼ã‚¿
 	//{{AFX_DATA(CCalibrationFactor)
 	enum { IDD = IDD_Calibration_Factor };
 	CButton	m_Amp15;
@@ -122,17 +122,17 @@ public:
 	//}}AFX_DATA
 
 
-// ƒI[ƒo[ƒ‰ƒCƒh
-	// ClassWizard ‚Í‰¼‘zŠÖ”‚ÌƒI[ƒo[ƒ‰ƒCƒh‚ğ¶¬‚µ‚Ü‚·B
+// ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰
+	// ClassWizard ã¯ä»®æƒ³é–¢æ•°ã®ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
 	//{{AFX_VIRTUAL(CCalibrationFactor)
 	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ƒTƒ|[ƒg
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ã‚µãƒãƒ¼ãƒˆ
 	//}}AFX_VIRTUAL
 
-// ƒCƒ“ƒvƒŠƒƒ“ƒe[ƒVƒ‡ƒ“
+// ã‚¤ãƒ³ãƒ—ãƒªãƒ¡ãƒ³ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³
 protected:
 
-	// ¶¬‚³‚ê‚½ƒƒbƒZ[ƒW ƒ}ƒbƒvŠÖ”
+	// ç”Ÿæˆã•ã‚ŒãŸãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒƒãƒ—é–¢æ•°
 	//{{AFX_MSG(CCalibrationFactor)
 	afx_msg void OnBUTTONCFUpdate();
 	afx_msg void OnBUTTONZero00();
@@ -176,6 +176,6 @@ protected:
 };
 
 //{{AFX_INSERT_LOCATION}}
-// Microsoft Visual C++ ‚Í‘Os‚Ì’¼‘O‚É’Ç‰Á‚ÌéŒ¾‚ğ‘}“ü‚µ‚Ü‚·B
+// Microsoft Visual C++ ã¯å‰è¡Œã®ç›´å‰ã«è¿½åŠ ã®å®£è¨€ã‚’æŒ¿å…¥ã—ã¾ã™ã€‚
 
 #endif // !defined(AFX_CALIBRATIONFACTOR_H__180C3E2C_AEA3_469C_B493_87EF9EE3B75D__INCLUDED_)

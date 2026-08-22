@@ -1,4 +1,4 @@
-// DigitShowBasicDoc.cpp : CDigitShowBasicDoc �N���X�̓���̒�`���s���܂��B
+﻿// DigitShowBasicDoc.cpp : CDigitShowBasicDoc クラスの動作の定義を行います。
 //
 
 #include	"stdafx.h"
@@ -25,13 +25,13 @@ IMPLEMENT_DYNCREATE(CDigitShowBasicDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CDigitShowBasicDoc, CDocument)
 	//{{AFX_MSG_MAP(CDigitShowBasicDoc)
-		// ���� - ClassWizard �͂��̈ʒu�Ƀ}�b�s���O�p�̃}�N����ǉ��܂��͍폜���܂��B
-		//        ���̈ʒu�ɐ��������R�[�h��ҏW���Ȃ��ł��������B
+		// メモ - ClassWizard はこの位置にマッピング用のマクロを追加または削除します。
+		//        この位置に生成されるコードを編集しないでください。
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicDoc �N���X�̍\�z/����
+// CDigitShowBasicDoc クラスの構築/消滅
 
 CDigitShowBasicDoc::CDigitShowBasicDoc()
 {
@@ -47,8 +47,8 @@ BOOL CDigitShowBasicDoc::OnNewDocument()
 	if (!CDocument::OnNewDocument())
 		return FALSE;
 
-	// TODO: ���̈ʒu�ɍď�����������ǉ����Ă��������B
-	// (SDI �h�L�������g�͂��̃h�L�������g���ė��p���܂��B)
+	// TODO: この位置に再初期化処理を追加してください。
+	// (SDI ドキュメントはこのドキュメントを再利用します。)
 
 	return TRUE;
 }
@@ -56,22 +56,22 @@ BOOL CDigitShowBasicDoc::OnNewDocument()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicDoc �V���A���C�[�[�V����
+// CDigitShowBasicDoc シリアライゼーション
 
 void CDigitShowBasicDoc::Serialize(CArchive& ar)
 {	DigitShowContext* ctx = GetContext();
 	if (ar.IsStoring())
 	{
-		// TODO: ���̈ʒu�ɕۑ��p�̃R�[�h��ǉ����Ă��������B
+		// TODO: この位置に保存用のコードを追加してください。
 	}
 	else
 	{
-		// TODO: ���̈ʒu�ɓǂݍ��ݗp�̃R�[�h��ǉ����Ă��������B
+		// TODO: この位置に読み込み用のコードを追加してください。
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicDoc �N���X�̐f�f
+// CDigitShowBasicDoc クラスの診断
 
 #ifdef _DEBUG
 void CDigitShowBasicDoc::AssertValid() const
@@ -86,7 +86,7 @@ void CDigitShowBasicDoc::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicDoc �R�}���h
+// CDigitShowBasicDoc コマンド
 void CDigitShowBasicDoc::OpenBoard()
 {	DigitShowContext* ctx = GetContext();
 	int	i;

@@ -1,4 +1,4 @@
-// Control_ID.cpp : ƒCƒ“ƒvƒŠƒƒ“ƒe[ƒVƒ‡ƒ“ ƒtƒ@ƒCƒ‹
+ï»¿// Control_ID.cpp : ã‚¤ãƒ³ãƒ—ãƒªãƒ¡ãƒ³ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
 #include "stdafx.h"
@@ -14,7 +14,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CControl_ID ƒ_ƒCƒAƒƒO
+// CControl_ID ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 		int			tmp;
 
 CControl_ID::CControl_ID(CWnd* pParent /*=NULL*/)
@@ -115,11 +115,11 @@ BEGIN_MESSAGE_MAP(CControl_ID, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CControl_ID ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰
+// CControl_ID ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©
 
 void CControl_ID::OnBUTTONLoad() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 
 	UpdateData(TRUE);
 	tmp=m_Control_ID;
@@ -162,7 +162,7 @@ void CControl_ID::OnBUTTONLoad()
 
 void CControl_ID::OnBUTTONUpdate() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 
 	UpdateData(TRUE);
 	tmp=m_Control_ID;
@@ -207,7 +207,7 @@ void CControl_ID::OnBUTTONUpdate()
 
 void CControl_ID::OnBUTTONLoadfromfile() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	int	i;
 	CString	pFileName;
 	FILE	*FileCtlData;
@@ -244,7 +244,7 @@ void CControl_ID::OnBUTTONLoadfromfile()
 
 void CControl_ID::OnBUTTONSaveFile() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	int	i;
 	CString	pFileName;
 	FILE	*FileCtlData;

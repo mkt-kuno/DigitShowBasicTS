@@ -1,4 +1,4 @@
-// BoardSettings.cpp : �C���v�������e�[�V���� �t�@�C��
+﻿// BoardSettings.cpp : インプリメンテーション ファイル
 //
 
 #include "stdafx.h"
@@ -13,7 +13,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CBoardSettings �_�C�A���O
+// CBoardSettings ダイアログ
 //---boards---
 
 
@@ -61,13 +61,13 @@ BEGIN_MESSAGE_MAP(CBoardSettings, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CBoardSettings ���b�Z�[�W �n���h��
+// CBoardSettings メッセージ ハンドラ
 
 BOOL CBoardSettings::OnInitDialog() 
 {	DigitShowContext* ctx = GetContext();
 	CDialog::OnInitDialog();
 	
-	// TODO: ���̈ʒu�ɏ������̕⑫������ǉ����Ă�������
+	// TODO: この位置に初期化の補足処理を追加してください
 	if(ctx->NumAD >0 && ctx->ad[0].InputMethod==0) m_AdMethod1="Single Input";
 	if(ctx->NumAD >0 && ctx->ad[0].InputMethod==1) m_AdMethod1="Differential Input";
 	if(ctx->NumAD >0 && ctx->ad[0].Resolution==12) m_AdResolution1="12 bit";
@@ -95,6 +95,6 @@ BOOL CBoardSettings::OnInitDialog()
 	if(ctx->NumDA >0 && ctx->da[0].Range==51) m_DaRange="0V   +5V";
 	if(ctx->NumDA >0) m_DaMaxChannel.Format("%3d",ctx->da[0].Channels);
 	UpdateData(FALSE);	
-	return TRUE;  // �R���g���[���Ƀt�H�[�J�X��ݒ肵�Ȃ��Ƃ��A�߂�l�� TRUE �ƂȂ�܂�
-	              // ��O: OCX �v���p�e�B �y�[�W�̖߂�l�� FALSE �ƂȂ�܂�
+	return TRUE;  // コントロールにフォーカスを設定しないとき、戻り値は TRUE となります
+	              // 例外: OCX プロパティ ページの戻り値は FALSE となります
 }

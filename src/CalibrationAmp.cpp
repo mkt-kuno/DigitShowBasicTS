@@ -1,4 +1,4 @@
-// CalibrationAmp.cpp : ƒCƒ“ƒvƒŠƒƒ“ƒe[ƒVƒ‡ƒ“ ƒtƒ@ƒCƒ‹
+ï»¿// CalibrationAmp.cpp : ã‚¤ãƒ³ãƒ—ãƒªãƒ¡ãƒ³ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
 #include "stdafx.h"
@@ -13,7 +13,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CCalibrationAmp ƒ_ƒCƒAƒƒO
+// CCalibrationAmp ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 
 CCalibrationAmp::CCalibrationAmp(CWnd* pParent /*=NULL*/)
@@ -51,11 +51,11 @@ BEGIN_MESSAGE_MAP(CCalibrationAmp, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CCalibrationAmp ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰
+// CCalibrationAmp ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©
 
 void CCalibrationAmp::OnBUTTONAmpBase() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	UpdateData(TRUE);
 	pDoc->AD_INPUT();
 	m_AmpVB=ctx->ai.raw[ctx->AmpID-1];
@@ -64,7 +64,7 @@ void CCalibrationAmp::OnBUTTONAmpBase()
 
 void CCalibrationAmp::OnBUTTONAmpOffset() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	UpdateData(TRUE);
 	pDoc->AD_INPUT();
 	m_AmpVO=ctx->ai.raw[ctx->AmpID-1];
@@ -73,7 +73,7 @@ void CCalibrationAmp::OnBUTTONAmpOffset()
 
 void CCalibrationAmp::OnBUTTONAmpUpdate() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	UpdateData(TRUE);
 	if(m_AmpVO-m_AmpVB==0.0){
 		AfxMessageBox("Can not get calibration factors!",MB_ICONEXCLAMATION | MB_OK );

@@ -1,4 +1,4 @@
-// CalibrationFactor.cpp : �C���v�������e�[�V���� �t�@�C��
+﻿// CalibrationFactor.cpp : インプリメンテーション ファイル
 //
 
 #include "stdafx.h"
@@ -15,7 +15,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CCalibrationFactor �_�C�A���O
+// CCalibrationFactor ダイアログ
 // CDigitShowBasicView
 CCalibrationFactor::CCalibrationFactor(CWnd* pParent /*=NULL*/)
 	: CDialog(CCalibrationFactor::IDD, pParent)
@@ -210,7 +210,7 @@ BEGIN_MESSAGE_MAP(CCalibrationFactor, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CCalibrationFactor ���b�Z�[�W �n���h��
+// CCalibrationFactor メッセージ ハンドラ
 
 BOOL CCalibrationFactor::OnInitDialog() 
 {	DigitShowContext* ctx = GetContext();
@@ -308,7 +308,7 @@ void CCalibrationFactor::Load()
 
 void CCalibrationFactor::OnBUTTONCFUpdate() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	UpdateData(TRUE);
 	if(m_DChannel == "Ch.00-15"){
 		ctx->ai.cal.a[0]=m_CFA00;	ctx->ai.cal.b[0]=m_CFB00;	ctx->ai.cal.c[0]=m_CFC00;	
@@ -351,7 +351,7 @@ void CCalibrationFactor::OnBUTTONCFUpdate()
 
 void CCalibrationFactor::OnBUTTONZero00() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
 	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[0]=ctx->ai.cal.c[0]-ctx->ai.phy[0];
 	else							ctx->ai.cal.c[16]=ctx->ai.cal.c[16]-ctx->ai.phy[16];
@@ -360,7 +360,7 @@ void CCalibrationFactor::OnBUTTONZero00()
 
 void CCalibrationFactor::OnBUTTONZero01() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
 	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[1]=ctx->ai.cal.c[1]-ctx->ai.phy[1];
 	else							ctx->ai.cal.c[17]=ctx->ai.cal.c[17]-ctx->ai.phy[17];
@@ -369,7 +369,7 @@ void CCalibrationFactor::OnBUTTONZero01()
 
 void CCalibrationFactor::OnBUTTONZero02() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
 	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[2]=ctx->ai.cal.c[2]-ctx->ai.phy[2];
 	else							ctx->ai.cal.c[18]=ctx->ai.cal.c[18]-ctx->ai.phy[18];
@@ -378,7 +378,7 @@ void CCalibrationFactor::OnBUTTONZero02()
 
 void CCalibrationFactor::OnBUTTONZero03() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
 	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[3]=ctx->ai.cal.c[3]-ctx->ai.phy[3];
 	else							ctx->ai.cal.c[19]=ctx->ai.cal.c[19]-ctx->ai.phy[19];
@@ -387,7 +387,7 @@ void CCalibrationFactor::OnBUTTONZero03()
 
 void CCalibrationFactor::OnBUTTONZero04() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
 	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[4]=ctx->ai.cal.c[4]-ctx->ai.phy[4];
 	else							ctx->ai.cal.c[20]=ctx->ai.cal.c[20]-ctx->ai.phy[20];
@@ -396,7 +396,7 @@ void CCalibrationFactor::OnBUTTONZero04()
 
 void CCalibrationFactor::OnBUTTONZero05() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
 	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[5]=ctx->ai.cal.c[5]-ctx->ai.phy[5];
 	else							ctx->ai.cal.c[21]=ctx->ai.cal.c[21]-ctx->ai.phy[21];
@@ -405,7 +405,7 @@ void CCalibrationFactor::OnBUTTONZero05()
 
 void CCalibrationFactor::OnBUTTONZero06() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
 	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[6]=ctx->ai.cal.c[6]-ctx->ai.phy[6];
 	else							ctx->ai.cal.c[22]=ctx->ai.cal.c[22]-ctx->ai.phy[22];
@@ -414,7 +414,7 @@ void CCalibrationFactor::OnBUTTONZero06()
 
 void CCalibrationFactor::OnBUTTONZero07() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
 	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[7]=ctx->ai.cal.c[7]-ctx->ai.phy[7];
 	else							ctx->ai.cal.c[23]=ctx->ai.cal.c[23]-ctx->ai.phy[23];
@@ -423,7 +423,7 @@ void CCalibrationFactor::OnBUTTONZero07()
 
 void CCalibrationFactor::OnBUTTONZero08() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
 	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[8]=ctx->ai.cal.c[8]-ctx->ai.phy[8];
 	else							ctx->ai.cal.c[24]=ctx->ai.cal.c[24]-ctx->ai.phy[24];
@@ -432,7 +432,7 @@ void CCalibrationFactor::OnBUTTONZero08()
 
 void CCalibrationFactor::OnBUTTONZero09() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
 	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[9]=ctx->ai.cal.c[9]-ctx->ai.phy[9];
 	else							ctx->ai.cal.c[25]=ctx->ai.cal.c[25]-ctx->ai.phy[25];
@@ -441,7 +441,7 @@ void CCalibrationFactor::OnBUTTONZero09()
 
 void CCalibrationFactor::OnBUTTONZero10() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
 	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[10]=ctx->ai.cal.c[10]-ctx->ai.phy[10];
 	else							ctx->ai.cal.c[26]=ctx->ai.cal.c[26]-ctx->ai.phy[26];
@@ -450,7 +450,7 @@ void CCalibrationFactor::OnBUTTONZero10()
 
 void CCalibrationFactor::OnBUTTONZero11() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
 	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[11]=ctx->ai.cal.c[11]-ctx->ai.phy[11];
 	else							ctx->ai.cal.c[27]=ctx->ai.cal.c[27]-ctx->ai.phy[27];
@@ -459,7 +459,7 @@ void CCalibrationFactor::OnBUTTONZero11()
 
 void CCalibrationFactor::OnBUTTONZero12() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
 	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[12]=ctx->ai.cal.c[12]-ctx->ai.phy[12];
 	else							ctx->ai.cal.c[28]=ctx->ai.cal.c[28]-ctx->ai.phy[28];
@@ -468,7 +468,7 @@ void CCalibrationFactor::OnBUTTONZero12()
 
 void CCalibrationFactor::OnBUTTONZero13() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
 	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[13]=ctx->ai.cal.c[13]-ctx->ai.phy[13];
 	else							ctx->ai.cal.c[29]=ctx->ai.cal.c[29]-ctx->ai.phy[29];
@@ -477,7 +477,7 @@ void CCalibrationFactor::OnBUTTONZero13()
 
 void CCalibrationFactor::OnBUTTONZero14() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
 	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[14]=ctx->ai.cal.c[14]-ctx->ai.phy[14];
 	else							ctx->ai.cal.c[30]=ctx->ai.cal.c[30]-ctx->ai.phy[30];
@@ -486,7 +486,7 @@ void CCalibrationFactor::OnBUTTONZero14()
 
 void CCalibrationFactor::OnBUTTONZero15() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
 	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[15]=ctx->ai.cal.c[15]-ctx->ai.phy[15];
 	else							ctx->ai.cal.c[31]=ctx->ai.cal.c[31]-ctx->ai.phy[31];
@@ -495,7 +495,7 @@ void CCalibrationFactor::OnBUTTONZero15()
 
 void CCalibrationFactor::OnBUTTONAmp00() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
 	if(m_DChannel == "Ch.00-15")	ctx->AmpID=0;
@@ -509,7 +509,7 @@ void CCalibrationFactor::OnBUTTONAmp00()
 
 void CCalibrationFactor::OnBUTTONAmp01() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
 	if(m_DChannel == "Ch.00-15")	ctx->AmpID=1;
@@ -523,7 +523,7 @@ void CCalibrationFactor::OnBUTTONAmp01()
 
 void CCalibrationFactor::OnBUTTONAmp02() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
 	if(m_DChannel == "Ch.00-15")	ctx->AmpID=2;
@@ -537,7 +537,7 @@ void CCalibrationFactor::OnBUTTONAmp02()
 
 void CCalibrationFactor::OnBUTTONAmp03() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
 	if(m_DChannel == "Ch.00-15")	ctx->AmpID=3;
@@ -551,7 +551,7 @@ void CCalibrationFactor::OnBUTTONAmp03()
 
 void CCalibrationFactor::OnBUTTONAmp04() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
 	if(m_DChannel == "Ch.00-15")	ctx->AmpID=4;
@@ -565,7 +565,7 @@ void CCalibrationFactor::OnBUTTONAmp04()
 
 void CCalibrationFactor::OnBUTTONAmp05() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
 	if(m_DChannel == "Ch.00-15")	ctx->AmpID=5;
@@ -579,7 +579,7 @@ void CCalibrationFactor::OnBUTTONAmp05()
 
 void CCalibrationFactor::OnBUTTONAmp06() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
 	if(m_DChannel == "Ch.00-15")	ctx->AmpID=6;
@@ -593,7 +593,7 @@ void CCalibrationFactor::OnBUTTONAmp06()
 
 void CCalibrationFactor::OnBUTTONAmp07() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
 	if(m_DChannel == "Ch.00-15")	ctx->AmpID=7;
@@ -607,7 +607,7 @@ void CCalibrationFactor::OnBUTTONAmp07()
 
 void CCalibrationFactor::OnBUTTONAmp08() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
 	if(m_DChannel == "Ch.00-15")	ctx->AmpID=8;
@@ -621,7 +621,7 @@ void CCalibrationFactor::OnBUTTONAmp08()
 
 void CCalibrationFactor::OnBUTTONAmp09() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
 	if(m_DChannel == "Ch.00-15")	ctx->AmpID=9;
@@ -635,7 +635,7 @@ void CCalibrationFactor::OnBUTTONAmp09()
 
 void CCalibrationFactor::OnBUTTONAmp10() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
 	if(m_DChannel == "Ch.00-15")	ctx->AmpID=10;
@@ -649,7 +649,7 @@ void CCalibrationFactor::OnBUTTONAmp10()
 
 void CCalibrationFactor::OnBUTTONAmp11() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
 	if(m_DChannel == "Ch.00-15")	ctx->AmpID=11;
@@ -663,7 +663,7 @@ void CCalibrationFactor::OnBUTTONAmp11()
 
 void CCalibrationFactor::OnBUTTONAmp12() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
 	if(m_DChannel == "Ch.00-15")	ctx->AmpID=12;
@@ -677,7 +677,7 @@ void CCalibrationFactor::OnBUTTONAmp12()
 
 void CCalibrationFactor::OnBUTTONAmp13() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
 	if(m_DChannel == "Ch.00-15")	ctx->AmpID=13;
@@ -691,7 +691,7 @@ void CCalibrationFactor::OnBUTTONAmp13()
 
 void CCalibrationFactor::OnBUTTONAmp14() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
 	if(m_DChannel == "Ch.00-15")	ctx->AmpID=14;
@@ -705,7 +705,7 @@ void CCalibrationFactor::OnBUTTONAmp14()
 
 void CCalibrationFactor::OnBUTTONAmp15() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
 	if(m_DChannel == "Ch.00-15")	ctx->AmpID=15;
@@ -720,7 +720,7 @@ void CCalibrationFactor::OnBUTTONAmp15()
 
 void CCalibrationFactor::OnBUTTONCFSave() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 
 	CString	pFileName;
 	FILE	*FileCalData;
@@ -742,7 +742,7 @@ void CCalibrationFactor::OnBUTTONCFSave()
 
 void CCalibrationFactor::OnBUTTONCFLoadFile() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 
 	CString	pFileName;
 	FILE	*FileCalData;

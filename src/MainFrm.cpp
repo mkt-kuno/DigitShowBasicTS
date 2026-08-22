@@ -1,4 +1,4 @@
-// MainFrm.cpp : CMainFrame ƒNƒ‰ƒX‚Ì“®ì‚Ì’è‹`‚ğs‚¢‚Ü‚·B
+ï»¿// MainFrm.cpp : CMainFrame ã‚¯ãƒ©ã‚¹ã®å‹•ä½œã®å®šç¾©ã‚’è¡Œã„ã¾ã™ã€‚
 //
 
 #include "stdafx.h"
@@ -51,11 +51,11 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CMainFrame ƒNƒ‰ƒX‚Ì\’z/Á–Å
+// CMainFrame ã‚¯ãƒ©ã‚¹ã®æ§‹ç¯‰/æ¶ˆæ»…
 
 CMainFrame::CMainFrame()
 {
-	// TODO: ‚±‚ÌˆÊ’u‚Éƒƒ“ƒo‚Ì‰Šú‰»ˆ—ƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢B
+	// TODO: ã“ã®ä½ç½®ã«ãƒ¡ãƒ³ãƒã®åˆæœŸåŒ–å‡¦ç†ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„ã€‚
 }
 
 CMainFrame::~CMainFrame()
@@ -64,8 +64,8 @@ CMainFrame::~CMainFrame()
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚Å CREATESTRUCT cs ‚ğC³‚µ‚ÄAWindow ƒNƒ‰ƒX‚âƒXƒ^ƒCƒ‹‚ğ
-	//       C³‚µ‚Ä‚­‚¾‚³‚¢B
+	// TODO: ã“ã®ä½ç½®ã§ CREATESTRUCT cs ã‚’ä¿®æ­£ã—ã¦ã€Window ã‚¯ãƒ©ã‚¹ã‚„ã‚¹ã‚¿ã‚¤ãƒ«ã‚’
+	//       ä¿®æ­£ã—ã¦ãã ã•ã„ã€‚
 
 	//Get system height and widths- added later
 	cs.cy = ::GetSystemMetrics(SM_CYSCREEN);
@@ -82,7 +82,7 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CMainFrame ƒNƒ‰ƒX‚Ìf’f
+// CMainFrame ã‚¯ãƒ©ã‚¹ã®è¨ºæ–­
 
 #ifdef _DEBUG
 void CMainFrame::AssertValid() const
@@ -98,11 +98,11 @@ void CMainFrame::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
-// CMainFrame ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰
+// CMainFrame ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©
 
 void CMainFrame::OnBoardSettings() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	int	nResult;
 	CBoardSettings BoardSettings;
 	nResult = BoardSettings.DoModal();
@@ -110,7 +110,7 @@ void CMainFrame::OnBoardSettings()
 
 void CMainFrame::OnSamplingSettings() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	int	nResult;
 	CSamplingSettings SamplingSettings;
 	nResult = SamplingSettings.DoModal();
@@ -126,7 +126,7 @@ void CMainFrame::OnRs232cPannel()
 
 void CMainFrame::OnCalibrationFactor() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	int	nResult;
 	if(ctx->flags.SetBoard==FALSE){
 		AfxMessageBox("SamplingCondition has not been accomplished !",MB_ICONEXCLAMATION | MB_OK );
@@ -140,7 +140,7 @@ void CMainFrame::OnCalibrationFactor()
 
 void CMainFrame::OnSpecimenData() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	int	nResult;
 	CSpecimen Specimen;
 	nResult = Specimen.DoModal();		
@@ -148,7 +148,7 @@ void CMainFrame::OnSpecimenData()
 
 void CMainFrame::OnDAChannel() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	int	nResult;
 	CDA_Channel DA_Channel;
 	nResult = DA_Channel.DoModal();	
@@ -156,7 +156,7 @@ void CMainFrame::OnDAChannel()
 
 void CMainFrame::OnDAVout() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	int	nResult;
 	if(ctx->flags.SetBoard==FALSE){
 		AfxMessageBox("SamplingCondition has not been accomplished !",MB_ICONEXCLAMATION | MB_OK );
@@ -168,7 +168,7 @@ void CMainFrame::OnDAVout()
 
 void CMainFrame::OnControlID() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	int	nResult;
 	CControl_ID CtrlIDDlg;
 	nResult = CtrlIDDlg.DoModal();	
@@ -176,7 +176,7 @@ void CMainFrame::OnControlID()
 
 void CMainFrame::OnControlFile() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	int	nResult;
 	CControl_File Control_File;
 	nResult = Control_File.DoModal();	
@@ -184,7 +184,7 @@ void CMainFrame::OnControlFile()
 
 void CMainFrame::OnControlGeneral() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	int	nResult;
 	CControl_General Control_General;
 	nResult = Control_General.DoModal();	
@@ -192,7 +192,7 @@ void CMainFrame::OnControlGeneral()
 
 void CMainFrame::OnControlPreConsolidation() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	int	nResult;
 	CControl_PreConsolidation Control_PreConsolidation;
 	nResult = Control_PreConsolidation.DoModal();	
@@ -200,7 +200,7 @@ void CMainFrame::OnControlPreConsolidation()
 
 void CMainFrame::OnConsolidation() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ}ƒ“ƒh ƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒãƒ³ãƒ‰ ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	int	nResult;
 	CControl_Consolidation Control_Consolidation;
 	nResult = Control_Consolidation.DoModal();	

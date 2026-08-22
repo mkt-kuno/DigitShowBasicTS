@@ -1,4 +1,4 @@
-// DA_Vout.cpp : ƒCƒ“ƒvƒŠƒƒ“ƒe[ƒVƒ‡ƒ“ ƒtƒ@ƒCƒ‹
+ï»¿// DA_Vout.cpp : ã‚¤ãƒ³ãƒ—ãƒªãƒ¡ãƒ³ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
 #include "stdafx.h"
@@ -13,7 +13,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CDA_Vout ƒ_ƒCƒAƒƒO
+// CDA_Vout ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 CDA_Vout::CDA_Vout(CWnd* pParent /*=NULL*/)
 	: CDialog(CDA_Vout::IDD, pParent)
@@ -71,7 +71,7 @@ BEGIN_MESSAGE_MAP(CDA_Vout, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CDA_Vout ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰
+// CDA_Vout ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©
 BOOL CDA_Vout::OnInitDialog() 
 {	DigitShowContext* ctx = GetContext();
 	CDialog::OnInitDialog();
@@ -100,7 +100,7 @@ BOOL CDA_Vout::OnInitDialog()
 
 void CDA_Vout::OnBUTTONDAVout() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	UpdateData(TRUE);
 	ctx->ao.raw[0]=m_DAVout01;
 	ctx->ao.raw[1]=m_DAVout02;
@@ -115,7 +115,7 @@ void CDA_Vout::OnBUTTONDAVout()
 
 void CDA_Vout::OnBUTTONReflesh() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	m_DAVout01 = ctx->ao.raw[0];
 	m_DAVout02 = ctx->ao.raw[1];
 	m_DAVout03 = ctx->ao.raw[2];

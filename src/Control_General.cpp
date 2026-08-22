@@ -1,4 +1,4 @@
-// Control_General.cpp : ƒCƒ“ƒvƒŠƒƒ“ƒe[ƒVƒ‡ƒ“ ƒtƒ@ƒCƒ‹
+ï»¿// Control_General.cpp : ã‚¤ãƒ³ãƒ—ãƒªãƒ¡ãƒ³ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
 #include "stdafx.h"
@@ -13,7 +13,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CControl_General ƒ_ƒCƒAƒƒO
+// CControl_General ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 CControl_General::CControl_General(CWnd* pParent /*=NULL*/)
 	: CDialog(CControl_General::IDD, pParent)
@@ -46,11 +46,11 @@ BEGIN_MESSAGE_MAP(CControl_General, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CControl_General ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰
+// CControl_General ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©
 
 void CControl_General::OnOK() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚É‚»‚Ì‘¼‚ÌŒŸØ—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ãã®ä»–ã®æ¤œè¨¼ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	UpdateData(TRUE);
 	ctx->err.StressAir = m_ErrorStressAir;
 	ctx->err.StressMotor = m_ErrorStressMotor;

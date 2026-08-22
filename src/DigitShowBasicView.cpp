@@ -1,4 +1,4 @@
-// DigitShowBasicView.cpp : CDigitShowBasicView �N���X�̓���̒�`���s���܂��B
+﻿// DigitShowBasicView.cpp : CDigitShowBasicView クラスの動作の定義を行います。
 //
 
 #include "stdafx.h"
@@ -60,7 +60,7 @@ BEGIN_MESSAGE_MAP(CDigitShowBasicView, CFormView)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicView �N���X�̍\�z/����
+// CDigitShowBasicView クラスの構築/消滅
 
 CDigitShowBasicView::CDigitShowBasicView()
 	: CFormView(CDigitShowBasicView::IDD)
@@ -166,7 +166,7 @@ CDigitShowBasicView::CDigitShowBasicView()
 	m_VLT15 = _T("");
 	m_DChannel = _T("Ch.00-15");
 	//}}AFX_DATA_INIT
-	// TODO: ���̏ꏊ�ɍ\�z�p�̃R�[�h��ǉ����Ă��������B
+	// TODO: この場所に構築用のコードを追加してください。
 	Flag_Ctrl=FALSE;
 	m_pEditBrush= new CBrush(RGB(255,255,255));
 	m_pStaticBrush= new CBrush(RGB(0,128,128));	
@@ -287,8 +287,8 @@ void CDigitShowBasicView::DoDataExchange(CDataExchange* pDX)
 
 BOOL CDigitShowBasicView::PreCreateWindow(CREATESTRUCT& cs)
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�� CREATESTRUCT cs ���C������ Window �N���X�܂��̓X�^�C����
-	//  �C�����Ă��������B
+	// TODO: この位置で CREATESTRUCT cs を修正して Window クラスまたはスタイルを
+	//  修正してください。
 	return CFormView::PreCreateWindow(cs);
 }
 
@@ -373,7 +373,7 @@ void CDigitShowBasicView::OnInitialUpdate()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicView �N���X�̐f�f
+// CDigitShowBasicView クラスの診断
 
 #ifdef _DEBUG
 void CDigitShowBasicView::AssertValid() const
@@ -386,7 +386,7 @@ void CDigitShowBasicView::Dump(CDumpContext& dc) const
 	CFormView::Dump(dc);
 }
 
-CDigitShowBasicDoc* CDigitShowBasicView::GetDocument() // ��f�o�b�O �o�[�W�����̓C�����C���ł��B
+CDigitShowBasicDoc* CDigitShowBasicView::GetDocument() // 非デバッグ バージョンはインラインです。
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CDigitShowBasicDoc)));
 	return (CDigitShowBasicDoc*)m_pDocument;
@@ -394,7 +394,7 @@ CDigitShowBasicDoc* CDigitShowBasicView::GetDocument() // ��f�o�b�O �o�[�W�����
 #endif //_DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicView �N���X�̃��b�Z�[�W �n���h��
+// CDigitShowBasicView クラスのメッセージ ハンドラ
 
 HBRUSH CDigitShowBasicView::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
 {	DigitShowContext* ctx = GetContext();
@@ -418,14 +418,14 @@ HBRUSH CDigitShowBasicView::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 void CDigitShowBasicView::OnDestroy() 
 {	DigitShowContext* ctx = GetContext();
 	CFormView::OnDestroy();
-	// TODO: ���̈ʒu�Ƀ��b�Z�[�W �n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にメッセージ ハンドラ用のコードを追加してください
 	delete	m_pEditBrush;
 	delete	m_pStaticBrush;	
 	delete	m_pDlgBrush;
 }
 void CDigitShowBasicView::OnTimer(UINT_PTR nIDEvent)
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�Ƀ��b�Z�[�W �n���h���p�̃R�[�h��ǉ����邩�܂��̓f�t�H���g�̏������Ăяo���Ă�������
+	// TODO: この位置にメッセージ ハンドラ用のコードを追加するかまたはデフォルトの処理を呼び出してください
 
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 
@@ -540,7 +540,7 @@ void CDigitShowBasicView::ShowData()
 
 void CDigitShowBasicView::OnBUTTONCtrlOn() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 	if(ctx->flags.SetBoard){
 		SetTimer(2,ctx->timeSettings.Interval2,NULL);
@@ -554,7 +554,7 @@ void CDigitShowBasicView::OnBUTTONCtrlOn()
 
 void CDigitShowBasicView::OnBUTTONCtrlOff() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 	KillTimer(2);
 	Flag_Ctrl=FALSE;
@@ -567,7 +567,7 @@ void CDigitShowBasicView::OnBUTTONCtrlOff()
 
 void CDigitShowBasicView::OnBUTTONStartSave() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 
 	CString	pFileName0, pFileName1, pFileName2, TmpString;
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
@@ -705,7 +705,7 @@ void CDigitShowBasicView::OnBUTTONStartSave()
 
 void CDigitShowBasicView::OnBUTTONStopSave() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 
@@ -942,7 +942,7 @@ void CDigitShowBasicView::OnBUTTONWriteData()
 }
 void CDigitShowBasicView::OnBUTTONSetCtrlID() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	CString		tmp;
 	CComboBox* m_Combo1 = (CComboBox*)GetDlgItem(IDC_COMBO_Control_ID);
 	m_Combo1->GetWindowText(tmp);
@@ -951,7 +951,7 @@ void CDigitShowBasicView::OnBUTTONSetCtrlID()
 
 void CDigitShowBasicView::OnBUTTONSetSamplingTime() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɃR���g���[���ʒm�n���h���p�̃R�[�h��ǉ����Ă�������
+	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	CString		tmp;
 	CComboBox* m_Combo1 = (CComboBox*)GetDlgItem(IDC_COMBO_SamplingTime);
 	m_Combo1->GetWindowText(tmp);
@@ -1011,7 +1011,7 @@ void CDigitShowBasicView::Reflesh()
 
 LRESULT CDigitShowBasicView::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ���̈ʒu�ɌŗL�̏�����ǉ����邩�A�܂��͊�{�N���X���Ăяo���Ă�������
+	// TODO: この位置に固有の処理を追加するか、または基本クラスを呼び出してください
 	int	i,j;
 
 	switch(message){

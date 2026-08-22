@@ -1,4 +1,4 @@
-// MainFrm.h : CMainFrame �N���X�̐錾����уC���^�[�t�F�C�X�̒�`�����܂��B
+﻿// MainFrm.h : CMainFrame クラスの宣言およびインターフェイスの定義をします。
 //
 /////////////////////////////////////////////////////////////////////////////
 
@@ -12,23 +12,23 @@
 class CMainFrame : public CFrameWnd
 {
 	
-protected: // �V���A���C�Y�@�\�݂̂���쐬���܂��B
+protected: // シリアライズ機能のみから作成します。
 	CMainFrame();
 	DECLARE_DYNCREATE(CMainFrame)
 
-// �A�g���r���[�g
+// アトリビュート
 public:
 
-// �I�y���[�V����
+// オペレーション
 public:
 
-// �I�[�o�[���C�h
-	// ClassWizard �͉��z�֐��̃I�[�o�[���C�h�𐶐����܂��B
+// オーバーライド
+	// ClassWizard は仮想関数のオーバーライドを生成します。
 	//{{AFX_VIRTUAL(CMainFrame)
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	//}}AFX_VIRTUAL
 
-// �C���v�������e�[�V����
+// インプリメンテーション
 public:
 	virtual ~CMainFrame();
 #ifdef _DEBUG
@@ -36,7 +36,7 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-// �������ꂽ���b�Z�[�W �}�b�v�֐�
+// 生成されたメッセージ マップ関数
 private:
 protected:
 	//{{AFX_MSG(CMainFrame)
@@ -59,6 +59,6 @@ protected:
 /////////////////////////////////////////////////////////////////////////////
 
 //{{AFX_INSERT_LOCATION}}
-// Microsoft Visual C++ �͑O�s�̒��O�ɒǉ��̐錾��}�����܂��B
+// Microsoft Visual C++ は前行の直前に追加の宣言を挿入します。
 
 #endif // !defined(AFX_MAINFRM_H__AC57187F_9544_4DFA_BC03_5FC6D5E29FB4__INCLUDED_)

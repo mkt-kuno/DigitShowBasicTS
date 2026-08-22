@@ -1,4 +1,4 @@
-// Specimen.cpp : ƒCƒ“ƒvƒŠƒƒ“ƒe[ƒVƒ‡ƒ“ ƒtƒ@ƒCƒ‹
+ï»¿// Specimen.cpp : ã‚¤ãƒ³ãƒ—ãƒªãƒ¡ãƒ³ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
 #include "stdafx.h"
@@ -15,7 +15,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CSpecimen ƒ_ƒCƒAƒƒO
+// CSpecimen ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 CSpecimen::CSpecimen(CWnd* pParent /*=NULL*/)
 	: CDialog(CSpecimen::IDD, pParent)
@@ -127,10 +127,10 @@ BEGIN_MESSAGE_MAP(CSpecimen, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CSpecimen ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰
+// CSpecimen ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©
 void CSpecimen::Load()
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	m_MembraneE = ctx->specimen.MembraneModulus;
 	m_MembraneT = ctx->specimen.MembraneThickness;
 	m_RodArea = ctx->specimen.RodArea;
@@ -176,7 +176,7 @@ void CSpecimen::Load()
 
 void CSpecimen::OnBUTTONUpdate() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	UpdateData(TRUE);
 	ctx->specimen.MembraneModulus = m_MembraneE;
 	ctx->specimen.MembraneThickness = m_MembraneT;
@@ -223,7 +223,7 @@ void CSpecimen::OnBUTTONUpdate()
 
 void CSpecimen::OnBUTTONSave() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	
 	OnBUTTONUpdate();
 
@@ -316,7 +316,7 @@ void CSpecimen::OnBUTTONAfConsolidation()
 
 void CSpecimen::OnBUTTONToPresent1() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	OnBUTTONUpdate();
 	ctx->specimen.DiameterIn[0] = ctx->specimen.DiameterIn[1];
 	ctx->specimen.DiameterOut[0] = ctx->specimen.DiameterOut[1];
@@ -331,7 +331,7 @@ void CSpecimen::OnBUTTONToPresent1()
 
 void CSpecimen::OnBUTTONToPresent2() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	OnBUTTONUpdate();
 	ctx->specimen.DiameterIn[0] = ctx->specimen.DiameterIn[2];
 	ctx->specimen.DiameterOut[0] = ctx->specimen.DiameterOut[2];
@@ -346,7 +346,7 @@ void CSpecimen::OnBUTTONToPresent2()
 
 void CSpecimen::OnBUTTONToPresent3() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	OnBUTTONUpdate();
 	ctx->specimen.DiameterIn[0] = ctx->specimen.DiameterIn[3];
 	ctx->specimen.DiameterOut[0] = ctx->specimen.DiameterOut[3];

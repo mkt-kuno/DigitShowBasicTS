@@ -1,4 +1,4 @@
-/*
+﻿/*
  * DigitShowBasicTS - Hollow Torsional Shear Triaxial Test Control Software
  * Copyright (C) 2026 Makoto KUNO
  *
@@ -24,7 +24,7 @@
 #include <afxwin.h>
 #include <stdio.h>
 
-// ── Array sizes ──────────────────────────────────────────
+// 笏笏 Array sizes 笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏
 #define AI_MAX_CHANNELS     32  // AI channels (primary board Ch00-15 + second board Ch16-31)
 #define AO_MAX_CHANNELS     16  // AO channels
 #define AD_MAX_BOARDS        2  // Number of A/D boards (NUMAD = 0-2)
@@ -38,7 +38,7 @@
 #define AD_BUFFER_SIZE 16777216L
 #define DA_BUFFER_SIZE     262144L
 
-// ── D/A channel index assignments (fixed hardware wiring) ──
+// 笏笏 D/A channel index assignments (fixed hardware wiring) 笏笏
 #define DA_CH_EP_CELL         0  // EP cell pressure
 #define DA_CH_AXIS_MOTOR      1  // Axial motor On/Off (0V = On, 5V = Off)
 #define DA_CH_AXIS_CLUTCH     2  // Axial clutch

@@ -1,4 +1,4 @@
-// Control_File.cpp : ƒCƒ“ƒvƒŠƒƒ“ƒe[ƒVƒ‡ƒ“ ƒtƒ@ƒCƒ‹
+ï»¿// Control_File.cpp : ã‚¤ãƒ³ãƒ—ãƒªãƒ¡ãƒ³ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ ãƒ•ã‚¡ã‚¤ãƒ«
 //
 
 #include "stdafx.h"
@@ -14,7 +14,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CControl_File ƒ_ƒCƒAƒƒO
+// CControl_File ãƒ€ã‚¤ã‚¢ãƒ­ã‚°
 
 CControl_File::CControl_File(CWnd* pParent /*=NULL*/)
 	: CDialog(CControl_File::IDD, pParent)
@@ -88,28 +88,28 @@ BEGIN_MESSAGE_MAP(CControl_File, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CControl_File ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰
+// CControl_File ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©
 
 /////////////////////////////////////////////////////////////////////////////
-// CControl_File ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰
+// CControl_File ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ ãƒãƒ³ãƒ‰ãƒ©
 BOOL CControl_File::OnInitDialog() 
 {	DigitShowContext* ctx = GetContext();
 	CDialog::OnInitDialog();
 	
-	// TODO: ‚±‚ÌˆÊ’u‚É‰Šú‰»‚Ì•â‘«ˆ—‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«åˆæœŸåŒ–ã®è£œè¶³å‡¦ç†ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_StepDec);
 	CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_StepInc);
 	myBTN1->EnableWindow(FALSE);
 	myBTN2->EnableWindow(FALSE);
 	CButton* chkbox1=(CButton*)GetDlgItem(IDC_CHECK_ChangeNo);
 	chkbox1->SetCheck(0);
-	return TRUE;  // ƒRƒ“ƒgƒ[ƒ‹‚ÉƒtƒH[ƒJƒX‚ðÝ’è‚µ‚È‚¢‚Æ‚«A–ß‚è’l‚Í TRUE ‚Æ‚È‚è‚Ü‚·
-	              // —áŠO: OCX ƒvƒƒpƒeƒB ƒy[ƒW‚Ì–ß‚è’l‚Í FALSE ‚Æ‚È‚è‚Ü‚·
+	return TRUE;  // ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’è¨­å®šã—ãªã„ã¨ãã€æˆ»ã‚Šå€¤ã¯ TRUE ã¨ãªã‚Šã¾ã™
+	              // ä¾‹å¤–: OCX ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ ãƒšãƒ¼ã‚¸ã®æˆ»ã‚Šå€¤ã¯ FALSE ã¨ãªã‚Šã¾ã™
 }
 
 void CControl_File::OnBUTTONReadFile() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	ctx->controlFile.CurrentNum=0;
 	CString	pFileName;
 	FILE	*FileCtlData;
@@ -160,7 +160,7 @@ void CControl_File::OnBUTTONReadFile()
 
 void CControl_File::OnBUTTONSaveFile() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	CString	pFileName;
 	FILE	*FileCtlData;
 	errno_t err;
@@ -189,7 +189,7 @@ void CControl_File::OnBUTTONSaveFile()
 
 void CControl_File::OnBUTTONLoad() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	UpdateData(TRUE);
 	m_CtrlNo = ctx->controlFile.Num[m_StepNo];
 	m_CFPARA0 = ctx->controlFile.Para[m_StepNo][0];
@@ -213,7 +213,7 @@ void CControl_File::OnBUTTONLoad()
 
 void CControl_File::OnBUTTONUpdate() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	UpdateData(TRUE);
 	ctx->controlFile.Num[m_StepNo] = m_CtrlNo;
 	ctx->controlFile.Para[m_StepNo][0] = m_CFPARA0;
@@ -237,7 +237,7 @@ void CControl_File::OnBUTTONUpdate()
 
 void CControl_File::OnCHECKChangeNo() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_StepDec);
 	CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_StepInc);
 	CButton* chkbox1=(CButton*)GetDlgItem(IDC_CHECK_ChangeNo);
@@ -253,7 +253,7 @@ void CControl_File::OnCHECKChangeNo()
 
 void CControl_File::OnBUTTONStepDec() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	ctx->controlFile.CurrentNum=ctx->controlFile.CurrentNum-1;
 	ctx->NumCyclic=0;
 	ctx->StepTime=0.0;
@@ -270,7 +270,7 @@ void CControl_File::OnBUTTONStepDec()
 
 void CControl_File::OnBUTTONStepInc() 
 {	DigitShowContext* ctx = GetContext();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ã“ã®ä½ç½®ã«ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«é€šçŸ¥ãƒãƒ³ãƒ‰ãƒ©ç”¨ã®ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¦ãã ã•ã„
 	ctx->controlFile.CurrentNum=ctx->controlFile.CurrentNum+1;
 	ctx->NumCyclic=0;
 	ctx->StepTime=0.0;
