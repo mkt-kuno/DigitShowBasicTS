@@ -56,7 +56,6 @@ A change counts as complete only after a clean build (**0 errors**) with the Rel
 
 - AI board(s): device name `"AIO000"` → `AdId[0]`; a second board uses `AdId[1]` when enabled (`NUMAD > 1`). Calibration supports channels Ch.00–15 / Ch.16–31 switching.
 - AO board: device name `"AIO001"` → `DaId[0]`.
-- Electronic balance connected via RS232C (`RS232C.cpp`) for weight readings.
 - If device names differ, rename them in Device Manager (see README).
 
 ### Timer-driven execution model (critical)

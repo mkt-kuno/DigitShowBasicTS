@@ -179,9 +179,6 @@ struct SystemFlags {
 	bool SaveData;    // saving data to file
 	bool FIFO;        // FIFO acquisition running
 	bool Cyclic;      // cyclic loading running
-	bool SetRs232c;   // RS232C port opened
-	bool SetBalance;  // electronic balance connected
-	bool COM[2];      // COM port status
 };
 
 /**
@@ -314,20 +311,6 @@ struct DigitShowContext {
 	FILE* FileSaveData1;                     // physical value log
 	FILE* FileSaveData2;                     // parameter value log
 
-	// RS232C (electronic balance)
-	struct {
-		HANDLE   hComm[2];
-		DCB      CommDCB[2];
-		CString  CommName[2];
-		COMSTAT  Comstat1;
-		COMSTAT  Comstat2;
-		CString  ReadBuffer1;
-		CString  ReadBuffer2;
-		CString  WriteBuffer1;
-		CString  WriteBuffer2;
-		CString  TmpBuffer;
-		HANDLE   hEvent;
-	} rs232c;
 };
 
 /**

@@ -219,10 +219,6 @@ void InitContext(DigitShowContext* ctx)
 	ctx->flags.SaveData = FALSE;
 	ctx->flags.FIFO = FALSE;
 	ctx->flags.Cyclic = FALSE;
-	ctx->flags.SetRs232c = FALSE;
-	ctx->flags.SetBalance = FALSE;
-	ctx->flags.COM[0] = FALSE;
-	ctx->flags.COM[1] = FALSE;
 
 	// Time management
 	ctx->timeSettings.Interval1 = 200;             // Time interval (ms) to display output data.
@@ -236,22 +232,6 @@ void InitContext(DigitShowContext* ctx)
 	ctx->FileSaveData0 = NULL;
 	ctx->FileSaveData1 = NULL;
 	ctx->FileSaveData2 = NULL;
-
-	// RS232C (electronic balance)
-	ctx->rs232c.hComm[0] = NULL;
-	ctx->rs232c.hComm[1] = NULL;
-	memset(&ctx->rs232c.CommDCB[0], 0, sizeof(DCB));
-	memset(&ctx->rs232c.CommDCB[1], 0, sizeof(DCB));
-	ctx->rs232c.CommName[0]=_T("COM1");
-	ctx->rs232c.CommName[1]=_T("COM2");
-	memset(&ctx->rs232c.Comstat1, 0, sizeof(COMSTAT));
-	memset(&ctx->rs232c.Comstat2, 0, sizeof(COMSTAT));
-	ctx->rs232c.ReadBuffer1 = _T("");
-	ctx->rs232c.ReadBuffer2 = _T("");
-	ctx->rs232c.WriteBuffer1 = _T("");
-	ctx->rs232c.WriteBuffer2 = _T("");
-	ctx->rs232c.TmpBuffer = _T("");
-	ctx->rs232c.hEvent = NULL;
 
 	// Control file data
 	ctx->controlFile.CurrentNum = 0;
