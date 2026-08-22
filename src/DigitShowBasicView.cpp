@@ -1,4 +1,4 @@
-// DigitShowBasicView.cpp : CDigitShowBasicView ƒNƒ‰ƒX‚Ì“®ì‚Ì’è‹`‚ğs‚¢‚Ü‚·B
+// DigitShowBasicView.cpp : CDigitShowBasicView ï¿½Nï¿½ï¿½ï¿½Xï¿½Ì“ï¿½ï¿½ï¿½Ì’ï¿½`ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
 //
 
 #include "stdafx.h"
@@ -7,7 +7,7 @@
 #include "DigitShowBasicDoc.h"
 #include "DigitShowBasicView.h"
 
-#include "caio.h"
+#include "CAIO.H"
 #include "SamplingSettings.h"
 #include "RS232C.h"
 
@@ -105,7 +105,7 @@ BEGIN_MESSAGE_MAP(CDigitShowBasicView, CFormView)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicView ƒNƒ‰ƒX‚Ì\’z/Á–Å
+// CDigitShowBasicView ï¿½Nï¿½ï¿½ï¿½Xï¿½Ì\ï¿½z/ï¿½ï¿½ï¿½ï¿½
 
 CDigitShowBasicView::CDigitShowBasicView()
 	: CFormView(CDigitShowBasicView::IDD)
@@ -210,7 +210,7 @@ CDigitShowBasicView::CDigitShowBasicView()
 	m_VLT15 = _T("");
 	m_DChannel = _T("Ch.00-15");
 	//}}AFX_DATA_INIT
-	// TODO: ‚±‚ÌêŠ‚É\’z—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢B
+	// TODO: ï¿½ï¿½ï¿½ÌêŠï¿½É\ï¿½zï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 	Flag_Ctrl=FALSE;
 	m_pEditBrush= new CBrush(RGB(255,255,255));
 	m_pStaticBrush= new CBrush(RGB(0,128,128));	
@@ -331,8 +331,8 @@ void CDigitShowBasicView::DoDataExchange(CDataExchange* pDX)
 
 BOOL CDigitShowBasicView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	// TODO: ‚±‚ÌˆÊ’u‚Å CREATESTRUCT cs ‚ğC³‚µ‚Ä Window ƒNƒ‰ƒX‚Ü‚½‚ÍƒXƒ^ƒCƒ‹‚ğ
-	//  C³‚µ‚Ä‚­‚¾‚³‚¢B
+	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ï¿½ CREATESTRUCT cs ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Window ï¿½Nï¿½ï¿½ï¿½Xï¿½Ü‚ï¿½ï¿½ÍƒXï¿½^ï¿½Cï¿½ï¿½ï¿½ï¿½
+	//  ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 	return CFormView::PreCreateWindow(cs);
 }
 
@@ -380,7 +380,9 @@ void CDigitShowBasicView::OnInitialUpdate()
 	pDoc->OpenBoard();
 	if(Flag_SetBoard){
 		if(NUMAD>0)	{
-			Ret = AioSetAiScanClock ( AdId[0] , 30 );
+			AdScanClock[0]=long(1000/AdChannels[0]);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
+			if(AdScanClock[0]<1){ AdScanClock[0]=1; }
+			Ret = AioSetAiScanClock ( AdId[0] , AdScanClock[0] );
 			Ret = AioGetAiScanClock ( AdId[0] , &AdScanClock[0] );
 			Ret = AioSetAiSamplingClock ( AdId[0] , 1000 );
 			Ret = AioGetAiSamplingClock ( AdId[0] , &AdSamplingClock[0] );
@@ -391,7 +393,9 @@ void CDigitShowBasicView::OnInitialUpdate()
 			Ret = AioResetAiMemory(AdId[0]);
 		}
 		if(NUMAD>1)	{
-			Ret = AioSetAiScanClock ( AdId[1] , 30 );
+			AdScanClock[1]=long(1000/AdChannels[1]);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
+			if(AdScanClock[1]<1){ AdScanClock[1]=1; }
+			Ret = AioSetAiScanClock ( AdId[1] , AdScanClock[1] );
 			Ret = AioGetAiScanClock ( AdId[1] , &AdScanClock[1] );
 			Ret = AioSetAiSamplingClock ( AdId[1] , 1000 );
 			Ret = AioGetAiSamplingClock ( AdId[1] , &AdSamplingClock[1] );
@@ -413,7 +417,7 @@ void CDigitShowBasicView::OnInitialUpdate()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicView ƒNƒ‰ƒX‚Ìf’f
+// CDigitShowBasicView ï¿½Nï¿½ï¿½ï¿½Xï¿½Ìfï¿½f
 
 #ifdef _DEBUG
 void CDigitShowBasicView::AssertValid() const
@@ -426,7 +430,7 @@ void CDigitShowBasicView::Dump(CDumpContext& dc) const
 	CFormView::Dump(dc);
 }
 
-CDigitShowBasicDoc* CDigitShowBasicView::GetDocument() // ”ñƒfƒoƒbƒO ƒo[ƒWƒ‡ƒ“‚ÍƒCƒ“ƒ‰ƒCƒ“‚Å‚·B
+CDigitShowBasicDoc* CDigitShowBasicView::GetDocument() // ï¿½ï¿½fï¿½oï¿½bï¿½O ï¿½oï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ÍƒCï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Å‚ï¿½ï¿½B
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CDigitShowBasicDoc)));
 	return (CDigitShowBasicDoc*)m_pDocument;
@@ -434,7 +438,7 @@ CDigitShowBasicDoc* CDigitShowBasicView::GetDocument() // ”ñƒfƒoƒbƒO ƒo[ƒWƒ‡ƒ“‚
 #endif //_DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicView ƒNƒ‰ƒX‚ÌƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰
+// CDigitShowBasicView ï¿½Nï¿½ï¿½ï¿½Xï¿½Ìƒï¿½ï¿½bï¿½Zï¿½[ï¿½W ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
 
 HBRUSH CDigitShowBasicView::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
 {
@@ -458,14 +462,14 @@ HBRUSH CDigitShowBasicView::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 void CDigitShowBasicView::OnDestroy() 
 {
 	CFormView::OnDestroy();
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½Éƒï¿½ï¿½bï¿½Zï¿½[ï¿½W ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	delete	m_pEditBrush;
 	delete	m_pStaticBrush;	
 	delete	m_pDlgBrush;
 }
 void CDigitShowBasicView::OnTimer(UINT_PTR nIDEvent)
 {
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚·‚é‚©‚Ü‚½‚ÍƒfƒtƒHƒ‹ƒg‚Ìˆ—‚ğŒÄ‚Ño‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½Éƒï¿½ï¿½bï¿½Zï¿½[ï¿½W ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½é‚©ï¿½Ü‚ï¿½ï¿½Íƒfï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 
@@ -580,7 +584,7 @@ void CDigitShowBasicView::ShowData()
 
 void CDigitShowBasicView::OnBUTTONCtrlOn() 
 {
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉƒRï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê’mï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 	if(Flag_SetBoard){
 		SetTimer(2,TimeInterval_2,NULL);
@@ -594,7 +598,7 @@ void CDigitShowBasicView::OnBUTTONCtrlOn()
 
 void CDigitShowBasicView::OnBUTTONCtrlOff() 
 {
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉƒRï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê’mï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 	KillTimer(2);
 	Flag_Ctrl=FALSE;
@@ -607,7 +611,7 @@ void CDigitShowBasicView::OnBUTTONCtrlOff()
 
 void CDigitShowBasicView::OnBUTTONStartSave() 
 {
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉƒRï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê’mï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	CString	pFileName0, pFileName1, pFileName2, TmpString;
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
@@ -745,7 +749,7 @@ void CDigitShowBasicView::OnBUTTONStartSave()
 
 void CDigitShowBasicView::OnBUTTONStopSave() 
 {
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉƒRï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê’mï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 
@@ -871,7 +875,9 @@ void CDigitShowBasicView::OnBUTTONFIFOStop()
 	myBTN2->EnableWindow(FALSE);
 //
 	if(NUMAD>0)	{
-		Ret = AioSetAiScanClock ( AdId[0] , 30 );
+		AdScanClock[0]=long(1000/AdChannels[0]);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
+		if(AdScanClock[0]<1){ AdScanClock[0]=1; }
+		Ret = AioSetAiScanClock ( AdId[0] , AdScanClock[0] );
 		Ret = AioGetAiScanClock ( AdId[0] , &AdScanClock[0] );
 		Ret = AioSetAiSamplingClock ( AdId[0] , 1000 );
 		Ret = AioGetAiSamplingClock ( AdId[0] , &AdSamplingClock[0] );
@@ -882,7 +888,9 @@ void CDigitShowBasicView::OnBUTTONFIFOStop()
 		Ret = AioResetAiMemory(AdId[0]);
 	}
 	if(NUMAD>1)	{
-		Ret = AioSetAiScanClock ( AdId[1] , 30 );
+		AdScanClock[1]=long(1000/AdChannels[1]);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
+		if(AdScanClock[1]<1){ AdScanClock[1]=1; }
+		Ret = AioSetAiScanClock ( AdId[1] , AdScanClock[1] );
 		Ret = AioGetAiScanClock ( AdId[1] , &AdScanClock[1] );
 		Ret = AioSetAiSamplingClock ( AdId[1] , 1000 );
 		Ret = AioGetAiSamplingClock ( AdId[1] , &AdSamplingClock[1] );
@@ -947,7 +955,9 @@ void CDigitShowBasicView::OnBUTTONWriteData()
 		myBTN1->EnableWindow(FALSE);
 	}
 	if(NUMAD>0)	{
-		Ret = AioSetAiScanClock ( AdId[0] , 30 );
+		AdScanClock[0]=long(1000/AdChannels[0]);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
+		if(AdScanClock[0]<1){ AdScanClock[0]=1; }
+		Ret = AioSetAiScanClock ( AdId[0] , AdScanClock[0] );
 		Ret = AioGetAiScanClock ( AdId[0] , &AdScanClock[0] );
 		Ret = AioSetAiSamplingClock ( AdId[0] , 1000 );
 		Ret = AioGetAiSamplingClock ( AdId[0] , &AdSamplingClock[0] );
@@ -958,7 +968,9 @@ void CDigitShowBasicView::OnBUTTONWriteData()
 		Ret = AioResetAiMemory(AdId[0]);
 	}
 	if(NUMAD>1)	{
-		Ret = AioSetAiScanClock ( AdId[1] , 30 );
+		AdScanClock[1]=long(1000/AdChannels[1]);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
+		if(AdScanClock[1]<1){ AdScanClock[1]=1; }
+		Ret = AioSetAiScanClock ( AdId[1] , AdScanClock[1] );
 		Ret = AioGetAiScanClock ( AdId[1] , &AdScanClock[1] );
 		Ret = AioSetAiSamplingClock ( AdId[1] , 1000 );
 		Ret = AioGetAiSamplingClock ( AdId[1] , &AdSamplingClock[1] );
@@ -974,7 +986,7 @@ void CDigitShowBasicView::OnBUTTONWriteData()
 }
 void CDigitShowBasicView::OnBUTTONSetCtrlID() 
 {
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉƒRï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê’mï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	CString		tmp;
 	CComboBox* m_Combo1 = (CComboBox*)GetDlgItem(IDC_COMBO_Control_ID);
 	m_Combo1->GetWindowText(tmp);
@@ -983,7 +995,7 @@ void CDigitShowBasicView::OnBUTTONSetCtrlID()
 
 void CDigitShowBasicView::OnBUTTONSetSamplingTime() 
 {
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉƒRï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê’mï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	CString		tmp;
 	CComboBox* m_Combo1 = (CComboBox*)GetDlgItem(IDC_COMBO_SamplingTime);
 	m_Combo1->GetWindowText(tmp);
@@ -1043,7 +1055,7 @@ void CDigitShowBasicView::Reflesh()
 
 LRESULT CDigitShowBasicView::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
 {
-	// TODO: ‚±‚ÌˆÊ’u‚ÉŒÅ—L‚Ìˆ—‚ğ’Ç‰Á‚·‚é‚©A‚Ü‚½‚ÍŠî–{ƒNƒ‰ƒX‚ğŒÄ‚Ño‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉŒÅ—Lï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½é‚©ï¿½Aï¿½Ü‚ï¿½ï¿½ÍŠï¿½{ï¿½Nï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	int	i,j;
 
 	switch(message){

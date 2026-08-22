@@ -1,10 +1,10 @@
-// DigitShowBasicDoc.cpp : CDigitShowBasicDoc ƒNƒ‰ƒX‚Ì“®ì‚Ì’è‹`‚ðs‚¢‚Ü‚·B
+// DigitShowBasicDoc.cpp : CDigitShowBasicDoc ï¿½Nï¿½ï¿½ï¿½Xï¿½Ì“ï¿½ï¿½ï¿½Ì’ï¿½`ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
 //
 
 #include	"stdafx.h"
 #include	"DigitShowBasic.h"
 #include	"DigitShowBasicDoc.h"
-#include	"caio.h"
+#include	"CAIO.H"
 #include	"dataconvert.h"
 
 #include	"time.h"
@@ -141,17 +141,17 @@ IMPLEMENT_DYNCREATE(CDigitShowBasicDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CDigitShowBasicDoc, CDocument)
 	//{{AFX_MSG_MAP(CDigitShowBasicDoc)
-		// ƒƒ‚ - ClassWizard ‚Í‚±‚ÌˆÊ’u‚Éƒ}ƒbƒsƒ“ƒO—p‚Ìƒ}ƒNƒ‚ð’Ç‰Á‚Ü‚½‚Ííœ‚µ‚Ü‚·B
-		//        ‚±‚ÌˆÊ’u‚É¶¬‚³‚ê‚éƒR[ƒh‚ð•ÒW‚µ‚È‚¢‚Å‚­‚¾‚³‚¢B
+		// ï¿½ï¿½ï¿½ï¿½ - ClassWizard ï¿½Í‚ï¿½ï¿½ÌˆÊ’uï¿½Éƒ}ï¿½bï¿½sï¿½ï¿½ï¿½Oï¿½pï¿½Ìƒ}ï¿½Nï¿½ï¿½ï¿½ï¿½Ç‰ï¿½ï¿½Ü‚ï¿½ï¿½Ííœï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
+		//        ï¿½ï¿½ï¿½ÌˆÊ’uï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½[ï¿½hï¿½ï¿½ÒWï¿½ï¿½ï¿½È‚ï¿½ï¿½Å‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicDoc ƒNƒ‰ƒX‚Ì\’z/Á–Å
+// CDigitShowBasicDoc ï¿½Nï¿½ï¿½ï¿½Xï¿½Ì\ï¿½z/ï¿½ï¿½ï¿½ï¿½
 
 CDigitShowBasicDoc::CDigitShowBasicDoc()
 {
-	// TODO: ‚±‚ÌˆÊ’u‚É‚P“x‚¾‚¯ŒÄ‚Î‚ê‚é\’z—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢B
+	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½É‚Pï¿½xï¿½ï¿½ï¿½ï¿½ï¿½Ä‚Î‚ï¿½ï¿½\ï¿½zï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 	// Initialize of data
 	int	i,j;
 	Flag_SetBoard=FALSE;
@@ -311,8 +311,8 @@ BOOL CDigitShowBasicDoc::OnNewDocument()
 	if (!CDocument::OnNewDocument())
 		return FALSE;
 
-	// TODO: ‚±‚ÌˆÊ’u‚ÉÄ‰Šú‰»ˆ—‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢B
-	// (SDI ƒhƒLƒ…ƒƒ“ƒg‚Í‚±‚ÌƒhƒLƒ…ƒƒ“ƒg‚ðÄ—˜—p‚µ‚Ü‚·B)
+	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉÄï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
+	// (SDI ï¿½hï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½Í‚ï¿½ï¿½Ìƒhï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Ä—ï¿½ï¿½pï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B)
 
 	return TRUE;
 }
@@ -320,22 +320,22 @@ BOOL CDigitShowBasicDoc::OnNewDocument()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicDoc ƒVƒŠƒAƒ‰ƒCƒ[[ƒVƒ‡ƒ“
+// CDigitShowBasicDoc ï¿½Vï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Cï¿½[ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½
 
 void CDigitShowBasicDoc::Serialize(CArchive& ar)
 {
 	if (ar.IsStoring())
 	{
-		// TODO: ‚±‚ÌˆÊ’u‚É•Û‘¶—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢B
+		// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½É•Û‘ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 	}
 	else
 	{
-		// TODO: ‚±‚ÌˆÊ’u‚É“Ç‚Ýž‚Ý—p‚ÌƒR[ƒh‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢B
+		// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½É“Ç‚Ýï¿½ï¿½Ý—pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicDoc ƒNƒ‰ƒX‚Ìf’f
+// CDigitShowBasicDoc ï¿½Nï¿½ï¿½ï¿½Xï¿½Ìfï¿½f
 
 #ifdef _DEBUG
 void CDigitShowBasicDoc::AssertValid() const
@@ -350,7 +350,7 @@ void CDigitShowBasicDoc::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicDoc ƒRƒ}ƒ“ƒh
+// CDigitShowBasicDoc ï¿½Rï¿½}ï¿½ï¿½ï¿½h
 void CDigitShowBasicDoc::OpenBoard()
 {
 	int	i;

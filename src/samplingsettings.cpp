@@ -1,4 +1,4 @@
-// SamplingSettings.cpp : ƒCƒ“ƒvƒŠƒƒ“ƒe[ƒVƒ‡ƒ“ ƒtƒ@ƒCƒ‹
+// SamplingSettings.cpp : ï¿½Cï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½eï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ ï¿½tï¿½@ï¿½Cï¿½ï¿½
 //
 
 #include "stdafx.h"
@@ -14,11 +14,13 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CSamplingSettings ƒ_ƒCƒAƒƒO
+// CSamplingSettings ï¿½_ï¿½Cï¿½Aï¿½ï¿½ï¿½O
 extern	int			NUMAD;
 extern	int			AdMaxCH;
 extern	short		AdMemoryType[2];
 extern	float		AdSamplingClock[2];
+extern	short		AdChannels[2];
+extern	float		AdScanClock[2];
 extern	long		AdSamplingTimes[2];
 extern	int			SavingTime;
 extern	long		TotalSamplingTimes;
@@ -77,13 +79,13 @@ BEGIN_MESSAGE_MAP(CSamplingSettings, CDialog)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CSamplingSettings ƒƒbƒZ[ƒW ƒnƒ“ƒhƒ‰
+// CSamplingSettings ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½W ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
 
 BOOL CSamplingSettings::OnInitDialog() 
 {
 	CDialog::OnInitDialog();
 	
-	// TODO: ‚±‚ÌˆÊ’u‚É‰Šú‰»‚Ì•â‘«ˆ—‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì•â‘«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	m_TimeInterval1 = TimeInterval_1;
 	m_TimeInterval2 = TimeInterval_2;
 	m_TimeInterval3 = TimeInterval_3;
@@ -104,13 +106,13 @@ BOOL CSamplingSettings::OnInitDialog()
 	if(Flag_FIFO==TRUE)	myBTN1->EnableWindow(FALSE);
 	myBTN2->EnableWindow(FALSE);
 
-	return TRUE;  // ƒRƒ“ƒgƒ[ƒ‹‚ÉƒtƒH[ƒJƒX‚ğİ’è‚µ‚È‚¢‚Æ‚«A–ß‚è’l‚Í TRUE ‚Æ‚È‚è‚Ü‚·
-	              // —áŠO: OCX ƒvƒƒpƒeƒB ƒy[ƒW‚Ì–ß‚è’l‚Í FALSE ‚Æ‚È‚è‚Ü‚·
+	return TRUE;  // ï¿½Rï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Éƒtï¿½Hï¿½[ï¿½Jï¿½Xï¿½ï¿½İ’è‚µï¿½È‚ï¿½ï¿½Æ‚ï¿½ï¿½Aï¿½ß‚ï¿½lï¿½ï¿½ TRUE ï¿½Æ‚È‚ï¿½Ü‚ï¿½
+	              // ï¿½ï¿½O: OCX ï¿½vï¿½ï¿½ï¿½pï¿½eï¿½B ï¿½yï¿½[ï¿½Wï¿½Ì–ß‚ï¿½lï¿½ï¿½ FALSE ï¿½Æ‚È‚ï¿½Ü‚ï¿½
 }
 
 void CSamplingSettings::OnBUTTONCheck() 
 {
-	// TODO: ‚±‚ÌˆÊ’u‚ÉƒRƒ“ƒgƒ[ƒ‹’Ê’mƒnƒ“ƒhƒ‰—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉƒRï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê’mï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	UpdateData(TRUE);
 	m_TotalSamplingTimes=long(m_SavingTime*1000/m_SamplingClock);
 	m_AllocatedMemory.Format("%.1f",4*AdMaxCH*m_TotalSamplingTimes/1024.0f/1024.0f);
@@ -124,9 +126,11 @@ void CSamplingSettings::OnBUTTONCheck()
 
 void CSamplingSettings::OnOK() 
 {
-	// TODO: ‚±‚ÌˆÊ’u‚É‚»‚Ì‘¼‚ÌŒŸØ—p‚ÌƒR[ƒh‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢
+	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½É‚ï¿½ï¿½Ì‘ï¿½ï¿½ÌŒï¿½ï¿½Ø—pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	UpdateData(TRUE);
 	AdSamplingClock[0] = m_SamplingClock*1000.0f;
+	AdScanClock[0] = long(AdSamplingClock[0]/AdChannels[0]);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
+	if(AdScanClock[0]<1){ AdScanClock[0]=1; }
 	SavingTime = m_SavingTime;
 	AdSamplingTimes[0] = m_EventSamplingTimes;
 	TotalSamplingTimes=long(SavingTime*1000000/AdSamplingClock[0]);
@@ -137,6 +141,8 @@ void CSamplingSettings::OnOK()
 
 	if(NUMAD>1){
 		AdSamplingClock[1]=AdSamplingClock[0];
+		AdScanClock[1]=long(AdSamplingClock[1]/AdChannels[1]);
+		if(AdScanClock[1]<1){ AdScanClock[1]=1; }
 		AdSamplingTimes[1]=AdSamplingTimes[0];
 	}
 	CDialog::OnOK();
