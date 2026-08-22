@@ -32,11 +32,10 @@
 #define CONTROL_MAX         16  // Number of control target data sets
 #define CONTROLFILE_STEPS  256  // Number of steps in a control file
 #define CONTROLFILE_PARAS   16  // Number of parameters per control file step
-#define NAME_DV_MAX          8  // Number of D/A channel names
+#define NAME_DV_MAX          7  // Number of D/A channel names (CH00-CH06)
 
 // Raw transfer buffer size [samples] (64 MiB / board, same as legacy globals)
 #define AD_BUFFER_SIZE 16777216L
-#define DA_BUFFER_SIZE     262144L
 
 // 笏笏 D/A channel index assignments (fixed hardware wiring) 笏笏
 #define DA_CH_EP_CELL         0  // EP cell pressure
@@ -104,9 +103,7 @@ struct ControlData {
 	double strainRate[3];
 	double strainAmp[3];
 	double K0;
-	double AxisClutch;
 	double AxisSpeed;
-	double TorsionClutch;
 	double TorsionSpeed;
 };
 
@@ -116,7 +113,6 @@ struct ControlData {
 struct PhysicalValues {
 	double rotation1;           // POT1 angle [rad]
 	double rotation2;           // POT2 angle [rad]
-	double BW1;                 // balance weight 1
 	double BW2;                 // balance weight 2
 	double height;              // current specimen height
 	double area;                // current specimen area
@@ -199,7 +195,7 @@ struct DigitShowContext {
 	DaBoardConfig  da[DA_MAX_BOARDS];
 
 	// Raw transfer buffers
-	long   DaData[DA_BUFFER_SIZE];
+	long   DaData[AO_MAX_CHANNELS];
 	long   AdData0[AD_BUFFER_SIZE];
 	long   AdData1[AD_BUFFER_SIZE];
 	PVOID  pSmplData[AD_MAX_BOARDS];         // save buffer source

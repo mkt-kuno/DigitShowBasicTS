@@ -60,9 +60,6 @@
     <ClCompile Include="MainFrm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RS232C.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SamplingSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -418,15 +418,6 @@
 #define IDC_BUTTON_Channel              2090
 #define IDC_EDIT_AxialMotorSpeed        2091
 #define IDC_EDIT_q                      2092
-#define IDC_BUTTON_initialize           2094
-#define IDC_BUTTON_receive              2095
-#define IDC_BUTTON_send                 2096
-#define IDC_EDIT_SendData               2097
-#define IDC_EDIT_ReceiveData            2098
-#define IDC_RADIO_LCDPT                 2099
-#define IDC_RADIO_Balance               2100
-#define IDC_BUTTON_BalanceOn            2101
-#define IDC_BUTTON_BalanceOff           2102
 #define IDC_EDIT_WeightString           2103
 #define IDC_BUTTON_ReadFile             2200
 #define IDC_BUTTON_StepInc              2201

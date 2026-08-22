@@ -70,7 +70,6 @@ public:
 	void SaveToFile2();
 	void Allocate_Memory();
 	void Stop_Control();
-	void Start_Control();
 	void CloseBoard();
 	void OpenBoard();
 	void SaveToFile();

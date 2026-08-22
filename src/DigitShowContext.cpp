@@ -163,9 +163,7 @@ void InitContext(DigitShowContext* ctx)
 			ctx->control[i].strainAmp[j]=0.0;
 		}
 		ctx->control[i].K0=1.0;
-		ctx->control[i].AxisClutch=0.0;
 		ctx->control[i].AxisSpeed=0.0;
-		ctx->control[i].TorsionClutch=0.0;
 		ctx->control[i].TorsionSpeed=0.0;
 	}
 	ctx->control[1].q[0]=1.0;

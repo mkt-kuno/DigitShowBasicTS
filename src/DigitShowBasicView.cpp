@@ -560,7 +560,6 @@ void CDigitShowBasicView::OnBUTTONCtrlOn()
 		CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_CtrlOff);
 		myBTN1->EnableWindow(FALSE);	
 		myBTN2->EnableWindow(TRUE);
-		pDoc->Start_Control();
 	}
 }
 

@@ -631,11 +631,6 @@ void CDigitShowBasicDoc::Control_DA()
 	}
 }
 
-void CDigitShowBasicDoc::Start_Control()
-{	DigitShowContext* ctx = GetContext();
-
-}
-
 void CDigitShowBasicDoc::Stop_Control()
 {	DigitShowContext* ctx = GetContext();
 	ctx->ao.raw[ctx->daCh.AxisMotor]=0.0f;
