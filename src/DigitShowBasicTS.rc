@@ -48,7 +48,7 @@ BEGIN
     "LANGUAGE 17, 1\r\n"
     "#pragma code_page(65001)\r\n"
     "#endif //_WIN32\r\n"
-    "#include ""res\\DigitShowBasic.rc2""  // Microsoft Visual C++ ?E?O?I?c?[???A?O?W?3?e?????\\?[?X\r\n"
+    "#include ""res\\DigitShowBasicTS.rc2""  // Microsoft Visual C++ ?E?O?I?c?[???A?O?W?3?e?????\\?[?X\r\n"
     "#include ""l.jpn\\afxres.rc""          // ?W???I?R?“?|?[?l?“?g\r\n"
     "#endif\r\n"
     "\0"
@@ -64,9 +64,9 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "res\\DigitShowBasic.ico"
+IDR_MAINFRAME           ICON                    "res\\DigitShowBasicTS.ico"
 
-IDR_DIGITSTYPE          ICON                    "res\\DigitShowBasicDoc.ico"
+IDR_DIGITSTYPE          ICON                    "res\\DigitShowBasicTSDoc.ico"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -928,12 +928,12 @@ BEGIN
     BEGIN
         BLOCK "041104b0"
         BEGIN
-            VALUE "FileDescription", "DigitShowBasic MFC ｱﾌﾟﾘｹｰｼｮﾝ"
+            VALUE "FileDescription", "DigitShowBasicTS MFC ｱﾌﾟﾘｹｰｼｮﾝ"
             VALUE "FileVersion", "1, 0, 0, 1"
-            VALUE "InternalName", "DigitShowBasic"
+            VALUE "InternalName", "DigitShowBasicTS"
             VALUE "LegalCopyright", "Copyright (C) 2001"
-            VALUE "OriginalFilename", "DigitShowBasic.EXE"
-            VALUE "ProductName", "DigitShowBasic ｱﾌﾟﾘｹｰｼｮﾝ"
+            VALUE "OriginalFilename", "DigitShowBasicTS.EXE"
+            VALUE "ProductName", "DigitShowBasicTS ｱﾌﾟﾘｹｰｼｮﾝ"
             VALUE "ProductVersion", "1, 0, 0, 1"
         END
     END
@@ -1096,7 +1096,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "DigitShowBasic\n\nDigitS\n\n\nDigitShowBasic.Document\nDigitS Document"
+    IDR_MAINFRAME           "DigitShowBasicTS\n\nDigitS\n\n\nDigitShowBasic.Document\nDigitS Document"
 END
 
 STRINGTABLE
@@ -1214,7 +1214,7 @@ END
 LANGUAGE 17, 1
 #pragma code_page(65001)
 #endif //_WIN32
-#include "res\DigitShowBasic.rc2"  // Microsoft Visual C++ 以外のツールで編集されたリソース
+#include "res\DigitShowBasicTS.rc2"  // Microsoft Visual C++ 以外のツールで編集されたリソース
 #include "l.jpn\afxres.rc"          // 標準のコンポーネント
 #endif
 

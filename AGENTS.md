@@ -14,11 +14,11 @@
 From repository root:
 
 ```powershell
-& "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe" "DigitShowBasic.sln" /p:Configuration=Debug /p:Platform=x64 /nologo
+& "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe" "DigitShowBasicTS.sln" /p:Configuration=Debug /p:Platform=x64 /nologo
 ```
 
 ```powershell
-& "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe" "DigitShowBasic.sln" /p:Configuration=Release /p:Platform=x64 /nologo
+& "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe" "DigitShowBasicTS.sln" /p:Configuration=Release /p:Platform=x64 /nologo
 ```
 
 ### Test

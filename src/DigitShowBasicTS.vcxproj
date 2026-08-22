@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -192,7 +192,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="DigitShowBasic.rc" />
+    <ResourceCompile Include="DigitShowBasicTS.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoardSettings.h" />
@@ -221,7 +221,7 @@
     <Image Include="res\DigitShowBasicDoc.ico" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="res\DigitShowBasic.rc2" />
+    <CustomBuild Include="res\DigitShowBasicTS.rc2" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
