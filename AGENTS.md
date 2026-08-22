@@ -105,7 +105,7 @@ Primary board (typical wiring): CH0 vertical load [N], CH1 torque [Ncm], CH2/CH3
 
 ## Key conventions for edits
 
-1. **File encoding is Shift-JIS (CP932) legacy.** Most `.cpp/.h/.rc` files contain Shift-JIS Japanese comments. Preserve each file's original encoding when editing; converting encodings casually will corrupt comments and string literals. Do not run global encodings conversions or "fix mojibake" rewrites.
+1. **File encoding is UTF-8 with BOM (`EF BB BF`).** All `.cpp/.h/.rc/.rc2` files are saved as UTF-8 with BOM, and the resource files use `#pragma code_page(65001)` (including inside the TEXTINCLUDE sections). Do not save as Shift-JIS or without a BOM; editors that silently drop the BOM on "save" must not be used for these files. Verify the first three bytes are `0xEF 0xBB 0xBF` after editing.
 
 2. **Do not write DA output directly from dialogs/control logic.** Control code updates `ctx->ao.raw[]` (in volts). Actual hardware writes happen in `DA_OUTPUT()` via the CAIO API.
 
