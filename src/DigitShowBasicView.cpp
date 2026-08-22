@@ -1,4 +1,4 @@
-// DigitShowBasicView.cpp : CDigitShowBasicView ï¿½Nï¿½ï¿½ï¿½Xï¿½Ì“ï¿½ï¿½ï¿½Ì’ï¿½`ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B
+// DigitShowBasicView.cpp : CDigitShowBasicView E½NE½E½E½XE½Ì“ï¿½E½E½Ì’ï¿½`E½E½E½sE½E½E½Ü‚ï¿½E½B
 //
 
 #include "stdafx.h"
@@ -6,6 +6,7 @@
 
 #include "DigitShowBasicDoc.h"
 #include "DigitShowBasicView.h"
+#include "DigitShowContext.h"
 
 #include "CAIO.H"
 #include "SamplingSettings.h"
@@ -21,67 +22,21 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CDigitShowBasicView
 // --- A/D ---
-extern	long		Ret,Ret2;
-extern	int			NUMAD,NUMDA;		// The Number of A/D and D/A boards
-extern	short		AdId[2];			// ID of A/D boards
-extern	short		AdChannels[2];		// The Number of Channel
-extern	long		DaData[262144];
-extern	long		AdData0[16777216],AdData1[16777216];
-extern	int			AdMaxCH;
-extern	short		AdMemoryType[2];
-extern	float		AdScanClock[2];
-extern	float		AdSamplingClock[2];
-extern	long		AdSamplingTimes[2];
-extern	long		AdEvent;
-extern	float		SavingClock;
-extern	int			SavingTime;
-extern	long		TotalSamplingTimes;
-extern	long		CurrentSamplingTimes;
-extern	float		AllocatedMemory;
-extern	char		ErrorString[256];
-extern	CString		TextString;
 
-extern	PVOID		pSmplData0,pSmplData1;	// Source of binary data
 		long		tmp,tmp0,tmp1;
 
 //------
-extern  CString		NameV[32], NameP[32];
-extern	float		Vout[32];	
-extern	double		Phyout[32];				
-extern	double		CalParam[32];				
 
 //---Flag---
-extern	bool		Flag_SetBoard;
-extern	bool		Flag_FIFO;
-extern	bool		Flag_SaveData;
 		bool		Flag_Ctrl;
-extern	bool		Flag_SetBalance;
 
 //---Control---
-extern	int			Control_ID;
-extern	int			Num_Cyclic;
-extern	double		StepTime;
 
 //---Control File---
-extern	int			CURNUM;
-extern	int			CFNUM[256];
 
 //---Time---
-extern	CTime		StartTime, NowTime;
-extern	CTimeSpan	SpanTime;
-extern	CString		SNowTime;
-extern	long		SequentTime1;
-extern	double		SequentTime2;
-extern	double		CtrlStepTime;
-extern	unsigned int	TimeInterval_1;
-extern	unsigned int	TimeInterval_2;
-extern	unsigned int	TimeInterval_3;
 //---File---
-extern	FILE        *FileSaveData0;
-extern	FILE		*FileSaveData1;
-extern	FILE		*FileSaveData2;
 //
-extern	CString		ReadBuffer1,ReadBuffer2;
 
 IMPLEMENT_DYNCREATE(CDigitShowBasicView, CFormView)
 
@@ -105,11 +60,12 @@ BEGIN_MESSAGE_MAP(CDigitShowBasicView, CFormView)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicView ï¿½Nï¿½ï¿½ï¿½Xï¿½Ì\ï¿½z/ï¿½ï¿½ï¿½ï¿½
+// CDigitShowBasicView E½NE½E½E½XE½Ì\E½z/E½E½E½E½
 
 CDigitShowBasicView::CDigitShowBasicView()
 	: CFormView(CDigitShowBasicView::IDD)
 {
+	DigitShowContext* ctx = GetContext();
 	//{{AFX_DATA_INIT(CDigitShowBasicView)
 	m_Vout00 = _T("");
 	m_Vout01 = _T("");
@@ -162,7 +118,7 @@ CDigitShowBasicView::CDigitShowBasicView()
 	m_Ctrl_ID = 0;
 	m_NowTime = _T("");
 	m_SeqTime = 0;
-	m_SamplingTime = TimeInterval_3;
+	m_SamplingTime = ctx->timeSettings.Interval3;
 	m_FileName = _T("");
 	m_Para16 = _T("");
 	m_Para17 = _T("");
@@ -210,7 +166,7 @@ CDigitShowBasicView::CDigitShowBasicView()
 	m_VLT15 = _T("");
 	m_DChannel = _T("Ch.00-15");
 	//}}AFX_DATA_INIT
-	// TODO: ï¿½ï¿½ï¿½ÌêŠï¿½É\ï¿½zï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
+	// TODO: E½E½E½ÌêŠE½É\E½zE½pE½ÌƒRE½[E½hE½E½Ç‰ï¿½E½E½E½Ä‚ï¿½E½E½E½E½E½E½E½B
 	Flag_Ctrl=FALSE;
 	m_pEditBrush= new CBrush(RGB(255,255,255));
 	m_pStaticBrush= new CBrush(RGB(0,128,128));	
@@ -225,7 +181,7 @@ CDigitShowBasicView::~CDigitShowBasicView()
 }
 
 void CDigitShowBasicView::DoDataExchange(CDataExchange* pDX)
-{
+{	DigitShowContext* ctx = GetContext();
 	CFormView::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CDigitShowBasicView)
 	DDX_Text(pDX, IDC_EDIT_Vout00, m_Vout00);
@@ -330,14 +286,14 @@ void CDigitShowBasicView::DoDataExchange(CDataExchange* pDX)
 }
 
 BOOL CDigitShowBasicView::PreCreateWindow(CREATESTRUCT& cs)
-{
-	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ï¿½ CREATESTRUCT cs ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Window ï¿½Nï¿½ï¿½ï¿½Xï¿½Ü‚ï¿½ï¿½ÍƒXï¿½^ï¿½Cï¿½ï¿½ï¿½ï¿½
-	//  ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
+{	DigitShowContext* ctx = GetContext();
+	// TODO: E½E½E½ÌˆÊ’uE½E½ CREATESTRUCT cs E½E½E½CE½E½E½E½E½E½ Window E½NE½E½E½XE½Ü‚ï¿½E½ÍƒXE½^E½CE½E½E½E½
+	//  E½CE½E½E½E½E½Ä‚ï¿½E½E½E½E½E½E½E½B
 	return CFormView::PreCreateWindow(cs);
 }
 
 void CDigitShowBasicView::OnInitialUpdate()
-{
+{	DigitShowContext* ctx = GetContext();
 	CFormView::OnInitialUpdate();
 	GetParentFrame()->RecalcLayout();
 	ResizeParentToFit();
@@ -378,46 +334,46 @@ void CDigitShowBasicView::OnInitialUpdate()
 //
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 	pDoc->OpenBoard();
-	if(Flag_SetBoard){
-		if(NUMAD>0)	{
-			AdScanClock[0]=long(1000/AdChannels[0]);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
-			if(AdScanClock[0]<1){ AdScanClock[0]=1; }
-			Ret = AioSetAiScanClock ( AdId[0] , AdScanClock[0] );
-			Ret = AioGetAiScanClock ( AdId[0] , &AdScanClock[0] );
-			Ret = AioSetAiSamplingClock ( AdId[0] , 1000 );
-			Ret = AioGetAiSamplingClock ( AdId[0] , &AdSamplingClock[0] );
-			AdSamplingTimes[0]=long(TimeInterval_1*1000/AdSamplingClock[0]);
-			Ret = AioSetAiEventSamplingTimes ( AdId[0] , AdSamplingTimes[0] );
-			Ret = AioGetAiEventSamplingTimes ( AdId[0] , &AdSamplingTimes[0] );
-			Ret = AioSetAiStopTrigger(AdId[0], 4);
-			Ret = AioResetAiMemory(AdId[0]);
+	if(ctx->flags.SetBoard){
+		if(ctx->NumAD>0)	{
+			ctx->ad[0].ScanClock=long(1000/ctx->ad[0].Channels);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
+			if(ctx->ad[0].ScanClock<1){ ctx->ad[0].ScanClock=1; }
+			ctx->Ret = AioSetAiScanClock ( ctx->ad[0].Id , ctx->ad[0].ScanClock );
+			ctx->Ret = AioGetAiScanClock ( ctx->ad[0].Id , &ctx->ad[0].ScanClock );
+			ctx->Ret = AioSetAiSamplingClock ( ctx->ad[0].Id , 1000 );
+			ctx->Ret = AioGetAiSamplingClock ( ctx->ad[0].Id , &ctx->ad[0].SamplingClock );
+			ctx->ad[0].SamplingTimes=long(ctx->timeSettings.Interval1*1000/ctx->ad[0].SamplingClock);
+			ctx->Ret = AioSetAiEventSamplingTimes ( ctx->ad[0].Id , ctx->ad[0].SamplingTimes );
+			ctx->Ret = AioGetAiEventSamplingTimes ( ctx->ad[0].Id , &ctx->ad[0].SamplingTimes );
+			ctx->Ret = AioSetAiStopTrigger(ctx->ad[0].Id, 4);
+			ctx->Ret = AioResetAiMemory(ctx->ad[0].Id);
 		}
-		if(NUMAD>1)	{
-			AdScanClock[1]=long(1000/AdChannels[1]);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
-			if(AdScanClock[1]<1){ AdScanClock[1]=1; }
-			Ret = AioSetAiScanClock ( AdId[1] , AdScanClock[1] );
-			Ret = AioGetAiScanClock ( AdId[1] , &AdScanClock[1] );
-			Ret = AioSetAiSamplingClock ( AdId[1] , 1000 );
-			Ret = AioGetAiSamplingClock ( AdId[1] , &AdSamplingClock[1] );
-			AdSamplingTimes[1]=long(TimeInterval_1*1000/AdSamplingClock[1]);
-			Ret = AioSetAiEventSamplingTimes ( AdId[1] , AdSamplingTimes[1] );
-			Ret = AioGetAiEventSamplingTimes ( AdId[1] , &AdSamplingTimes[1] );
-			Ret = AioSetAiStopTrigger(AdId[1], 4);
-			Ret = AioResetAiMemory(AdId[1]);
+		if(ctx->NumAD>1)	{
+			ctx->ad[1].ScanClock=long(1000/ctx->ad[1].Channels);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
+			if(ctx->ad[1].ScanClock<1){ ctx->ad[1].ScanClock=1; }
+			ctx->Ret = AioSetAiScanClock ( ctx->ad[1].Id , ctx->ad[1].ScanClock );
+			ctx->Ret = AioGetAiScanClock ( ctx->ad[1].Id , &ctx->ad[1].ScanClock );
+			ctx->Ret = AioSetAiSamplingClock ( ctx->ad[1].Id , 1000 );
+			ctx->Ret = AioGetAiSamplingClock ( ctx->ad[1].Id , &ctx->ad[1].SamplingClock );
+			ctx->ad[1].SamplingTimes=long(ctx->timeSettings.Interval1*1000/ctx->ad[1].SamplingClock);
+			ctx->Ret = AioSetAiEventSamplingTimes ( ctx->ad[1].Id , ctx->ad[1].SamplingTimes );
+			ctx->Ret = AioGetAiEventSamplingTimes ( ctx->ad[1].Id , &ctx->ad[1].SamplingTimes );
+			ctx->Ret = AioSetAiStopTrigger(ctx->ad[1].Id, 4);
+			ctx->Ret = AioResetAiMemory(ctx->ad[1].Id);
 		}
-		AdEvent = AIE_DATA_NUM | AIE_OFERR | AIE_SCERR | AIE_ADERR;
-		Ret = AioSetAiEvent(AdId[NUMAD-1], m_hWnd, AdEvent);
-		Ret = AioSetAiEventSamplingTimes(AdId[NUMAD-1], AdSamplingTimes[NUMAD-1]);
-		if(NUMAD>0) Ret = AioStartAi(AdId[0]);
-		if(NUMAD>1) Ret = AioStartAi(AdId[1]);
+		ctx->AdEvent = AIE_DATA_NUM | AIE_OFERR | AIE_SCERR | AIE_ADERR;
+		ctx->Ret = AioSetAiEvent(ctx->ad[ctx->NumAD-1].Id, m_hWnd, ctx->AdEvent);
+		ctx->Ret = AioSetAiEventSamplingTimes(ctx->ad[ctx->NumAD-1].Id, ctx->ad[ctx->NumAD-1].SamplingTimes);
+		if(ctx->NumAD>0) ctx->Ret = AioStartAi(ctx->ad[0].Id);
+		if(ctx->NumAD>1) ctx->Ret = AioStartAi(ctx->ad[1].Id);
 	}
-	SetTimer(1,TimeInterval_1,NULL);
+	SetTimer(1,ctx->timeSettings.Interval1,NULL);
 	CRS232C RS232C;
 	RS232C.DoModal();	
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicView ï¿½Nï¿½ï¿½ï¿½Xï¿½Ìfï¿½f
+// CDigitShowBasicView E½NE½E½E½XE½ÌfE½f
 
 #ifdef _DEBUG
 void CDigitShowBasicView::AssertValid() const
@@ -430,7 +386,7 @@ void CDigitShowBasicView::Dump(CDumpContext& dc) const
 	CFormView::Dump(dc);
 }
 
-CDigitShowBasicDoc* CDigitShowBasicView::GetDocument() // ï¿½ï¿½fï¿½oï¿½bï¿½O ï¿½oï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ÍƒCï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Å‚ï¿½ï¿½B
+CDigitShowBasicDoc* CDigitShowBasicView::GetDocument() // E½E½fE½oE½bE½O E½oE½[E½WE½E½E½E½E½ÍƒCE½E½E½E½E½CE½E½E½Å‚ï¿½E½B
 {
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CDigitShowBasicDoc)));
 	return (CDigitShowBasicDoc*)m_pDocument;
@@ -438,10 +394,10 @@ CDigitShowBasicDoc* CDigitShowBasicView::GetDocument() // ï¿½ï¿½fï¿½oï¿½bï¿½O ï¿
 #endif //_DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
-// CDigitShowBasicView ï¿½Nï¿½ï¿½ï¿½Xï¿½Ìƒï¿½ï¿½bï¿½Zï¿½[ï¿½W ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
+// CDigitShowBasicView E½NE½E½E½XE½ÌE¿½E½bE½ZE½[E½W E½nE½E½E½hE½E½
 
 HBRUSH CDigitShowBasicView::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
-{
+{	DigitShowContext* ctx = GetContext();
 	switch(nCtlColor)
 	{
 		case CTLCOLOR_EDIT:
@@ -460,16 +416,16 @@ HBRUSH CDigitShowBasicView::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	}	
 }
 void CDigitShowBasicView::OnDestroy() 
-{
+{	DigitShowContext* ctx = GetContext();
 	CFormView::OnDestroy();
-	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½Éƒï¿½ï¿½bï¿½Zï¿½[ï¿½W ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// TODO: E½E½E½ÌˆÊ’uE½ÉE¿½E½bE½ZE½[E½W E½nE½E½E½hE½E½E½pE½ÌƒRE½[E½hE½E½Ç‰ï¿½E½E½E½Ä‚ï¿½E½E½E½E½E½E½
 	delete	m_pEditBrush;
 	delete	m_pStaticBrush;	
 	delete	m_pDlgBrush;
 }
 void CDigitShowBasicView::OnTimer(UINT_PTR nIDEvent)
-{
-	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½Éƒï¿½ï¿½bï¿½Zï¿½[ï¿½W ï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½é‚©ï¿½Ü‚ï¿½ï¿½Íƒfï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+{	DigitShowContext* ctx = GetContext();
+	// TODO: E½E½E½ÌˆÊ’uE½ÉE¿½E½bE½ZE½[E½W E½nE½E½E½hE½E½E½pE½ÌƒRE½[E½hE½E½Ç‰ï¿½E½E½E½é‚©E½Ü‚ï¿½E½ÍƒfE½tE½HE½E½E½gE½Ìï¿½E½E½E½E½E½Ä‚ÑoE½E½E½Ä‚ï¿½E½E½E½E½E½E½
 
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 
@@ -477,14 +433,14 @@ void CDigitShowBasicView::OnTimer(UINT_PTR nIDEvent)
 	{
 	case 1:
 		{ 
-			NowTime=NowTime.GetCurrentTime();
-			SNowTime=NowTime.Format("%m/%d  %H:%M:%S");
-			if(Flag_SaveData){
-				SpanTime=NowTime-StartTime;
-				SequentTime1=SpanTime.GetTotalSeconds();
+			ctx->NowTime=ctx->NowTime.GetCurrentTime();
+			ctx->SNowTime=ctx->NowTime.Format("%m/%d  %H:%M:%S");
+			if(ctx->flags.SaveData){
+				ctx->SpanTime=ctx->NowTime-ctx->StartTime;
+				ctx->SequentTime1=ctx->SpanTime.GetTotalSeconds();
 			}	
-			if(Flag_SetBalance)	pDoc -> Rs232c_GetWeight();
-			if(Flag_SetBoard)	pDoc -> AD_INPUT();
+			if(ctx->flags.SetBalance)	pDoc -> Rs232c_GetWeight();
+			if(ctx->flags.SetBoard)	pDoc -> AD_INPUT();
 			pDoc -> Cal_Physical();
 			pDoc -> Cal_Param();
 			ShowData();
@@ -497,16 +453,16 @@ void CDigitShowBasicView::OnTimer(UINT_PTR nIDEvent)
 				StepTime0=StepTime1;
 				Flag_Ctrl=TRUE;
 			}
-			CtrlStepTime=double(StepTime1.time-StepTime0.time)+double( (StepTime1.millitm-StepTime0.millitm)/1000.0 );
+			ctx->CtrlStepTime=double(StepTime1.time-StepTime0.time)+double( (StepTime1.millitm-StepTime0.millitm)/1000.0 );
 			StepTime0=StepTime1;
-			if(Flag_SetBoard)	pDoc -> Control_DA(); 
+			if(ctx->flags.SetBoard)	pDoc -> Control_DA(); 
 		}
 		break;
 	case 3:
 		{ 
 			_ftime(&NowTime2);
-			SequentTime2=double(NowTime2.time-StartTime2.time)+double( (NowTime2.millitm-StartTime2.millitm)/1000.0 );
-			if(Flag_SetBoard)	pDoc -> AD_INPUT();
+			ctx->SequentTime2=double(NowTime2.time-StartTime2.time)+double( (NowTime2.millitm-StartTime2.millitm)/1000.0 );
+			if(ctx->flags.SetBoard)	pDoc -> AD_INPUT();
 			pDoc -> Cal_Physical();
 			pDoc -> Cal_Param();
 			pDoc -> SaveToFile();
@@ -517,77 +473,77 @@ void CDigitShowBasicView::OnTimer(UINT_PTR nIDEvent)
 }
 
 void CDigitShowBasicView::ShowData()
-{
+{	DigitShowContext* ctx = GetContext();
 	if(m_DChannel == "Ch.00-15"){
-		m_Vout00.Format("%11.4f",Vout[0]);	m_Vout01.Format("%11.4f",Vout[1]);
-		m_Vout02.Format("%11.4f",Vout[2]);	m_Vout03.Format("%11.4f",Vout[3]);
-		m_Vout04.Format("%11.4f",Vout[4]); 	m_Vout05.Format("%11.4f",Vout[5]);
-		m_Vout06.Format("%11.4f",Vout[6]); 	m_Vout07.Format("%11.4f",Vout[7]);
-		m_Vout08.Format("%11.4f",Vout[8]);	m_Vout09.Format("%11.4f",Vout[9]);
-		m_Vout10.Format("%11.4f",Vout[10]);	m_Vout11.Format("%11.4f",Vout[11]);
-		m_Vout12.Format("%11.4f",Vout[12]);	m_Vout13.Format("%11.4f",Vout[13]);
-		m_Vout14.Format("%11.4f",Vout[14]);	m_Vout15.Format("%11.4f",Vout[15]);		
+		m_Vout00.Format("%11.4f",ctx->ai.raw[0]);	m_Vout01.Format("%11.4f",ctx->ai.raw[1]);
+		m_Vout02.Format("%11.4f",ctx->ai.raw[2]);	m_Vout03.Format("%11.4f",ctx->ai.raw[3]);
+		m_Vout04.Format("%11.4f",ctx->ai.raw[4]); 	m_Vout05.Format("%11.4f",ctx->ai.raw[5]);
+		m_Vout06.Format("%11.4f",ctx->ai.raw[6]); 	m_Vout07.Format("%11.4f",ctx->ai.raw[7]);
+		m_Vout08.Format("%11.4f",ctx->ai.raw[8]);	m_Vout09.Format("%11.4f",ctx->ai.raw[9]);
+		m_Vout10.Format("%11.4f",ctx->ai.raw[10]);	m_Vout11.Format("%11.4f",ctx->ai.raw[11]);
+		m_Vout12.Format("%11.4f",ctx->ai.raw[12]);	m_Vout13.Format("%11.4f",ctx->ai.raw[13]);
+		m_Vout14.Format("%11.4f",ctx->ai.raw[14]);	m_Vout15.Format("%11.4f",ctx->ai.raw[15]);		
 
-		m_Phyout00.Format("%11.4f",Phyout[0]);	m_Phyout01.Format("%11.4f",Phyout[1]);
-		m_Phyout02.Format("%11.4f",Phyout[2]);	m_Phyout03.Format("%11.4f",Phyout[3]);
-		m_Phyout04.Format("%11.4f",Phyout[4]);	m_Phyout05.Format("%11.4f",Phyout[5]);
-		m_Phyout06.Format("%11.4f",Phyout[6]);	m_Phyout07.Format("%11.4f",Phyout[7]);
-		m_Phyout08.Format("%11.4f",Phyout[8]);	m_Phyout09.Format("%11.4f",Phyout[9]);
-		m_Phyout10.Format("%11.4f",Phyout[10]);	m_Phyout11.Format("%11.4f",Phyout[11]);
-		m_Phyout12.Format("%11.4f",Phyout[12]);	m_Phyout13.Format("%11.4f",Phyout[13]);
-		m_Phyout14.Format("%11.4f",Phyout[14]);	m_Phyout15.Format("%11.4f",Phyout[15]);
+		m_Phyout00.Format("%11.4f",ctx->ai.phy[0]);	m_Phyout01.Format("%11.4f",ctx->ai.phy[1]);
+		m_Phyout02.Format("%11.4f",ctx->ai.phy[2]);	m_Phyout03.Format("%11.4f",ctx->ai.phy[3]);
+		m_Phyout04.Format("%11.4f",ctx->ai.phy[4]);	m_Phyout05.Format("%11.4f",ctx->ai.phy[5]);
+		m_Phyout06.Format("%11.4f",ctx->ai.phy[6]);	m_Phyout07.Format("%11.4f",ctx->ai.phy[7]);
+		m_Phyout08.Format("%11.4f",ctx->ai.phy[8]);	m_Phyout09.Format("%11.4f",ctx->ai.phy[9]);
+		m_Phyout10.Format("%11.4f",ctx->ai.phy[10]);	m_Phyout11.Format("%11.4f",ctx->ai.phy[11]);
+		m_Phyout12.Format("%11.4f",ctx->ai.phy[12]);	m_Phyout13.Format("%11.4f",ctx->ai.phy[13]);
+		m_Phyout14.Format("%11.4f",ctx->ai.phy[14]);	m_Phyout15.Format("%11.4f",ctx->ai.phy[15]);
 	}
 	else{
-		m_Vout00.Format("%11.4f",Vout[16]);	m_Vout01.Format("%11.4f",Vout[17]);
-		m_Vout02.Format("%11.4f",Vout[18]);	m_Vout03.Format("%11.4f",Vout[19]);
-		m_Vout04.Format("%11.4f",Vout[20]); m_Vout05.Format("%11.4f",Vout[21]);
-		m_Vout06.Format("%11.4f",Vout[22]); m_Vout07.Format("%11.4f",Vout[23]);
-		m_Vout08.Format("%11.4f",Vout[24]);	m_Vout09.Format("%11.4f",Vout[25]);
-		m_Vout10.Format("%11.4f",Vout[26]);	m_Vout11.Format("%11.4f",Vout[27]);
-		m_Vout12.Format("%11.4f",Vout[28]);	m_Vout13.Format("%11.4f",Vout[29]);
-		m_Vout14.Format("%11.4f",Vout[30]);	m_Vout15.Format("%11.4f",Vout[31]);		
+		m_Vout00.Format("%11.4f",ctx->ai.raw[16]);	m_Vout01.Format("%11.4f",ctx->ai.raw[17]);
+		m_Vout02.Format("%11.4f",ctx->ai.raw[18]);	m_Vout03.Format("%11.4f",ctx->ai.raw[19]);
+		m_Vout04.Format("%11.4f",ctx->ai.raw[20]); m_Vout05.Format("%11.4f",ctx->ai.raw[21]);
+		m_Vout06.Format("%11.4f",ctx->ai.raw[22]); m_Vout07.Format("%11.4f",ctx->ai.raw[23]);
+		m_Vout08.Format("%11.4f",ctx->ai.raw[24]);	m_Vout09.Format("%11.4f",ctx->ai.raw[25]);
+		m_Vout10.Format("%11.4f",ctx->ai.raw[26]);	m_Vout11.Format("%11.4f",ctx->ai.raw[27]);
+		m_Vout12.Format("%11.4f",ctx->ai.raw[28]);	m_Vout13.Format("%11.4f",ctx->ai.raw[29]);
+		m_Vout14.Format("%11.4f",ctx->ai.raw[30]);	m_Vout15.Format("%11.4f",ctx->ai.raw[31]);		
 
-		m_Phyout00.Format("%11.4f",Phyout[16]);	m_Phyout01.Format("%11.4f",Phyout[17]);
-		m_Phyout02.Format("%11.4f",Phyout[18]);	m_Phyout03.Format("%11.4f",Phyout[19]);
-		m_Phyout04.Format("%11.4f",Phyout[20]);	m_Phyout05.Format("%11.4f",Phyout[21]);
-		m_Phyout06.Format("%11.4f",Phyout[22]);	m_Phyout07.Format("%11.4f",Phyout[23]);
-		m_Phyout08.Format("%11.4f",Phyout[24]);	m_Phyout09.Format("%11.4f",Phyout[25]);
-		m_Phyout10.Format("%11.4f",Phyout[26]);	m_Phyout11.Format("%11.4f",Phyout[27]);
-		m_Phyout12.Format("%11.4f",Phyout[28]);	m_Phyout13.Format("%11.4f",Phyout[29]);
-		m_Phyout14.Format("%11.4f",Phyout[30]);	m_Phyout15.Format("%11.4f",Phyout[31]);
+		m_Phyout00.Format("%11.4f",ctx->ai.phy[16]);	m_Phyout01.Format("%11.4f",ctx->ai.phy[17]);
+		m_Phyout02.Format("%11.4f",ctx->ai.phy[18]);	m_Phyout03.Format("%11.4f",ctx->ai.phy[19]);
+		m_Phyout04.Format("%11.4f",ctx->ai.phy[20]);	m_Phyout05.Format("%11.4f",ctx->ai.phy[21]);
+		m_Phyout06.Format("%11.4f",ctx->ai.phy[22]);	m_Phyout07.Format("%11.4f",ctx->ai.phy[23]);
+		m_Phyout08.Format("%11.4f",ctx->ai.phy[24]);	m_Phyout09.Format("%11.4f",ctx->ai.phy[25]);
+		m_Phyout10.Format("%11.4f",ctx->ai.phy[26]);	m_Phyout11.Format("%11.4f",ctx->ai.phy[27]);
+		m_Phyout12.Format("%11.4f",ctx->ai.phy[28]);	m_Phyout13.Format("%11.4f",ctx->ai.phy[29]);
+		m_Phyout14.Format("%11.4f",ctx->ai.phy[30]);	m_Phyout15.Format("%11.4f",ctx->ai.phy[31]);
 	}
-	m_Para00.Format("%11.5f",CalParam[0]);	m_Para01.Format("%11.5f",CalParam[1]);
-	m_Para02.Format("%11.5f",CalParam[2]);	m_Para03.Format("%11.5f",CalParam[3]);
-	m_Para04.Format("%11.5f",CalParam[4]);	m_Para05.Format("%11.5f",CalParam[5]);
-	m_Para06.Format("%11.5f",CalParam[6]);	m_Para07.Format("%11.5f",CalParam[7]);
-	m_Para08.Format("%11.5f",CalParam[8]);	m_Para09.Format("%11.5f",CalParam[9]);
-	m_Para10.Format("%11.5f",CalParam[10]);	m_Para11.Format("%11.5f",CalParam[11]);
-	m_Para12.Format("%11.5f",CalParam[12]);	m_Para13.Format("%11.5f",CalParam[13]);
-	m_Para14.Format("%11.5f",CalParam[14]);	m_Para15.Format("%11.5f",CalParam[15]);
-	m_Para16.Format("%11.5f",CalParam[16]);	m_Para17.Format("%11.5f",CalParam[17]);
-	m_Para18.Format("%11.5f",CalParam[18]);	m_Para19.Format("%11.5f",CalParam[19]);
-	m_Para20.Format("%11.5f",CalParam[20]);	m_Para21.Format("%11.5f",CalParam[21]);
-	m_Para22.Format("%11.5f",CalParam[22]);	m_Para23.Format("%11.5f",CalParam[23]);
+	m_Para00.Format("%11.5f",ctx->ai.param[0]);	m_Para01.Format("%11.5f",ctx->ai.param[1]);
+	m_Para02.Format("%11.5f",ctx->ai.param[2]);	m_Para03.Format("%11.5f",ctx->ai.param[3]);
+	m_Para04.Format("%11.5f",ctx->ai.param[4]);	m_Para05.Format("%11.5f",ctx->ai.param[5]);
+	m_Para06.Format("%11.5f",ctx->ai.param[6]);	m_Para07.Format("%11.5f",ctx->ai.param[7]);
+	m_Para08.Format("%11.5f",ctx->ai.param[8]);	m_Para09.Format("%11.5f",ctx->ai.param[9]);
+	m_Para10.Format("%11.5f",ctx->ai.param[10]);	m_Para11.Format("%11.5f",ctx->ai.param[11]);
+	m_Para12.Format("%11.5f",ctx->ai.param[12]);	m_Para13.Format("%11.5f",ctx->ai.param[13]);
+	m_Para14.Format("%11.5f",ctx->ai.param[14]);	m_Para15.Format("%11.5f",ctx->ai.param[15]);
+	m_Para16.Format("%11.5f",ctx->ai.param[16]);	m_Para17.Format("%11.5f",ctx->ai.param[17]);
+	m_Para18.Format("%11.5f",ctx->ai.param[18]);	m_Para19.Format("%11.5f",ctx->ai.param[19]);
+	m_Para20.Format("%11.5f",ctx->ai.param[20]);	m_Para21.Format("%11.5f",ctx->ai.param[21]);
+	m_Para22.Format("%11.5f",ctx->ai.param[22]);	m_Para23.Format("%11.5f",ctx->ai.param[23]);
 	
-	m_Ctrl_ID=Control_ID;
-	m_NowTime=SNowTime;
-	m_SeqTime=SequentTime1;
-	m_SamplingTime=TimeInterval_3;
-	if(Flag_FIFO) m_SamplingTime=long(AdSamplingClock[0]/1000.0f);
+	m_Ctrl_ID=ctx->ControlID;
+	m_NowTime=ctx->SNowTime;
+	m_SeqTime=ctx->SequentTime1;
+	m_SamplingTime=ctx->timeSettings.Interval3;
+	if(ctx->flags.FIFO) m_SamplingTime=long(ctx->ad[0].SamplingClock/1000.0f);
 
-	m_CFStepNo = CURNUM;
-	m_CFCtrlPattern = CFNUM[CURNUM];
-	m_CFCyclicNo = Num_Cyclic;
-	m_CFStepTime = StepTime;
+	m_CFStepNo = ctx->controlFile.CurrentNum;
+	m_CFCtrlPattern = ctx->controlFile.Num[ctx->controlFile.CurrentNum];
+	m_CFCyclicNo = ctx->NumCyclic;
+	m_CFStepTime = ctx->StepTime;
 	UpdateData(FALSE);
 }
 
 void CDigitShowBasicView::OnBUTTONCtrlOn() 
-{
-	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉƒRï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê’mï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+{	DigitShowContext* ctx = GetContext();
+	// TODO: E½E½E½ÌˆÊ’uE½ÉƒRE½E½E½gE½E½E½[E½E½E½Ê’mE½nE½E½E½hE½E½E½pE½ÌƒRE½[E½hE½E½Ç‰ï¿½E½E½E½Ä‚ï¿½E½E½E½E½E½E½
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
-	if(Flag_SetBoard){
-		SetTimer(2,TimeInterval_2,NULL);
+	if(ctx->flags.SetBoard){
+		SetTimer(2,ctx->timeSettings.Interval2,NULL);
 		CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_CtrlOn);
 		CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_CtrlOff);
 		myBTN1->EnableWindow(FALSE);	
@@ -597,8 +553,8 @@ void CDigitShowBasicView::OnBUTTONCtrlOn()
 }
 
 void CDigitShowBasicView::OnBUTTONCtrlOff() 
-{
-	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉƒRï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê’mï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+{	DigitShowContext* ctx = GetContext();
+	// TODO: E½E½E½ÌˆÊ’uE½ÉƒRE½E½E½gE½E½E½[E½E½E½Ê’mE½nE½E½E½hE½E½E½pE½ÌƒRE½[E½hE½E½Ç‰ï¿½E½E½E½Ä‚ï¿½E½E½E½E½E½E½
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 	KillTimer(2);
 	Flag_Ctrl=FALSE;
@@ -610,14 +566,14 @@ void CDigitShowBasicView::OnBUTTONCtrlOff()
 }
 
 void CDigitShowBasicView::OnBUTTONStartSave() 
-{
-	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉƒRï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê’mï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+{	DigitShowContext* ctx = GetContext();
+	// TODO: E½E½E½ÌˆÊ’uE½ÉƒRE½E½E½gE½E½E½[E½E½E½Ê’mE½nE½E½E½hE½E½E½pE½ÌƒRE½[E½hE½E½Ç‰ï¿½E½E½E½Ä‚ï¿½E½E½E½E½E½E½
 
 	CString	pFileName0, pFileName1, pFileName2, TmpString;
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 	int		i;
 
-	if(Flag_FIFO==FALSE){
+	if(ctx->flags.FIFO==FALSE){
 		CFileDialog SaveFile_dlg( FALSE, NULL, "*.dat",  OFN_CREATEPROMPT | OFN_OVERWRITEPROMPT,
 				"Data Files(*.dat)|*.dat| All Files(*.*)|*.*| |",NULL);
 		if(SaveFile_dlg.DoModal()==IDOK){
@@ -635,71 +591,71 @@ void CDigitShowBasicView::OnBUTTONStartSave()
 				pFileName1.Replace(TmpString,".dat");
 				m_FileName=m_FileName+_T(".dat");
 			}
-			FileSaveData1 = fopen((LPCSTR)pFileName1 , "w" );
-			fprintf(FileSaveData1,"%s	","Time(s)");
+			ctx->FileSaveData1 = fopen((LPCSTR)pFileName1 , "w" );
+			fprintf(ctx->FileSaveData1,"%s	","Time(s)");
 			for(i=0;i<32;i++){
-				fprintf(FileSaveData1,"%s	",NameP[i]);
+				fprintf(ctx->FileSaveData1,"%s	",ctx->NameP[i]);
 			}
-			fprintf(FileSaveData1,"\n");
+			fprintf(ctx->FileSaveData1,"\n");
 			// File for saving the voltage data
 			pFileName0=pFileName1;
 			pFileName0.Replace(".dat",".vlt");
-			FileSaveData0 = fopen((LPCSTR)pFileName0 , "w" );
-			fprintf(FileSaveData0,"%s	","Time(s)");
+			ctx->FileSaveData0 = fopen((LPCSTR)pFileName0 , "w" );
+			fprintf(ctx->FileSaveData0,"%s	","Time(s)");
 			for(i=0;i<32;i++){
-				fprintf(FileSaveData0,"%s	",NameV[i]);
+				fprintf(ctx->FileSaveData0,"%s	",ctx->NameV[i]);
 			}
-			fprintf(FileSaveData0,"\n");
+			fprintf(ctx->FileSaveData0,"\n");
 			// File for saving the parameter data
 			// @ Hashimoto modified 2023.02.28
 			pFileName2=pFileName1;
 			pFileName2.Replace(".dat",".out");
-			FileSaveData2 = fopen((LPCSTR)pFileName2 , "w" );
-			fprintf(FileSaveData2,"%s	","Time(s)");
-			fprintf(FileSaveData2,"%s	","sigma(z)(kPa)");
-			fprintf(FileSaveData2,"%s	","sigma(r)(kPa)");
-			fprintf(FileSaveData2,"%s	","sigma(q)(kPa)");
-			fprintf(FileSaveData2,"%s	","tau(zq)(kPa)");
-			fprintf(FileSaveData2,"%s	","e_(vol.)");
-			fprintf(FileSaveData2,"%s	","e_(z)");
-			fprintf(FileSaveData2,"%s	","LDT1(mm)");
-			fprintf(FileSaveData2,"%s	","LDT2(mm)");
-			fprintf(FileSaveData2,"%s	","CG1(mm)");
-			fprintf(FileSaveData2,"%s	","CG2(mm)");
-			fprintf(FileSaveData2,"%s	","CG3(mm)");
-			fprintf(FileSaveData2,"%s	","p_(kPa)");
-			fprintf(FileSaveData2,"%s	","q_(kPa)");
-			fprintf(FileSaveData2,"%s	","sigma(1)(kPa)");
-			fprintf(FileSaveData2,"%s	","sigma(2)(kPa)");
-			fprintf(FileSaveData2,"%s	","sigma(3)(kPa)");
-			fprintf(FileSaveData2,"%s	","g1_(zq)");
-			fprintf(FileSaveData2,"%s	","g2_(zq)");
-			fprintf(FileSaveData2,"%s	","InCellPre(kPa)");
-			fprintf(FileSaveData2,"%s	","OutCellPre(kPa)");
-			fprintf(FileSaveData2,"%s	","InnerDia.(mm)");
-			fprintf(FileSaveData2,"%s	","OuterDia.(mm)");
-			fprintf(FileSaveData2,"%s	","Height(mm)");
-			fprintf(FileSaveData2,"%s	","Volume(mm3)");
+			ctx->FileSaveData2 = fopen((LPCSTR)pFileName2 , "w" );
+			fprintf(ctx->FileSaveData2,"%s	","Time(s)");
+			fprintf(ctx->FileSaveData2,"%s	","sigma(z)(kPa)");
+			fprintf(ctx->FileSaveData2,"%s	","sigma(r)(kPa)");
+			fprintf(ctx->FileSaveData2,"%s	","sigma(q)(kPa)");
+			fprintf(ctx->FileSaveData2,"%s	","tau(zq)(kPa)");
+			fprintf(ctx->FileSaveData2,"%s	","e_(vol.)");
+			fprintf(ctx->FileSaveData2,"%s	","e_(z)");
+			fprintf(ctx->FileSaveData2,"%s	","LDT1(mm)");
+			fprintf(ctx->FileSaveData2,"%s	","LDT2(mm)");
+			fprintf(ctx->FileSaveData2,"%s	","CG1(mm)");
+			fprintf(ctx->FileSaveData2,"%s	","CG2(mm)");
+			fprintf(ctx->FileSaveData2,"%s	","CG3(mm)");
+			fprintf(ctx->FileSaveData2,"%s	","p_(kPa)");
+			fprintf(ctx->FileSaveData2,"%s	","q_(kPa)");
+			fprintf(ctx->FileSaveData2,"%s	","sigma(1)(kPa)");
+			fprintf(ctx->FileSaveData2,"%s	","sigma(2)(kPa)");
+			fprintf(ctx->FileSaveData2,"%s	","sigma(3)(kPa)");
+			fprintf(ctx->FileSaveData2,"%s	","g1_(zq)");
+			fprintf(ctx->FileSaveData2,"%s	","g2_(zq)");
+			fprintf(ctx->FileSaveData2,"%s	","InCellPre(kPa)");
+			fprintf(ctx->FileSaveData2,"%s	","OutCellPre(kPa)");
+			fprintf(ctx->FileSaveData2,"%s	","InnerDia.(mm)");
+			fprintf(ctx->FileSaveData2,"%s	","OuterDia.(mm)");
+			fprintf(ctx->FileSaveData2,"%s	","Height(mm)");
+			fprintf(ctx->FileSaveData2,"%s	","Volume(mm3)");
 
 			
 			// 2021.12.07 Edited by M.Kuno
 			// customize for Sanjei
-			fprintf(FileSaveData2, "%s	", "ControlStep");
-			fprintf(FileSaveData2, "%s	", "Cyclic");
-			fprintf(FileSaveData2,"\n");
+			fprintf(ctx->FileSaveData2, "%s	", "ControlStep");
+			fprintf(ctx->FileSaveData2, "%s	", "Cyclic");
+			fprintf(ctx->FileSaveData2,"\n");
 
 // Timer starts
-			SetTimer(3,TimeInterval_3,NULL);
-			NowTime=NowTime.GetCurrentTime();
-			StartTime=NowTime;
-			SpanTime=NowTime-StartTime;
-			SequentTime1=SpanTime.GetTotalSeconds();
+			SetTimer(3,ctx->timeSettings.Interval3,NULL);
+			ctx->NowTime=ctx->NowTime.GetCurrentTime();
+			ctx->StartTime=ctx->NowTime;
+			ctx->SpanTime=ctx->NowTime-ctx->StartTime;
+			ctx->SequentTime1=ctx->SpanTime.GetTotalSeconds();
 //
 			_ftime(&NowTime2);
 			StartTime2=NowTime2;
-			SequentTime2=double(NowTime2.time-StartTime2.time)+double( (NowTime2.millitm-StartTime2.millitm)/1000.0 );
+			ctx->SequentTime2=double(NowTime2.time-StartTime2.time)+double( (NowTime2.millitm-StartTime2.millitm)/1000.0 );
 //
-			Flag_SaveData=TRUE;
+			ctx->flags.SaveData=TRUE;
 			CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_StartSave);
 			CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_StopSave);
 			CButton* myBTN3=(CButton*)GetDlgItem(IDC_BUTTON_InterceptSave);
@@ -711,22 +667,22 @@ void CDigitShowBasicView::OnBUTTONStartSave()
 			myBTN4->EnableWindow(FALSE);
 			myBTN5->EnableWindow(FALSE);
 //
-			if(Flag_SetBoard)	pDoc -> AD_INPUT();
+			if(ctx->flags.SetBoard)	pDoc -> AD_INPUT();
 			pDoc -> Cal_Physical();
 			pDoc -> Cal_Param();
 			pDoc -> SaveToFile();
 		}
 	}
-	if(Flag_SetBoard==TRUE && Flag_FIFO==TRUE){
-		NowTime=NowTime.GetCurrentTime();
-		StartTime=NowTime;
-		SpanTime=NowTime-StartTime;
-		SequentTime1=SpanTime.GetTotalSeconds();
-	    if(NUMAD>0) Ret = AioStopAi(AdId[0]);
-		if(NUMAD>1) Ret = AioStopAi(AdId[1]);
-		if(NUMAD>2) Ret = AioStopAi(AdId[2]);
-		Flag_SaveData=TRUE;
-		CurrentSamplingTimes=0;
+	if(ctx->flags.SetBoard==TRUE && ctx->flags.FIFO==TRUE){
+		ctx->NowTime=ctx->NowTime.GetCurrentTime();
+		ctx->StartTime=ctx->NowTime;
+		ctx->SpanTime=ctx->NowTime-ctx->StartTime;
+		ctx->SequentTime1=ctx->SpanTime.GetTotalSeconds();
+	    if(ctx->NumAD>0) ctx->Ret = AioStopAi(ctx->ad[0].Id);
+		if(ctx->NumAD>1) ctx->Ret = AioStopAi(ctx->ad[1].Id);
+		if(ctx->NumAD>2) ctx->Ret = AioStopAi(ctx->ad[2].Id);
+		ctx->flags.SaveData=TRUE;
+		ctx->CurrentSamplingTimes=0;
 		pDoc->Allocate_Memory();
 		CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_StartSave);
 		CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_StopSave);
@@ -740,33 +696,33 @@ void CDigitShowBasicView::OnBUTTONStartSave()
 		myBTN4->EnableWindow(FALSE);
 		myBTN5->EnableWindow(FALSE);
 		myBTN6->EnableWindow(FALSE);
-		if(NUMAD>0) Ret = AioResetAiMemory(AdId[0]);
-		if(NUMAD>1) Ret = AioResetAiMemory(AdId[1]);
-		if(NUMAD>0) Ret = AioStartAi(AdId[0]);
-		if(NUMAD>1) Ret = AioStartAi(AdId[1]);
+		if(ctx->NumAD>0) ctx->Ret = AioResetAiMemory(ctx->ad[0].Id);
+		if(ctx->NumAD>1) ctx->Ret = AioResetAiMemory(ctx->ad[1].Id);
+		if(ctx->NumAD>0) ctx->Ret = AioStartAi(ctx->ad[0].Id);
+		if(ctx->NumAD>1) ctx->Ret = AioStartAi(ctx->ad[1].Id);
 	}
 }
 
 void CDigitShowBasicView::OnBUTTONStopSave() 
-{
-	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉƒRï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê’mï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+{	DigitShowContext* ctx = GetContext();
+	// TODO: E½E½E½ÌˆÊ’uE½ÉƒRE½E½E½gE½E½E½[E½E½E½Ê’mE½nE½E½E½hE½E½E½pE½ÌƒRE½[E½hE½E½Ç‰ï¿½E½E½E½Ä‚ï¿½E½E½E½E½E½E½
 
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 
-	if(Flag_SaveData==TRUE && Flag_FIFO==FALSE){
+	if(ctx->flags.SaveData==TRUE && ctx->flags.FIFO==FALSE){
 		KillTimer(3);
-		NowTime=NowTime.GetCurrentTime();
-		SpanTime=NowTime-StartTime;
-		SequentTime1=SpanTime.GetTotalSeconds();
+		ctx->NowTime=ctx->NowTime.GetCurrentTime();
+		ctx->SpanTime=ctx->NowTime-ctx->StartTime;
+		ctx->SequentTime1=ctx->SpanTime.GetTotalSeconds();
 		_ftime(&NowTime2);
-		SequentTime2=double(NowTime2.time-StartTime2.time)+double( (NowTime2.millitm-StartTime2.millitm)/1000.0 );
-		if(Flag_SetBoard)	pDoc -> AD_INPUT();
+		ctx->SequentTime2=double(NowTime2.time-StartTime2.time)+double( (NowTime2.millitm-StartTime2.millitm)/1000.0 );
+		if(ctx->flags.SetBoard)	pDoc -> AD_INPUT();
 		pDoc -> Cal_Physical();
 		pDoc -> Cal_Param();
 		pDoc -> SaveToFile();
-		fclose(FileSaveData0);
-		fclose(FileSaveData1);
-		fclose(FileSaveData2);
+		fclose(ctx->FileSaveData0);
+		fclose(ctx->FileSaveData1);
+		fclose(ctx->FileSaveData2);
 		CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_StartSave);
 		CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_StopSave);	
 		CButton* myBTN3=(CButton*)GetDlgItem(IDC_BUTTON_InterceptSave);
@@ -777,16 +733,16 @@ void CDigitShowBasicView::OnBUTTONStopSave()
 		myBTN3->EnableWindow(FALSE);	
 		myBTN4->EnableWindow(TRUE);
 		myBTN5->EnableWindow(FALSE);
-		Flag_SaveData=FALSE;
+		ctx->flags.SaveData=FALSE;
 	}
-	if(Flag_SaveData==TRUE && Flag_FIFO==TRUE){
-		Flag_SaveData=FALSE;
-	    if(NUMAD>0) Ret = AioStopAi(AdId[0]);
-		if(NUMAD>1) Ret = AioStopAi(AdId[1]);
-		if(NUMAD>0) Ret = AioResetAiMemory(AdId[0]);
-		if(NUMAD>1) Ret = AioResetAiMemory(AdId[1]);
-		if(NUMAD>0) Ret = AioStartAi(AdId[0]);
-		if(NUMAD>1) Ret = AioStartAi(AdId[1]);
+	if(ctx->flags.SaveData==TRUE && ctx->flags.FIFO==TRUE){
+		ctx->flags.SaveData=FALSE;
+	    if(ctx->NumAD>0) ctx->Ret = AioStopAi(ctx->ad[0].Id);
+		if(ctx->NumAD>1) ctx->Ret = AioStopAi(ctx->ad[1].Id);
+		if(ctx->NumAD>0) ctx->Ret = AioResetAiMemory(ctx->ad[0].Id);
+		if(ctx->NumAD>1) ctx->Ret = AioResetAiMemory(ctx->ad[1].Id);
+		if(ctx->NumAD>0) ctx->Ret = AioStartAi(ctx->ad[0].Id);
+		if(ctx->NumAD>1) ctx->Ret = AioStartAi(ctx->ad[1].Id);
 		CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_StartSave);
 		CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_StopSave);	
 		CButton* myBTN3=(CButton*)GetDlgItem(IDC_BUTTON_InterceptSave);
@@ -803,18 +759,18 @@ void CDigitShowBasicView::OnBUTTONStopSave()
 }
 
 void CDigitShowBasicView::OnBUTTONInterceptSave() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: Add your control notification handler code here
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 	_ftime(&NowTime2);
-	SequentTime2=double(NowTime2.time-StartTime2.time)+double( (NowTime2.millitm-StartTime2.millitm)/1000.0 );	
-	if(Flag_SetBoard)	pDoc -> AD_INPUT();
+	ctx->SequentTime2=double(NowTime2.time-StartTime2.time)+double( (NowTime2.millitm-StartTime2.millitm)/1000.0 );	
+	if(ctx->flags.SetBoard)	pDoc -> AD_INPUT();
 	pDoc -> Cal_Physical();
 	pDoc -> Cal_Param();
 	pDoc -> SaveToFile();	
 }
 void CDigitShowBasicView::OnBUTTONFIFOStart() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: Add your control notification handler code here
 	int	nResult;
 
@@ -822,40 +778,40 @@ void CDigitShowBasicView::OnBUTTONFIFOStart()
 	CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_FIFOStart);
 	CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_FIFOStop);	
 
-	if(Flag_SetBoard==TRUE){
-		if(NUMAD>0) Ret = AioStopAi(AdId[0]);
-	    if(NUMAD>1) Ret = AioStopAi(AdId[1]);
+	if(ctx->flags.SetBoard==TRUE){
+		if(ctx->NumAD>0) ctx->Ret = AioStopAi(ctx->ad[0].Id);
+	    if(ctx->NumAD>1) ctx->Ret = AioStopAi(ctx->ad[1].Id);
 		CSamplingSettings SamplingSettings;
 		nResult = SamplingSettings.DoModal();
 		if(nResult==IDOK){
-			if(NUMAD>0)	{
-				Ret = AioSetAiScanClock ( AdId[0] , AdScanClock[0] );
-				Ret = AioGetAiScanClock ( AdId[0] , &AdScanClock[0] );	
-				Ret = AioSetAiSamplingClock ( AdId[0] , AdSamplingClock[0] );
-				Ret = AioGetAiSamplingClock ( AdId[0] , &AdSamplingClock[0] );
-				Ret = AioSetAiStopTrigger(AdId[0], 4);
-				Ret = AioSetAiEventSamplingTimes ( AdId[0] , AdSamplingTimes[0] );
-				Ret = AioGetAiEventSamplingTimes ( AdId[0] , &AdSamplingTimes[0] );
-				Ret = AioResetAiMemory(AdId[0]);
+			if(ctx->NumAD>0)	{
+				ctx->Ret = AioSetAiScanClock ( ctx->ad[0].Id , ctx->ad[0].ScanClock );
+				ctx->Ret = AioGetAiScanClock ( ctx->ad[0].Id , &ctx->ad[0].ScanClock );	
+				ctx->Ret = AioSetAiSamplingClock ( ctx->ad[0].Id , ctx->ad[0].SamplingClock );
+				ctx->Ret = AioGetAiSamplingClock ( ctx->ad[0].Id , &ctx->ad[0].SamplingClock );
+				ctx->Ret = AioSetAiStopTrigger(ctx->ad[0].Id, 4);
+				ctx->Ret = AioSetAiEventSamplingTimes ( ctx->ad[0].Id , ctx->ad[0].SamplingTimes );
+				ctx->Ret = AioGetAiEventSamplingTimes ( ctx->ad[0].Id , &ctx->ad[0].SamplingTimes );
+				ctx->Ret = AioResetAiMemory(ctx->ad[0].Id);
 			}
-			if(NUMAD>1)	{
-				Ret = AioSetAiScanClock ( AdId[1] , AdScanClock[1] );
-				Ret = AioGetAiScanClock ( AdId[1] , &AdScanClock[1] );
-				Ret = AioSetAiSamplingClock ( AdId[1] , AdSamplingClock[1] );
-				Ret = AioGetAiSamplingClock ( AdId[1] , &AdSamplingClock[1] );
-				Ret = AioSetAiStopTrigger(AdId[1], 4);
-				Ret = AioSetAiEventSamplingTimes ( AdId[1] , AdSamplingTimes[1] );
-				Ret = AioGetAiEventSamplingTimes ( AdId[1] , &AdSamplingTimes[1] );
-				Ret = AioResetAiMemory(AdId[1]);
+			if(ctx->NumAD>1)	{
+				ctx->Ret = AioSetAiScanClock ( ctx->ad[1].Id , ctx->ad[1].ScanClock );
+				ctx->Ret = AioGetAiScanClock ( ctx->ad[1].Id , &ctx->ad[1].ScanClock );
+				ctx->Ret = AioSetAiSamplingClock ( ctx->ad[1].Id , ctx->ad[1].SamplingClock );
+				ctx->Ret = AioGetAiSamplingClock ( ctx->ad[1].Id , &ctx->ad[1].SamplingClock );
+				ctx->Ret = AioSetAiStopTrigger(ctx->ad[1].Id, 4);
+				ctx->Ret = AioSetAiEventSamplingTimes ( ctx->ad[1].Id , ctx->ad[1].SamplingTimes );
+				ctx->Ret = AioGetAiEventSamplingTimes ( ctx->ad[1].Id , &ctx->ad[1].SamplingTimes );
+				ctx->Ret = AioResetAiMemory(ctx->ad[1].Id);
 			}
-			Ret = AioSetAiEventSamplingTimes(AdId[NUMAD-1], AdSamplingTimes[NUMAD-1]);
-			SavingClock=AdSamplingClock[0];
-			Flag_FIFO=TRUE;
+			ctx->Ret = AioSetAiEventSamplingTimes(ctx->ad[ctx->NumAD-1].Id, ctx->ad[ctx->NumAD-1].SamplingTimes);
+			ctx->SavingClock=ctx->ad[0].SamplingClock;
+			ctx->flags.FIFO=TRUE;
 			myBTN1->EnableWindow(FALSE);
 			myBTN2->EnableWindow(TRUE);
 		}
-		if(NUMAD>0) Ret = AioStartAi(AdId[0]);
-		if(NUMAD>1) Ret = AioStartAi(AdId[1]);
+		if(ctx->NumAD>0) ctx->Ret = AioStartAi(ctx->ad[0].Id);
+		if(ctx->NumAD>1) ctx->Ret = AioStartAi(ctx->ad[1].Id);
 	}
 	else{
 		AfxMessageBox("Board Setting has not been accomplished yet.", MB_OK | MB_ICONSTOP, 0);	
@@ -863,58 +819,58 @@ void CDigitShowBasicView::OnBUTTONFIFOStart()
 }
 
 void CDigitShowBasicView::OnBUTTONFIFOStop() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: Add your control notification handler code here
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 	CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_FIFOStart);
 	CButton* myBTN2=(CButton*)GetDlgItem(IDC_BUTTON_FIFOStop);	
-    if(NUMAD>0) Ret = AioStopAi(AdId[0]);
-    if(NUMAD>1) Ret = AioStopAi(AdId[1]);
-	Flag_FIFO=FALSE;
+    if(ctx->NumAD>0) ctx->Ret = AioStopAi(ctx->ad[0].Id);
+    if(ctx->NumAD>1) ctx->Ret = AioStopAi(ctx->ad[1].Id);
+	ctx->flags.FIFO=FALSE;
 	myBTN1->EnableWindow(TRUE);
 	myBTN2->EnableWindow(FALSE);
 //
-	if(NUMAD>0)	{
-		AdScanClock[0]=long(1000/AdChannels[0]);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
-		if(AdScanClock[0]<1){ AdScanClock[0]=1; }
-		Ret = AioSetAiScanClock ( AdId[0] , AdScanClock[0] );
-		Ret = AioGetAiScanClock ( AdId[0] , &AdScanClock[0] );
-		Ret = AioSetAiSamplingClock ( AdId[0] , 1000 );
-		Ret = AioGetAiSamplingClock ( AdId[0] , &AdSamplingClock[0] );
-		AdSamplingTimes[0]=long(TimeInterval_1*1000/AdSamplingClock[0]);
-		Ret = AioSetAiEventSamplingTimes ( AdId[0] , AdSamplingTimes[0] );
-		Ret = AioGetAiEventSamplingTimes ( AdId[0] , &AdSamplingTimes[0] );
-		Ret = AioSetAiStopTrigger(AdId[0], 4);
-		Ret = AioResetAiMemory(AdId[0]);
+	if(ctx->NumAD>0)	{
+		ctx->ad[0].ScanClock=long(1000/ctx->ad[0].Channels);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
+		if(ctx->ad[0].ScanClock<1){ ctx->ad[0].ScanClock=1; }
+		ctx->Ret = AioSetAiScanClock ( ctx->ad[0].Id , ctx->ad[0].ScanClock );
+		ctx->Ret = AioGetAiScanClock ( ctx->ad[0].Id , &ctx->ad[0].ScanClock );
+		ctx->Ret = AioSetAiSamplingClock ( ctx->ad[0].Id , 1000 );
+		ctx->Ret = AioGetAiSamplingClock ( ctx->ad[0].Id , &ctx->ad[0].SamplingClock );
+		ctx->ad[0].SamplingTimes=long(ctx->timeSettings.Interval1*1000/ctx->ad[0].SamplingClock);
+		ctx->Ret = AioSetAiEventSamplingTimes ( ctx->ad[0].Id , ctx->ad[0].SamplingTimes );
+		ctx->Ret = AioGetAiEventSamplingTimes ( ctx->ad[0].Id , &ctx->ad[0].SamplingTimes );
+		ctx->Ret = AioSetAiStopTrigger(ctx->ad[0].Id, 4);
+		ctx->Ret = AioResetAiMemory(ctx->ad[0].Id);
 	}
-	if(NUMAD>1)	{
-		AdScanClock[1]=long(1000/AdChannels[1]);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
-		if(AdScanClock[1]<1){ AdScanClock[1]=1; }
-		Ret = AioSetAiScanClock ( AdId[1] , AdScanClock[1] );
-		Ret = AioGetAiScanClock ( AdId[1] , &AdScanClock[1] );
-		Ret = AioSetAiSamplingClock ( AdId[1] , 1000 );
-		Ret = AioGetAiSamplingClock ( AdId[1] , &AdSamplingClock[1] );
-		AdSamplingTimes[1]=long(TimeInterval_1*1000/AdSamplingClock[1]);
-		Ret = AioSetAiEventSamplingTimes ( AdId[1] , TimeInterval_1 );
-		Ret = AioGetAiEventSamplingTimes ( AdId[1] , &AdSamplingTimes[1] );
-		Ret = AioSetAiStopTrigger(AdId[1], 4);
-		Ret = AioResetAiMemory(AdId[1]);
+	if(ctx->NumAD>1)	{
+		ctx->ad[1].ScanClock=long(1000/ctx->ad[1].Channels);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
+		if(ctx->ad[1].ScanClock<1){ ctx->ad[1].ScanClock=1; }
+		ctx->Ret = AioSetAiScanClock ( ctx->ad[1].Id , ctx->ad[1].ScanClock );
+		ctx->Ret = AioGetAiScanClock ( ctx->ad[1].Id , &ctx->ad[1].ScanClock );
+		ctx->Ret = AioSetAiSamplingClock ( ctx->ad[1].Id , 1000 );
+		ctx->Ret = AioGetAiSamplingClock ( ctx->ad[1].Id , &ctx->ad[1].SamplingClock );
+		ctx->ad[1].SamplingTimes=long(ctx->timeSettings.Interval1*1000/ctx->ad[1].SamplingClock);
+		ctx->Ret = AioSetAiEventSamplingTimes ( ctx->ad[1].Id , ctx->timeSettings.Interval1 );
+		ctx->Ret = AioGetAiEventSamplingTimes ( ctx->ad[1].Id , &ctx->ad[1].SamplingTimes );
+		ctx->Ret = AioSetAiStopTrigger(ctx->ad[1].Id, 4);
+		ctx->Ret = AioResetAiMemory(ctx->ad[1].Id);
 	}
-	Ret = AioSetAiEventSamplingTimes(AdId[NUMAD-1], AdSamplingTimes[NUMAD-1]);
-	if(NUMAD>0) Ret = AioStartAi(AdId[0]);
-	if(NUMAD>1) Ret = AioStartAi(AdId[1]);
+	ctx->Ret = AioSetAiEventSamplingTimes(ctx->ad[ctx->NumAD-1].Id, ctx->ad[ctx->NumAD-1].SamplingTimes);
+	if(ctx->NumAD>0) ctx->Ret = AioStartAi(ctx->ad[0].Id);
+	if(ctx->NumAD>1) ctx->Ret = AioStartAi(ctx->ad[1].Id);
 }
 void CDigitShowBasicView::OnBUTTONWriteData() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: Add your control notification handler code here
 	CString	pFileName0, pFileName1, TmpString;
 	CButton* myBTN1=(CButton*)GetDlgItem(IDC_BUTTON_WriteData);
 	CDigitShowBasicDoc* pDoc=(CDigitShowBasicDoc *)GetDocument();
 	int		i;
 
-	if(Flag_FIFO)	OnBUTTONFIFOStop();
-    if(NUMAD>0) Ret = AioStopAi(AdId[0]);
-    if(NUMAD>1) Ret = AioStopAi(AdId[1]);
+	if(ctx->flags.FIFO)	OnBUTTONFIFOStop();
+    if(ctx->NumAD>0) ctx->Ret = AioStopAi(ctx->ad[0].Id);
+    if(ctx->NumAD>1) ctx->Ret = AioStopAi(ctx->ad[1].Id);
 
 	CFileDialog SaveFile_dlg( FALSE, NULL, "*.dat",  OFN_CREATEPROMPT | OFN_OVERWRITEPROMPT,
 	"Data Files(*.dat)|*.dat| All Files(*.*)|*.*| |",NULL);
@@ -933,95 +889,95 @@ void CDigitShowBasicView::OnBUTTONWriteData()
 			pFileName1.Replace(TmpString,".dat");
 			m_FileName=m_FileName+_T(".dat");
 		}
-		FileSaveData1 = fopen((LPCSTR)pFileName1 , "w" );
-		fprintf(FileSaveData1,"%s	","Time(s)");
+		ctx->FileSaveData1 = fopen((LPCSTR)pFileName1 , "w" );
+		fprintf(ctx->FileSaveData1,"%s	","Time(s)");
 		for(i=0;i<32;i++){
-			fprintf(FileSaveData1,"%s	",NameP[i]);
+			fprintf(ctx->FileSaveData1,"%s	",ctx->NameP[i]);
 		}
-		fprintf(FileSaveData1,"\n");
+		fprintf(ctx->FileSaveData1,"\n");
 		// File for saving the voltage data
 		pFileName0=pFileName1;
 		pFileName0.Replace(".dat",".vlt");
-		FileSaveData0 = fopen((LPCSTR)pFileName0 , "w" );
-		fprintf(FileSaveData0,"%s	","Time(s)");
+		ctx->FileSaveData0 = fopen((LPCSTR)pFileName0 , "w" );
+		fprintf(ctx->FileSaveData0,"%s	","Time(s)");
 		for(i=0;i<32;i++){
-			fprintf(FileSaveData0,"%s	",NameV[i]);
+			fprintf(ctx->FileSaveData0,"%s	",ctx->NameV[i]);
 		}
-		fprintf(FileSaveData0,"\n");
+		fprintf(ctx->FileSaveData0,"\n");
 		pDoc -> SaveToFile2();
-		fclose(FileSaveData0);
-		fclose(FileSaveData1);
+		fclose(ctx->FileSaveData0);
+		fclose(ctx->FileSaveData1);
 		pDoc -> Allocate_Memory();
 		myBTN1->EnableWindow(FALSE);
 	}
-	if(NUMAD>0)	{
-		AdScanClock[0]=long(1000/AdChannels[0]);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
-		if(AdScanClock[0]<1){ AdScanClock[0]=1; }
-		Ret = AioSetAiScanClock ( AdId[0] , AdScanClock[0] );
-		Ret = AioGetAiScanClock ( AdId[0] , &AdScanClock[0] );
-		Ret = AioSetAiSamplingClock ( AdId[0] , 1000 );
-		Ret = AioGetAiSamplingClock ( AdId[0] , &AdSamplingClock[0] );
-		AdSamplingTimes[0]=long(TimeInterval_1*1000/AdSamplingClock[0]);
-		Ret = AioSetAiEventSamplingTimes ( AdId[0] , AdSamplingTimes[0] );
-		Ret = AioGetAiEventSamplingTimes ( AdId[0] , &AdSamplingTimes[0] );
-		Ret = AioSetAiStopTrigger(AdId[0], 4);
-		Ret = AioResetAiMemory(AdId[0]);
+	if(ctx->NumAD>0)	{
+		ctx->ad[0].ScanClock=long(1000/ctx->ad[0].Channels);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
+		if(ctx->ad[0].ScanClock<1){ ctx->ad[0].ScanClock=1; }
+		ctx->Ret = AioSetAiScanClock ( ctx->ad[0].Id , ctx->ad[0].ScanClock );
+		ctx->Ret = AioGetAiScanClock ( ctx->ad[0].Id , &ctx->ad[0].ScanClock );
+		ctx->Ret = AioSetAiSamplingClock ( ctx->ad[0].Id , 1000 );
+		ctx->Ret = AioGetAiSamplingClock ( ctx->ad[0].Id , &ctx->ad[0].SamplingClock );
+		ctx->ad[0].SamplingTimes=long(ctx->timeSettings.Interval1*1000/ctx->ad[0].SamplingClock);
+		ctx->Ret = AioSetAiEventSamplingTimes ( ctx->ad[0].Id , ctx->ad[0].SamplingTimes );
+		ctx->Ret = AioGetAiEventSamplingTimes ( ctx->ad[0].Id , &ctx->ad[0].SamplingTimes );
+		ctx->Ret = AioSetAiStopTrigger(ctx->ad[0].Id, 4);
+		ctx->Ret = AioResetAiMemory(ctx->ad[0].Id);
 	}
-	if(NUMAD>1)	{
-		AdScanClock[1]=long(1000/AdChannels[1]);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
-		if(AdScanClock[1]<1){ AdScanClock[1]=1; }
-		Ret = AioSetAiScanClock ( AdId[1] , AdScanClock[1] );
-		Ret = AioGetAiScanClock ( AdId[1] , &AdScanClock[1] );
-		Ret = AioSetAiSamplingClock ( AdId[1] , 1000 );
-		Ret = AioGetAiSamplingClock ( AdId[1] , &AdSamplingClock[1] );
-		AdSamplingTimes[1]=long(TimeInterval_1*1000/AdSamplingClock[1]);
-		Ret = AioSetAiEventSamplingTimes ( AdId[1] , TimeInterval_1 );
-		Ret = AioGetAiEventSamplingTimes ( AdId[1] , &AdSamplingTimes[1] );
-		Ret = AioSetAiStopTrigger(AdId[1], 4);
-		Ret = AioResetAiMemory(AdId[1]);
+	if(ctx->NumAD>1)	{
+		ctx->ad[1].ScanClock=long(1000/ctx->ad[1].Channels);	// Newer CONTEC drivers require ScanClock <= SamplingClock/CH (floor to the safe side)
+		if(ctx->ad[1].ScanClock<1){ ctx->ad[1].ScanClock=1; }
+		ctx->Ret = AioSetAiScanClock ( ctx->ad[1].Id , ctx->ad[1].ScanClock );
+		ctx->Ret = AioGetAiScanClock ( ctx->ad[1].Id , &ctx->ad[1].ScanClock );
+		ctx->Ret = AioSetAiSamplingClock ( ctx->ad[1].Id , 1000 );
+		ctx->Ret = AioGetAiSamplingClock ( ctx->ad[1].Id , &ctx->ad[1].SamplingClock );
+		ctx->ad[1].SamplingTimes=long(ctx->timeSettings.Interval1*1000/ctx->ad[1].SamplingClock);
+		ctx->Ret = AioSetAiEventSamplingTimes ( ctx->ad[1].Id , ctx->timeSettings.Interval1 );
+		ctx->Ret = AioGetAiEventSamplingTimes ( ctx->ad[1].Id , &ctx->ad[1].SamplingTimes );
+		ctx->Ret = AioSetAiStopTrigger(ctx->ad[1].Id, 4);
+		ctx->Ret = AioResetAiMemory(ctx->ad[1].Id);
 	}
-	Ret = AioSetAiEventSamplingTimes(AdId[NUMAD-1], AdSamplingTimes[NUMAD-1]);
-	if(NUMAD>0) Ret = AioStartAi(AdId[0]);
-	if(NUMAD>1) Ret = AioStartAi(AdId[1]);
+	ctx->Ret = AioSetAiEventSamplingTimes(ctx->ad[ctx->NumAD-1].Id, ctx->ad[ctx->NumAD-1].SamplingTimes);
+	if(ctx->NumAD>0) ctx->Ret = AioStartAi(ctx->ad[0].Id);
+	if(ctx->NumAD>1) ctx->Ret = AioStartAi(ctx->ad[1].Id);
 }
 void CDigitShowBasicView::OnBUTTONSetCtrlID() 
-{
-	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉƒRï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê’mï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+{	DigitShowContext* ctx = GetContext();
+	// TODO: E½E½E½ÌˆÊ’uE½ÉƒRE½E½E½gE½E½E½[E½E½E½Ê’mE½nE½E½E½hE½E½E½pE½ÌƒRE½[E½hE½E½Ç‰ï¿½E½E½E½Ä‚ï¿½E½E½E½E½E½E½
 	CString		tmp;
 	CComboBox* m_Combo1 = (CComboBox*)GetDlgItem(IDC_COMBO_Control_ID);
 	m_Combo1->GetWindowText(tmp);
-	Control_ID=atoi(tmp);	
+	ctx->ControlID=atoi(tmp);	
 }
 
 void CDigitShowBasicView::OnBUTTONSetSamplingTime() 
-{
-	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉƒRï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ê’mï¿½nï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½ÌƒRï¿½[ï¿½hï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+{	DigitShowContext* ctx = GetContext();
+	// TODO: E½E½E½ÌˆÊ’uE½ÉƒRE½E½E½gE½E½E½[E½E½E½Ê’mE½nE½E½E½hE½E½E½pE½ÌƒRE½[E½hE½E½Ç‰ï¿½E½E½E½Ä‚ï¿½E½E½E½E½E½E½
 	CString		tmp;
 	CComboBox* m_Combo1 = (CComboBox*)GetDlgItem(IDC_COMBO_SamplingTime);
 	m_Combo1->GetWindowText(tmp);
-	if(tmp=="0.1 s")	TimeInterval_3=100;
-	if(tmp=="0.2 s")	TimeInterval_3=200;
-	if(tmp=="0.5 s")	TimeInterval_3=500;
-	if(tmp=="1.0 s")	TimeInterval_3=1000;
-	if(tmp=="2.0 s")	TimeInterval_3=2000;
-	if(tmp=="3.0 s")	TimeInterval_3=3000;
-	if(tmp=="5.0 s")	TimeInterval_3=5000;
-	if(tmp=="10.0 s")	TimeInterval_3=10000;
-	if(tmp=="20.0 s")	TimeInterval_3=20000;
-	if(tmp=="30.0 s")	TimeInterval_3=30000;
-	if(tmp=="1.0 min")	TimeInterval_3=60000;
-	if(tmp=="2.0 min")	TimeInterval_3=120000;
-	if(tmp=="3.0 min")	TimeInterval_3=180000;
-	if(tmp=="5.0 min")	TimeInterval_3=300000;
-	if(tmp=="10.0 min")	TimeInterval_3=600000;
-	if(Flag_SaveData){
+	if(tmp=="0.1 s")	ctx->timeSettings.Interval3=100;
+	if(tmp=="0.2 s")	ctx->timeSettings.Interval3=200;
+	if(tmp=="0.5 s")	ctx->timeSettings.Interval3=500;
+	if(tmp=="1.0 s")	ctx->timeSettings.Interval3=1000;
+	if(tmp=="2.0 s")	ctx->timeSettings.Interval3=2000;
+	if(tmp=="3.0 s")	ctx->timeSettings.Interval3=3000;
+	if(tmp=="5.0 s")	ctx->timeSettings.Interval3=5000;
+	if(tmp=="10.0 s")	ctx->timeSettings.Interval3=10000;
+	if(tmp=="20.0 s")	ctx->timeSettings.Interval3=20000;
+	if(tmp=="30.0 s")	ctx->timeSettings.Interval3=30000;
+	if(tmp=="1.0 min")	ctx->timeSettings.Interval3=60000;
+	if(tmp=="2.0 min")	ctx->timeSettings.Interval3=120000;
+	if(tmp=="3.0 min")	ctx->timeSettings.Interval3=180000;
+	if(tmp=="5.0 min")	ctx->timeSettings.Interval3=300000;
+	if(tmp=="10.0 min")	ctx->timeSettings.Interval3=600000;
+	if(ctx->flags.SaveData){
 		KillTimer(3);
-		SetTimer(3,TimeInterval_3,NULL);
+		SetTimer(3,ctx->timeSettings.Interval3,NULL);
 	}	
 }
 
 void CDigitShowBasicView::OnBUTTONDChannel() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: Add your control notification handler code here
 	if(m_DChannel == "Ch.00-15")	m_DChannel = "Ch.16-31";
 	else							m_DChannel = "Ch.00-15";
@@ -1029,94 +985,94 @@ void CDigitShowBasicView::OnBUTTONDChannel()
 }
 
 void CDigitShowBasicView::Reflesh()
-{
+{	DigitShowContext* ctx = GetContext();
 	if(m_DChannel == "Ch.00-15"){
-		m_VLT00 = NameV[0];	m_VLT01 = NameV[1]; m_VLT02 = NameV[2]; m_VLT03 = NameV[3]; 
-		m_VLT04 = NameV[4];	m_VLT05 = NameV[5]; m_VLT06 = NameV[6]; m_VLT07 = NameV[7];	
-		m_VLT08 = NameV[8];	m_VLT09 = NameV[9]; m_VLT10 = NameV[10];m_VLT11 = NameV[11];
-	    m_VLT12 = NameV[12];m_VLT13 = NameV[13];m_VLT14 = NameV[14];m_VLT15 = NameV[15];
-		m_PHY00 = NameP[0];	m_PHY01 = NameP[1];	m_PHY02 = NameP[2]; m_PHY03 = NameP[3];
-		m_PHY04 = NameP[4];	m_PHY05 = NameP[5];	m_PHY06 = NameP[6]; m_PHY07 = NameP[7];
-		m_PHY08 = NameP[8];	m_PHY09 = NameP[9];	m_PHY10 = NameP[10];m_PHY11 = NameP[11];
-		m_PHY12 = NameP[12];m_PHY13 = NameP[13];m_PHY14 = NameP[14];m_PHY15 = NameP[15];
+		m_VLT00 = ctx->NameV[0];	m_VLT01 = ctx->NameV[1]; m_VLT02 = ctx->NameV[2]; m_VLT03 = ctx->NameV[3]; 
+		m_VLT04 = ctx->NameV[4];	m_VLT05 = ctx->NameV[5]; m_VLT06 = ctx->NameV[6]; m_VLT07 = ctx->NameV[7];	
+		m_VLT08 = ctx->NameV[8];	m_VLT09 = ctx->NameV[9]; m_VLT10 = ctx->NameV[10];m_VLT11 = ctx->NameV[11];
+	    m_VLT12 = ctx->NameV[12];m_VLT13 = ctx->NameV[13];m_VLT14 = ctx->NameV[14];m_VLT15 = ctx->NameV[15];
+		m_PHY00 = ctx->NameP[0];	m_PHY01 = ctx->NameP[1];	m_PHY02 = ctx->NameP[2]; m_PHY03 = ctx->NameP[3];
+		m_PHY04 = ctx->NameP[4];	m_PHY05 = ctx->NameP[5];	m_PHY06 = ctx->NameP[6]; m_PHY07 = ctx->NameP[7];
+		m_PHY08 = ctx->NameP[8];	m_PHY09 = ctx->NameP[9];	m_PHY10 = ctx->NameP[10];m_PHY11 = ctx->NameP[11];
+		m_PHY12 = ctx->NameP[12];m_PHY13 = ctx->NameP[13];m_PHY14 = ctx->NameP[14];m_PHY15 = ctx->NameP[15];
 	}
 	if(m_DChannel == "Ch.16-31"){
-		m_VLT00 = NameV[16]; m_VLT01 = NameV[17]; m_VLT02 = NameV[18]; m_VLT03 = NameV[19]; 
-		m_VLT04 = NameV[20]; m_VLT05 = NameV[21]; m_VLT06 = NameV[22]; m_VLT07 = NameV[23];	
-		m_VLT08 = NameV[24]; m_VLT09 = NameV[25]; m_VLT10 = NameV[26]; m_VLT11 = NameV[27];
-	    m_VLT12 = NameV[28]; m_VLT13 = NameV[29]; m_VLT14 = NameV[30]; m_VLT15 = NameV[31];
-		m_PHY00 = NameP[16]; m_PHY01 = NameP[17]; m_PHY02 = NameP[18]; m_PHY03 = NameP[19];
-		m_PHY04 = NameP[20]; m_PHY05 = NameP[21]; m_PHY06 = NameP[22]; m_PHY07 = NameP[23];
-		m_PHY08 = NameP[24]; m_PHY09 = NameP[25]; m_PHY10 = NameP[26]; m_PHY11 = NameP[27];
-		m_PHY12 = NameP[28]; m_PHY13 = NameP[29]; m_PHY14 = NameP[30]; m_PHY15 = NameP[31];
+		m_VLT00 = ctx->NameV[16]; m_VLT01 = ctx->NameV[17]; m_VLT02 = ctx->NameV[18]; m_VLT03 = ctx->NameV[19]; 
+		m_VLT04 = ctx->NameV[20]; m_VLT05 = ctx->NameV[21]; m_VLT06 = ctx->NameV[22]; m_VLT07 = ctx->NameV[23];	
+		m_VLT08 = ctx->NameV[24]; m_VLT09 = ctx->NameV[25]; m_VLT10 = ctx->NameV[26]; m_VLT11 = ctx->NameV[27];
+	    m_VLT12 = ctx->NameV[28]; m_VLT13 = ctx->NameV[29]; m_VLT14 = ctx->NameV[30]; m_VLT15 = ctx->NameV[31];
+		m_PHY00 = ctx->NameP[16]; m_PHY01 = ctx->NameP[17]; m_PHY02 = ctx->NameP[18]; m_PHY03 = ctx->NameP[19];
+		m_PHY04 = ctx->NameP[20]; m_PHY05 = ctx->NameP[21]; m_PHY06 = ctx->NameP[22]; m_PHY07 = ctx->NameP[23];
+		m_PHY08 = ctx->NameP[24]; m_PHY09 = ctx->NameP[25]; m_PHY10 = ctx->NameP[26]; m_PHY11 = ctx->NameP[27];
+		m_PHY12 = ctx->NameP[28]; m_PHY13 = ctx->NameP[29]; m_PHY14 = ctx->NameP[30]; m_PHY15 = ctx->NameP[31];
 	}
 	UpdateData(FALSE);
 }
 
 LRESULT CDigitShowBasicView::DefWindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
-{
-	// TODO: ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ÉŒÅ—Lï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½é‚©ï¿½Aï¿½Ü‚ï¿½ï¿½ÍŠï¿½{ï¿½Nï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+{	DigitShowContext* ctx = GetContext();
+	// TODO: E½E½E½ÌˆÊ’uE½ÉŒÅ—LE½Ìï¿½E½E½E½E½Ç‰ï¿½E½E½E½é‚©E½AE½Ü‚ï¿½E½ÍŠï¿½{E½NE½E½E½XE½E½E½Ä‚ÑoE½E½E½Ä‚ï¿½E½E½E½E½E½E½
 	int	i,j;
 
 	switch(message){
 	case AIOM_AIE_DATA_NUM:
-		if(NUMAD>0)	{
-			Ret = AioGetAiSamplingCount ( AdId[0] , &tmp0 );
+		if(ctx->NumAD>0)	{
+			ctx->Ret = AioGetAiSamplingCount ( ctx->ad[0].Id , &tmp0 );
 			tmp=tmp0;
 		}
-		if(NUMAD>1)	{
-			Ret = AioGetAiSamplingCount ( AdId[1] , &tmp1 );
+		if(ctx->NumAD>1)	{
+			ctx->Ret = AioGetAiSamplingCount ( ctx->ad[1].Id , &tmp1 );
 			if(tmp>tmp1) tmp=tmp1;
 		}
-		if(NUMAD>0){
-			Ret = AioGetAiSamplingData(AdId[0], &tmp, &AdData0[0]);
-		    if(Ret != 0){
-			    Ret2 = AioGetErrorString(Ret, ErrorString);
-				TextString.Format("AioGetAiSamplingData = %d : %s", Ret, ErrorString);
-				AfxMessageBox(TextString, MB_ICONSTOP | MB_OK );
+		if(ctx->NumAD>0){
+			ctx->Ret = AioGetAiSamplingData(ctx->ad[0].Id, &tmp, &ctx->AdData0[0]);
+		    if(ctx->Ret != 0){
+			    ctx->Ret2 = AioGetErrorString(ctx->Ret, ctx->ErrorString);
+				ctx->TextString.Format("AioGetAiSamplingData = %d : %s", ctx->Ret, ctx->ErrorString);
+				AfxMessageBox(ctx->TextString, MB_ICONSTOP | MB_OK );
 			}
 		}
-		if(NUMAD>1){
-			Ret = AioGetAiSamplingData(AdId[1], &tmp, &AdData1[0]);
-		    if(Ret != 0){
-			    Ret2 = AioGetErrorString(Ret, ErrorString);
-				TextString.Format("AioGetAiSamplingData = %d : %s", Ret, ErrorString);
-				AfxMessageBox(TextString, MB_ICONSTOP | MB_OK );
+		if(ctx->NumAD>1){
+			ctx->Ret = AioGetAiSamplingData(ctx->ad[1].Id, &tmp, &ctx->AdData1[0]);
+		    if(ctx->Ret != 0){
+			    ctx->Ret2 = AioGetErrorString(ctx->Ret, ctx->ErrorString);
+				ctx->TextString.Format("AioGetAiSamplingData = %d : %s", ctx->Ret, ctx->ErrorString);
+				AfxMessageBox(ctx->TextString, MB_ICONSTOP | MB_OK );
 			}
 		}
-		if(Flag_SaveData==TRUE && Flag_FIFO==TRUE){
+		if(ctx->flags.SaveData==TRUE && ctx->flags.FIFO==TRUE){
 			for(i=0;i<tmp;i++){
-				if(CurrentSamplingTimes>=TotalSamplingTimes) {
+				if(ctx->CurrentSamplingTimes>=ctx->TotalSamplingTimes) {
 					OnBUTTONStopSave();
 				}
 				else{
-					if(NUMAD > 0){
-						for(j=0;j<AdChannels[0];j++){
-							*((PLONG)pSmplData0+CurrentSamplingTimes*AdChannels[0]+j)=AdData0[i*AdChannels[0]+j];
+					if(ctx->NumAD > 0){
+						for(j=0;j<ctx->ad[0].Channels;j++){
+							*((PLONG)ctx->pSmplData[0]+ctx->CurrentSamplingTimes*ctx->ad[0].Channels+j)=ctx->AdData0[i*ctx->ad[0].Channels+j];
 						}
 					}
-					if(NUMAD > 1){
-						for(j=0;j<AdChannels[1];j++){
-							*((PLONG)pSmplData1+CurrentSamplingTimes*AdChannels[1]+j)=AdData1[i*AdChannels[1]+j];
+					if(ctx->NumAD > 1){
+						for(j=0;j<ctx->ad[1].Channels;j++){
+							*((PLONG)ctx->pSmplData[1]+ctx->CurrentSamplingTimes*ctx->ad[1].Channels+j)=ctx->AdData1[i*ctx->ad[1].Channels+j];
 						}
 					}
-					CurrentSamplingTimes=CurrentSamplingTimes+1;
+					ctx->CurrentSamplingTimes=ctx->CurrentSamplingTimes+1;
 				}
 			}
 		}
 		return TRUE;
 	case AIOM_AIE_OFERR:
-		if(Flag_FIFO){
+		if(ctx->flags.FIFO){
 			AfxMessageBox("FIFO sttoped by the over flow int the memory of A/D board.", MB_OK | MB_ICONSTOP, 0);	
 		}
 		else{
-			if(NUMAD>0){
-				Ret = AioResetAiMemory(AdId[0]);
-				Ret = AioStartAi(AdId[0]);
+			if(ctx->NumAD>0){
+				ctx->Ret = AioResetAiMemory(ctx->ad[0].Id);
+				ctx->Ret = AioStartAi(ctx->ad[0].Id);
 			}
-			if(NUMAD>1){
-				Ret = AioResetAiMemory(AdId[1]);
-				Ret = AioStartAi(AdId[1]);
+			if(ctx->NumAD>1){
+				ctx->Ret = AioResetAiMemory(ctx->ad[1].Id);
+				ctx->Ret = AioStartAi(ctx->ad[1].Id);
 			}
 			AfxMessageBox("FIFO sttoped by the over flow, but restarted automatically.", MB_OK | MB_ICONSTOP, 0);	
 		}
