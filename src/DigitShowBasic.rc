@@ -48,7 +48,7 @@ BEGIN
     "LANGUAGE 17, 1\r\n"
     "#pragma code_page(65001)\r\n"
     "#endif //_WIN32\r\n"
-    "#include ""res\\DigitShowBasicTS.rc2""  // Microsoft Visual C++ ?E?O?I?c?[???A?O?W?3?e?????\\?[?X\r\n"
+    "#include ""res\\DigitShowBasic.rc2""  // Microsoft Visual C++ ?E?O?I?c?[???A?O?W?3?e?????\\?[?X\r\n"
     "#include ""l.jpn\\afxres.rc""          // ?W???I?R?“?|?[?l?“?g\r\n"
     "#endif\r\n"
     "\0"
@@ -1214,7 +1214,7 @@ END
 LANGUAGE 17, 1
 #pragma code_page(65001)
 #endif //_WIN32
-#include "res\DigitShowBasicTS.rc2"  // Microsoft Visual C++ 以外のツールで編集されたリソース
+#include "res\DigitShowBasic.rc2"  // Microsoft Visual C++ 以外のツールで編集されたリソース
 #include "l.jpn\afxres.rc"          // 標準のコンポーネント
 #endif
 

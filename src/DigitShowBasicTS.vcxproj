@@ -192,7 +192,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="DigitShowBasicTS.rc" />
+    <ResourceCompile Include="DigitShowBasic.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoardSettings.h" />
@@ -217,11 +217,11 @@
     <ClInclude Include="StdAfx.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\DigitShowBasic.ico" />
-    <Image Include="res\DigitShowBasicDoc.ico" />
+    <Image Include="res\DigitShowBasicTS.ico" />
+    <Image Include="res\DigitShowBasicTSDoc.ico" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="res\DigitShowBasicTS.rc2" />
+    <CustomBuild Include="res\DigitShowBasic.rc2" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

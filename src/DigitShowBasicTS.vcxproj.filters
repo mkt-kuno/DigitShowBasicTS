@@ -71,7 +71,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="DigitShowBasicTS.rc">
+    <ResourceCompile Include="DigitShowBasic.rc">
       <Filter>Source Files</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -152,7 +152,7 @@
     <Library Include="Caio.lib" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="res\DigitShowBasicTS.rc2">
+    <CustomBuild Include="res\DigitShowBasic.rc2">
       <Filter>Resource Files</Filter>
     </CustomBuild>
   </ItemGroup>
