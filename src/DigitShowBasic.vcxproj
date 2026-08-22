@@ -180,6 +180,7 @@
     <ClCompile Include="DigitShowBasic.cpp" />
     <ClCompile Include="DigitShowBasicDoc.cpp" />
     <ClCompile Include="DigitShowBasicView.cpp" />
+    <ClCompile Include="DigitShowContext.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="RS232C.cpp" />
     <ClCompile Include="SamplingSettings.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Control_ID.h" />
     <ClInclude Include="Control_PreConsolidation.h" />
     <ClInclude Include="DataConvert.h" />
+    <ClInclude Include="DigitShowContext.h" />
     <ClInclude Include="DA_Channel.h" />
     <ClInclude Include="DA_Vout.h" />
     <ClInclude Include="DigitShowBasic.h" />
