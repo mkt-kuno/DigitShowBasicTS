@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "DigitShowBasic.h"
 #include "Specimen.h"
+#include "DigitShowContext.h"
 #include "DigitShowBasicDoc.h"
 #include "math.h"
 
@@ -15,61 +16,58 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // CSpecimen ダイアログ
-extern	Specimen	SpecimenData;
-extern	double		Phyout[32],Cal_c[32];
-extern	int			Control_ID;
-extern	double		height,area,volume,diameter_in,diameter_out;	// Current specimen size
 
 CSpecimen::CSpecimen(CWnd* pParent /*=NULL*/)
 	: CDialog(CSpecimen::IDD, pParent)
 {
+	DigitShowContext* ctx = GetContext();
 	//{{AFX_DATA_INIT(CSpecimen)
-	m_Height0 = SpecimenData.Height[0];
-	m_Height1 = SpecimenData.Height[1];
-	m_Height2 = SpecimenData.Height[2];
-	m_Height3 = SpecimenData.Height[3];
-	m_MembraneE = SpecimenData.MembraneModulus;
-	m_MembraneT = SpecimenData.MembraneThickness;
-	m_RodArea = SpecimenData.RodArea;
-	m_CapWeight = SpecimenData.CapWeight;
-	m_RDInM = SpecimenData.RDiaInM;
-	m_RDOutM = SpecimenData.RDiaOutM;
-	m_RHInM = SpecimenData.RHeightInM;
-	m_RHOutM = SpecimenData.RHeightOutM;
-	m_DiaInM0 = SpecimenData.DiaInMembrane[0];
-	m_DiaInM1 = SpecimenData.DiaInMembrane[1];
-	m_DiaInM2 = SpecimenData.DiaInMembrane[2];
-	m_DiaInM3 = SpecimenData.DiaInMembrane[3];
-	m_DiameterIn0 = SpecimenData.DiameterIn[0];
-	m_DiameterIn1 = SpecimenData.DiameterIn[1];
-	m_DiameterIn2 = SpecimenData.DiameterIn[2];
-	m_DiameterIn3 = SpecimenData.DiameterIn[3];
-	m_DiameterOut0 = SpecimenData.DiameterOut[0];
-	m_DiameterOut1 = SpecimenData.DiameterOut[1];
-	m_DiameterOut2 = SpecimenData.DiameterOut[2];
-	m_DiameterOut3 = SpecimenData.DiameterOut[3];
-	m_DiaOutM0 = SpecimenData.DiaOutMembrane[0];
-	m_DiaOutM1 = SpecimenData.DiaOutMembrane[1];
-	m_DiaOutM2 = SpecimenData.DiaOutMembrane[2];
-	m_DiaOutM3 = SpecimenData.DiaOutMembrane[3];
-	m_HeightInM0 = SpecimenData.HeightInMembrane[0];
-	m_HeightInM1 = SpecimenData.HeightInMembrane[1];
-	m_HeightInM2 = SpecimenData.HeightInMembrane[2];
-	m_HeightInM3 = SpecimenData.HeightInMembrane[3];
-	m_HeightOutM0 = SpecimenData.HeightOutMembrane[0];
-	m_HeightOutM1 = SpecimenData.HeightOutMembrane[1];
-	m_HeightOutM2 = SpecimenData.HeightOutMembrane[2];
-	m_HeightOutM3 = SpecimenData.HeightOutMembrane[3];
-	m_Volume0 = SpecimenData.Volume[0];
-	m_Volume1 = SpecimenData.Volume[1];
-	m_Volume2 = SpecimenData.Volume[2];
-	m_Volume3 = SpecimenData.Volume[3];
+	m_Height0 = ctx->specimen.Height[0];
+	m_Height1 = ctx->specimen.Height[1];
+	m_Height2 = ctx->specimen.Height[2];
+	m_Height3 = ctx->specimen.Height[3];
+	m_MembraneE = ctx->specimen.MembraneModulus;
+	m_MembraneT = ctx->specimen.MembraneThickness;
+	m_RodArea = ctx->specimen.RodArea;
+	m_CapWeight = ctx->specimen.CapWeight;
+	m_RDInM = ctx->specimen.RDiaInM;
+	m_RDOutM = ctx->specimen.RDiaOutM;
+	m_RHInM = ctx->specimen.RHeightInM;
+	m_RHOutM = ctx->specimen.RHeightOutM;
+	m_DiaInM0 = ctx->specimen.DiaInMembrane[0];
+	m_DiaInM1 = ctx->specimen.DiaInMembrane[1];
+	m_DiaInM2 = ctx->specimen.DiaInMembrane[2];
+	m_DiaInM3 = ctx->specimen.DiaInMembrane[3];
+	m_DiameterIn0 = ctx->specimen.DiameterIn[0];
+	m_DiameterIn1 = ctx->specimen.DiameterIn[1];
+	m_DiameterIn2 = ctx->specimen.DiameterIn[2];
+	m_DiameterIn3 = ctx->specimen.DiameterIn[3];
+	m_DiameterOut0 = ctx->specimen.DiameterOut[0];
+	m_DiameterOut1 = ctx->specimen.DiameterOut[1];
+	m_DiameterOut2 = ctx->specimen.DiameterOut[2];
+	m_DiameterOut3 = ctx->specimen.DiameterOut[3];
+	m_DiaOutM0 = ctx->specimen.DiaOutMembrane[0];
+	m_DiaOutM1 = ctx->specimen.DiaOutMembrane[1];
+	m_DiaOutM2 = ctx->specimen.DiaOutMembrane[2];
+	m_DiaOutM3 = ctx->specimen.DiaOutMembrane[3];
+	m_HeightInM0 = ctx->specimen.HeightInMembrane[0];
+	m_HeightInM1 = ctx->specimen.HeightInMembrane[1];
+	m_HeightInM2 = ctx->specimen.HeightInMembrane[2];
+	m_HeightInM3 = ctx->specimen.HeightInMembrane[3];
+	m_HeightOutM0 = ctx->specimen.HeightOutMembrane[0];
+	m_HeightOutM1 = ctx->specimen.HeightOutMembrane[1];
+	m_HeightOutM2 = ctx->specimen.HeightOutMembrane[2];
+	m_HeightOutM3 = ctx->specimen.HeightOutMembrane[3];
+	m_Volume0 = ctx->specimen.Volume[0];
+	m_Volume1 = ctx->specimen.Volume[1];
+	m_Volume2 = ctx->specimen.Volume[2];
+	m_Volume3 = ctx->specimen.Volume[3];
 	//}}AFX_DATA_INIT
 }
 
 
 void CSpecimen::DoDataExchange(CDataExchange* pDX)
-{
+{	DigitShowContext* ctx = GetContext();
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CSpecimen)
 	DDX_Text(pDX, IDC_EDIT_Height0, m_Height0);
@@ -131,100 +129,100 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CSpecimen メッセージ ハンドラ
 void CSpecimen::Load()
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
-	m_MembraneE = SpecimenData.MembraneModulus;
-	m_MembraneT = SpecimenData.MembraneThickness;
-	m_RodArea = SpecimenData.RodArea;
-	m_CapWeight = SpecimenData.CapWeight;
-	m_RDInM = SpecimenData.RDiaInM;
-	m_RDOutM = SpecimenData.RDiaOutM;
-	m_RHInM = SpecimenData.RHeightInM;
-	m_RHOutM = SpecimenData.RHeightOutM;
-	m_DiameterIn0 = SpecimenData.DiameterIn[0];
-	m_DiameterIn1 = SpecimenData.DiameterIn[1];
-	m_DiameterIn2 = SpecimenData.DiameterIn[2];
-	m_DiameterIn3 = SpecimenData.DiameterIn[3];
-	m_DiameterOut0 = SpecimenData.DiameterOut[0];
-	m_DiameterOut1 = SpecimenData.DiameterOut[1];
-	m_DiameterOut2 = SpecimenData.DiameterOut[2];
-	m_DiameterOut3 = SpecimenData.DiameterOut[3];
-	m_Height0 = SpecimenData.Height[0];
-	m_Height1 = SpecimenData.Height[1];
-	m_Height2 = SpecimenData.Height[2];
-	m_Height3 = SpecimenData.Height[3];
-	m_Volume0 = SpecimenData.Volume[0];
-	m_Volume1 = SpecimenData.Volume[1];
-	m_Volume2 = SpecimenData.Volume[2];
-	m_Volume3 = SpecimenData.Volume[3];
-	m_DiaInM0 = SpecimenData.DiaInMembrane[0];
-	m_DiaInM1 = SpecimenData.DiaInMembrane[1];
-	m_DiaInM2 = SpecimenData.DiaInMembrane[2];
-	m_DiaInM3 = SpecimenData.DiaInMembrane[3];
-	m_DiaOutM0 = SpecimenData.DiaOutMembrane[0];
-	m_DiaOutM1 = SpecimenData.DiaOutMembrane[1];
-	m_DiaOutM2 = SpecimenData.DiaOutMembrane[2];
-	m_DiaOutM3 = SpecimenData.DiaOutMembrane[3];
-	m_HeightInM0 = SpecimenData.HeightInMembrane[0];
-	m_HeightInM1 = SpecimenData.HeightInMembrane[1];
-	m_HeightInM2 = SpecimenData.HeightInMembrane[2];
-	m_HeightInM3 = SpecimenData.HeightInMembrane[3];
-	m_HeightOutM0 = SpecimenData.HeightOutMembrane[0];
-	m_HeightOutM1 = SpecimenData.HeightOutMembrane[1];
-	m_HeightOutM2 = SpecimenData.HeightOutMembrane[2];
-	m_HeightOutM3 = SpecimenData.HeightOutMembrane[3];
+	m_MembraneE = ctx->specimen.MembraneModulus;
+	m_MembraneT = ctx->specimen.MembraneThickness;
+	m_RodArea = ctx->specimen.RodArea;
+	m_CapWeight = ctx->specimen.CapWeight;
+	m_RDInM = ctx->specimen.RDiaInM;
+	m_RDOutM = ctx->specimen.RDiaOutM;
+	m_RHInM = ctx->specimen.RHeightInM;
+	m_RHOutM = ctx->specimen.RHeightOutM;
+	m_DiameterIn0 = ctx->specimen.DiameterIn[0];
+	m_DiameterIn1 = ctx->specimen.DiameterIn[1];
+	m_DiameterIn2 = ctx->specimen.DiameterIn[2];
+	m_DiameterIn3 = ctx->specimen.DiameterIn[3];
+	m_DiameterOut0 = ctx->specimen.DiameterOut[0];
+	m_DiameterOut1 = ctx->specimen.DiameterOut[1];
+	m_DiameterOut2 = ctx->specimen.DiameterOut[2];
+	m_DiameterOut3 = ctx->specimen.DiameterOut[3];
+	m_Height0 = ctx->specimen.Height[0];
+	m_Height1 = ctx->specimen.Height[1];
+	m_Height2 = ctx->specimen.Height[2];
+	m_Height3 = ctx->specimen.Height[3];
+	m_Volume0 = ctx->specimen.Volume[0];
+	m_Volume1 = ctx->specimen.Volume[1];
+	m_Volume2 = ctx->specimen.Volume[2];
+	m_Volume3 = ctx->specimen.Volume[3];
+	m_DiaInM0 = ctx->specimen.DiaInMembrane[0];
+	m_DiaInM1 = ctx->specimen.DiaInMembrane[1];
+	m_DiaInM2 = ctx->specimen.DiaInMembrane[2];
+	m_DiaInM3 = ctx->specimen.DiaInMembrane[3];
+	m_DiaOutM0 = ctx->specimen.DiaOutMembrane[0];
+	m_DiaOutM1 = ctx->specimen.DiaOutMembrane[1];
+	m_DiaOutM2 = ctx->specimen.DiaOutMembrane[2];
+	m_DiaOutM3 = ctx->specimen.DiaOutMembrane[3];
+	m_HeightInM0 = ctx->specimen.HeightInMembrane[0];
+	m_HeightInM1 = ctx->specimen.HeightInMembrane[1];
+	m_HeightInM2 = ctx->specimen.HeightInMembrane[2];
+	m_HeightInM3 = ctx->specimen.HeightInMembrane[3];
+	m_HeightOutM0 = ctx->specimen.HeightOutMembrane[0];
+	m_HeightOutM1 = ctx->specimen.HeightOutMembrane[1];
+	m_HeightOutM2 = ctx->specimen.HeightOutMembrane[2];
+	m_HeightOutM3 = ctx->specimen.HeightOutMembrane[3];
 	UpdateData(FALSE);
 }
 
 void CSpecimen::OnBUTTONUpdate() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	UpdateData(TRUE);
-	SpecimenData.MembraneModulus = m_MembraneE;
-	SpecimenData.MembraneThickness = m_MembraneT;
-	SpecimenData.RodArea = m_RodArea;
-	SpecimenData.CapWeight = m_CapWeight;
-	SpecimenData.RDiaInM = m_RDInM;
-	SpecimenData.RDiaOutM = m_RDOutM;
-	SpecimenData.RHeightInM = m_RHInM;
-	SpecimenData.RHeightOutM = m_RHOutM;
-	SpecimenData.DiameterIn[0] = m_DiameterIn0;
-	SpecimenData.DiameterIn[1] = m_DiameterIn1;
-	SpecimenData.DiameterIn[2] = m_DiameterIn2;
-	SpecimenData.DiameterIn[3] = m_DiameterIn3;
-	SpecimenData.DiameterOut[0] = m_DiameterOut0;
-	SpecimenData.DiameterOut[1] = m_DiameterOut1;
-	SpecimenData.DiameterOut[2] = m_DiameterOut2;
-	SpecimenData.DiameterOut[3] = m_DiameterOut3;
-	SpecimenData.Height[0] = m_Height0;
-	SpecimenData.Height[1] = m_Height1;
-	SpecimenData.Height[2] = m_Height2;
-	SpecimenData.Height[3] = m_Height3;
-	SpecimenData.Volume[0] = 3.141592*(SpecimenData.DiameterOut[0]*SpecimenData.DiameterOut[0]-SpecimenData.DiameterIn[0]*SpecimenData.DiameterIn[0])/4.0*SpecimenData.Height[0];
-	SpecimenData.Volume[1] = 3.141592*(SpecimenData.DiameterOut[1]*SpecimenData.DiameterOut[1]-SpecimenData.DiameterIn[1]*SpecimenData.DiameterIn[1])/4.0*SpecimenData.Height[1];
-	SpecimenData.Volume[2] = 3.141592*(SpecimenData.DiameterOut[2]*SpecimenData.DiameterOut[2]-SpecimenData.DiameterIn[2]*SpecimenData.DiameterIn[2])/4.0*SpecimenData.Height[2];
-	SpecimenData.Volume[3] = 3.141592*(SpecimenData.DiameterOut[3]*SpecimenData.DiameterOut[3]-SpecimenData.DiameterIn[3]*SpecimenData.DiameterIn[3])/4.0*SpecimenData.Height[3];
-	SpecimenData.DiaInMembrane[0] = m_DiaInM0;
-	SpecimenData.DiaInMembrane[1] = m_DiaInM1;
-	SpecimenData.DiaInMembrane[2] = m_DiaInM2;
-	SpecimenData.DiaInMembrane[3] = m_DiaInM3;
-	SpecimenData.DiaOutMembrane[0] = m_DiaOutM0;
-	SpecimenData.DiaOutMembrane[1] = m_DiaOutM1;
-	SpecimenData.DiaOutMembrane[2] = m_DiaOutM2;
-	SpecimenData.DiaOutMembrane[3] = m_DiaOutM3;
-	SpecimenData.HeightInMembrane[0] = m_HeightInM0;
-	SpecimenData.HeightInMembrane[1] = m_HeightInM1;
-	SpecimenData.HeightInMembrane[2] = m_HeightInM2;
-	SpecimenData.HeightInMembrane[3] = m_HeightInM3;
-	SpecimenData.HeightOutMembrane[0] = m_HeightOutM0;
-	SpecimenData.HeightOutMembrane[1] = m_HeightOutM1;
-	SpecimenData.HeightOutMembrane[2] = m_HeightOutM2;
-	SpecimenData.HeightOutMembrane[3] = m_HeightOutM3;
+	ctx->specimen.MembraneModulus = m_MembraneE;
+	ctx->specimen.MembraneThickness = m_MembraneT;
+	ctx->specimen.RodArea = m_RodArea;
+	ctx->specimen.CapWeight = m_CapWeight;
+	ctx->specimen.RDiaInM = m_RDInM;
+	ctx->specimen.RDiaOutM = m_RDOutM;
+	ctx->specimen.RHeightInM = m_RHInM;
+	ctx->specimen.RHeightOutM = m_RHOutM;
+	ctx->specimen.DiameterIn[0] = m_DiameterIn0;
+	ctx->specimen.DiameterIn[1] = m_DiameterIn1;
+	ctx->specimen.DiameterIn[2] = m_DiameterIn2;
+	ctx->specimen.DiameterIn[3] = m_DiameterIn3;
+	ctx->specimen.DiameterOut[0] = m_DiameterOut0;
+	ctx->specimen.DiameterOut[1] = m_DiameterOut1;
+	ctx->specimen.DiameterOut[2] = m_DiameterOut2;
+	ctx->specimen.DiameterOut[3] = m_DiameterOut3;
+	ctx->specimen.Height[0] = m_Height0;
+	ctx->specimen.Height[1] = m_Height1;
+	ctx->specimen.Height[2] = m_Height2;
+	ctx->specimen.Height[3] = m_Height3;
+	ctx->specimen.Volume[0] = 3.141592*(ctx->specimen.DiameterOut[0]*ctx->specimen.DiameterOut[0]-ctx->specimen.DiameterIn[0]*ctx->specimen.DiameterIn[0])/4.0*ctx->specimen.Height[0];
+	ctx->specimen.Volume[1] = 3.141592*(ctx->specimen.DiameterOut[1]*ctx->specimen.DiameterOut[1]-ctx->specimen.DiameterIn[1]*ctx->specimen.DiameterIn[1])/4.0*ctx->specimen.Height[1];
+	ctx->specimen.Volume[2] = 3.141592*(ctx->specimen.DiameterOut[2]*ctx->specimen.DiameterOut[2]-ctx->specimen.DiameterIn[2]*ctx->specimen.DiameterIn[2])/4.0*ctx->specimen.Height[2];
+	ctx->specimen.Volume[3] = 3.141592*(ctx->specimen.DiameterOut[3]*ctx->specimen.DiameterOut[3]-ctx->specimen.DiameterIn[3]*ctx->specimen.DiameterIn[3])/4.0*ctx->specimen.Height[3];
+	ctx->specimen.DiaInMembrane[0] = m_DiaInM0;
+	ctx->specimen.DiaInMembrane[1] = m_DiaInM1;
+	ctx->specimen.DiaInMembrane[2] = m_DiaInM2;
+	ctx->specimen.DiaInMembrane[3] = m_DiaInM3;
+	ctx->specimen.DiaOutMembrane[0] = m_DiaOutM0;
+	ctx->specimen.DiaOutMembrane[1] = m_DiaOutM1;
+	ctx->specimen.DiaOutMembrane[2] = m_DiaOutM2;
+	ctx->specimen.DiaOutMembrane[3] = m_DiaOutM3;
+	ctx->specimen.HeightInMembrane[0] = m_HeightInM0;
+	ctx->specimen.HeightInMembrane[1] = m_HeightInM1;
+	ctx->specimen.HeightInMembrane[2] = m_HeightInM2;
+	ctx->specimen.HeightInMembrane[3] = m_HeightInM3;
+	ctx->specimen.HeightOutMembrane[0] = m_HeightOutM0;
+	ctx->specimen.HeightOutMembrane[1] = m_HeightOutM1;
+	ctx->specimen.HeightOutMembrane[2] = m_HeightOutM2;
+	ctx->specimen.HeightOutMembrane[3] = m_HeightOutM3;
 	Load();
 }
 
 void CSpecimen::OnBUTTONSave() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	
 	OnBUTTONUpdate();
@@ -239,125 +237,125 @@ void CSpecimen::OnBUTTONSave()
 	{
 	    pFileName = SpcSaveFile_dlg.GetPathName();	
 		FileSpcData = fopen((LPCSTR)pFileName , "w" );
-		fprintf(FileSpcData,"%s	%lf	\n","ReferentialDiameter_InnerMembrane(mm)",SpecimenData.RDiaInM);
-		fprintf(FileSpcData,"%s	%lf	\n","ReferentialDiameter_OuterMembrane(mm)",SpecimenData.RDiaOutM);
-		fprintf(FileSpcData,"%s	%lf	\n","ReferentialHeight_InnerMembrane(mm)",SpecimenData.RHeightInM);
-		fprintf(FileSpcData,"%s	%lf	\n","ReferentialHeight_OuterMembrane(mm)",SpecimenData.RHeightOutM);
-		fprintf(FileSpcData,"%s	%lf	\n","Membrane_Young's_Modulus(kPa)",SpecimenData.MembraneModulus);
-		fprintf(FileSpcData,"%s	%lf	\n","Membrane_Thickness(mm)",SpecimenData.MembraneThickness);
-		fprintf(FileSpcData,"%s	%lf	\n","Rod_Area(mm2)",SpecimenData.RodArea);
-		fprintf(FileSpcData,"%s	%lf	\n","Cap_Weight(N)",SpecimenData.CapWeight);
+		fprintf(FileSpcData,"%s	%lf	\n","ReferentialDiameter_InnerMembrane(mm)",ctx->specimen.RDiaInM);
+		fprintf(FileSpcData,"%s	%lf	\n","ReferentialDiameter_OuterMembrane(mm)",ctx->specimen.RDiaOutM);
+		fprintf(FileSpcData,"%s	%lf	\n","ReferentialHeight_InnerMembrane(mm)",ctx->specimen.RHeightInM);
+		fprintf(FileSpcData,"%s	%lf	\n","ReferentialHeight_OuterMembrane(mm)",ctx->specimen.RHeightOutM);
+		fprintf(FileSpcData,"%s	%lf	\n","Membrane_Young's_Modulus(kPa)",ctx->specimen.MembraneModulus);
+		fprintf(FileSpcData,"%s	%lf	\n","Membrane_Thickness(mm)",ctx->specimen.MembraneThickness);
+		fprintf(FileSpcData,"%s	%lf	\n","Rod_Area(mm2)",ctx->specimen.RodArea);
+		fprintf(FileSpcData,"%s	%lf	\n","Cap_Weight(N)",ctx->specimen.CapWeight);
 //
-		fprintf(FileSpcData,"%s	%lf	%lf	%lf	%lf	\n","Inner_Diameter(mm)",SpecimenData.DiameterIn[0],SpecimenData.DiameterIn[1],SpecimenData.DiameterIn[2],SpecimenData.DiameterIn[3]);
-		fprintf(FileSpcData,"%s	%lf	%lf	%lf	%lf	\n","Outer_Diameter(mm)",SpecimenData.DiameterOut[0],SpecimenData.DiameterOut[1],SpecimenData.DiameterOut[2],SpecimenData.DiameterOut[3]);
-		fprintf(FileSpcData,"%s	%lf	%lf	%lf	%lf	\n","Height(mm)",SpecimenData.Height[0],SpecimenData.Height[1],SpecimenData.Height[2],SpecimenData.Height[3]);
-		fprintf(FileSpcData,"%s	%lf	%lf	%lf	%lf	\n","Volume(mm3)",SpecimenData.Volume[0],SpecimenData.Volume[1],SpecimenData.Volume[2],SpecimenData.Volume[3]);
-		fprintf(FileSpcData,"%s	%lf	%lf	%lf	%lf	\n","Diameter_InnerMembrane(mm)",SpecimenData.DiaInMembrane[0],SpecimenData.DiaInMembrane[1],SpecimenData.DiaInMembrane[2],SpecimenData.DiaInMembrane[3]);
-		fprintf(FileSpcData,"%s	%lf	%lf	%lf	%lf	\n","Diameter_OuterMembrane(mm)",SpecimenData.DiaOutMembrane[0],SpecimenData.DiaOutMembrane[1],SpecimenData.DiaOutMembrane[2],SpecimenData.DiaOutMembrane[3]);
-		fprintf(FileSpcData,"%s	%lf	%lf	%lf	%lf	\n","Height_InnerMembrane(mm)",SpecimenData.HeightInMembrane[0],SpecimenData.HeightInMembrane[1],SpecimenData.HeightInMembrane[2],SpecimenData.HeightInMembrane[3]);
-		fprintf(FileSpcData,"%s	%lf	%lf	%lf	%lf	\n","Height_OuterMembrane(mm)",SpecimenData.HeightOutMembrane[0],SpecimenData.HeightOutMembrane[1],SpecimenData.HeightOutMembrane[2],SpecimenData.HeightOutMembrane[3]);
+		fprintf(FileSpcData,"%s	%lf	%lf	%lf	%lf	\n","Inner_Diameter(mm)",ctx->specimen.DiameterIn[0],ctx->specimen.DiameterIn[1],ctx->specimen.DiameterIn[2],ctx->specimen.DiameterIn[3]);
+		fprintf(FileSpcData,"%s	%lf	%lf	%lf	%lf	\n","Outer_Diameter(mm)",ctx->specimen.DiameterOut[0],ctx->specimen.DiameterOut[1],ctx->specimen.DiameterOut[2],ctx->specimen.DiameterOut[3]);
+		fprintf(FileSpcData,"%s	%lf	%lf	%lf	%lf	\n","Height(mm)",ctx->specimen.Height[0],ctx->specimen.Height[1],ctx->specimen.Height[2],ctx->specimen.Height[3]);
+		fprintf(FileSpcData,"%s	%lf	%lf	%lf	%lf	\n","Volume(mm3)",ctx->specimen.Volume[0],ctx->specimen.Volume[1],ctx->specimen.Volume[2],ctx->specimen.Volume[3]);
+		fprintf(FileSpcData,"%s	%lf	%lf	%lf	%lf	\n","Diameter_InnerMembrane(mm)",ctx->specimen.DiaInMembrane[0],ctx->specimen.DiaInMembrane[1],ctx->specimen.DiaInMembrane[2],ctx->specimen.DiaInMembrane[3]);
+		fprintf(FileSpcData,"%s	%lf	%lf	%lf	%lf	\n","Diameter_OuterMembrane(mm)",ctx->specimen.DiaOutMembrane[0],ctx->specimen.DiaOutMembrane[1],ctx->specimen.DiaOutMembrane[2],ctx->specimen.DiaOutMembrane[3]);
+		fprintf(FileSpcData,"%s	%lf	%lf	%lf	%lf	\n","Height_InnerMembrane(mm)",ctx->specimen.HeightInMembrane[0],ctx->specimen.HeightInMembrane[1],ctx->specimen.HeightInMembrane[2],ctx->specimen.HeightInMembrane[3]);
+		fprintf(FileSpcData,"%s	%lf	%lf	%lf	%lf	\n","Height_OuterMembrane(mm)",ctx->specimen.HeightOutMembrane[0],ctx->specimen.HeightOutMembrane[1],ctx->specimen.HeightOutMembrane[2],ctx->specimen.HeightOutMembrane[3]);
 		fclose(FileSpcData);
 	}	
 }
 
 void CSpecimen::OnBUTTONBeConsol() 
-{
+{	DigitShowContext* ctx = GetContext();
 	double BeConsol_ez = 0.0, BeConsol_ev = 0.0;
 	// TODO: Add your control notification handler code here
 	//@note Hashimoto modified 2022/12/17
-	SpecimenData.Height[2]=height;
-	//SpecimenData.Volume[2]=height*3.141592*(pow(SpecimenData.DiameterOut[1],2.0)-pow(SpecimenData.DiameterIn[1],2.0))/4.0;
-	//SpecimenData.DiameterIn[2]=SpecimenData.DiameterIn[1];
-	//SpecimenData.DiameterOut[2]=SpecimenData.DiameterOut[1];
-	//SpecimenData.DiaInMembrane[2] = SpecimenData.DiaInMembrane[1];
-	//SpecimenData.DiaOutMembrane[2] = SpecimenData.DiaOutMembrane[1];
-	//SpecimenData.HeightInMembrane[2] = SpecimenData.HeightInMembrane[1];
-	//SpecimenData.HeightOutMembrane[2] = SpecimenData.HeightOutMembrane[1];
-	BeConsol_ez = 1 - height / SpecimenData.Height[1];
+	ctx->specimen.Height[2]=ctx->phys.height;
+	//ctx->specimen.Volume[2]=ctx->phys.height*3.141592*(pow(ctx->specimen.DiameterOut[1],2.0)-pow(ctx->specimen.DiameterIn[1],2.0))/4.0;
+	//ctx->specimen.DiameterIn[2]=ctx->specimen.DiameterIn[1];
+	//ctx->specimen.DiameterOut[2]=ctx->specimen.DiameterOut[1];
+	//ctx->specimen.DiaInMembrane[2] = ctx->specimen.DiaInMembrane[1];
+	//ctx->specimen.DiaOutMembrane[2] = ctx->specimen.DiaOutMembrane[1];
+	//ctx->specimen.HeightInMembrane[2] = ctx->specimen.HeightInMembrane[1];
+	//ctx->specimen.HeightOutMembrane[2] = ctx->specimen.HeightOutMembrane[1];
+	BeConsol_ez = 1 - ctx->phys.height / ctx->specimen.Height[1];
 	BeConsol_ev = BeConsol_ez * 3;  // assume isotropic deformation
-	SpecimenData.Volume[2] = SpecimenData.Volume[1] * (1 - BeConsol_ev);
-	SpecimenData.DiameterIn[2] = SpecimenData.DiameterIn[1] * sqrt((1 - BeConsol_ev) / (1 - BeConsol_ez));
-	SpecimenData.DiameterOut[2] = SpecimenData.DiameterOut[1] * sqrt((1 - BeConsol_ev) / (1 - BeConsol_ez));
-	SpecimenData.DiaInMembrane[2] = SpecimenData.DiameterIn[2] - SpecimenData.MembraneThickness / 2.0;
-	SpecimenData.DiaOutMembrane[2] = SpecimenData.DiameterOut[2] + SpecimenData.MembraneThickness / 2.0;
-	SpecimenData.HeightInMembrane[2] = height;
-	SpecimenData.HeightOutMembrane[2] = height;
+	ctx->specimen.Volume[2] = ctx->specimen.Volume[1] * (1 - BeConsol_ev);
+	ctx->specimen.DiameterIn[2] = ctx->specimen.DiameterIn[1] * sqrt((1 - BeConsol_ev) / (1 - BeConsol_ez));
+	ctx->specimen.DiameterOut[2] = ctx->specimen.DiameterOut[1] * sqrt((1 - BeConsol_ev) / (1 - BeConsol_ez));
+	ctx->specimen.DiaInMembrane[2] = ctx->specimen.DiameterIn[2] - ctx->specimen.MembraneThickness / 2.0;
+	ctx->specimen.DiaOutMembrane[2] = ctx->specimen.DiameterOut[2] + ctx->specimen.MembraneThickness / 2.0;
+	ctx->specimen.HeightInMembrane[2] = ctx->phys.height;
+	ctx->specimen.HeightOutMembrane[2] = ctx->phys.height;
 	
 	//---Initialize Displacement transducer---
-	Cal_c[5] -= Phyout[5]; // initialize ez
-	//Cal_c[18]=Cal_c[18]-Phyout[18];
-	Cal_c[13] -= Phyout[13]; // initialize ev
+	ctx->ai.cal.c[5] -= ctx->ai.phy[5]; // initialize ez
+	//ctx->ai.cal.c[18]=ctx->ai.cal.c[18]-ctx->ai.phy[18];
+	ctx->ai.cal.c[13] -= ctx->ai.phy[13]; // initialize ev
 	Load();
 	OnBUTTONToPresent2();
 }
 
 void CSpecimen::OnBUTTONAfConsolidation() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: Add your control notification handler code here
 	//@note Hashimoto modified 2022/12/22
-	SpecimenData.Height[3]=height;
-	SpecimenData.Volume[3]=volume;
-	SpecimenData.DiameterIn[3]=diameter_in;
-	SpecimenData.DiameterOut[3]=diameter_out;
-	//SpecimenData.DiaInMembrane[3] = SpecimenData.DiaInMembrane[2];
-	//SpecimenData.DiaOutMembrane[3] = SpecimenData.DiaOutMembrane[2];
-	//SpecimenData.HeightInMembrane[3] = SpecimenData.HeightInMembrane[2];
-	//SpecimenData.HeightOutMembrane[3] = SpecimenData.HeightOutMembrane[2];
-	SpecimenData.DiaInMembrane[3] = diameter_in - SpecimenData.MembraneThickness / 2.0;
-	SpecimenData.DiaOutMembrane[3] = diameter_out + SpecimenData.MembraneThickness / 2.0;
-	SpecimenData.HeightInMembrane[3] = height;
-	SpecimenData.HeightOutMembrane[3] = height;
+	ctx->specimen.Height[3]=ctx->phys.height;
+	ctx->specimen.Volume[3]=ctx->phys.volume;
+	ctx->specimen.DiameterIn[3]=ctx->phys.diameter_in;
+	ctx->specimen.DiameterOut[3]=ctx->phys.diameter_out;
+	//ctx->specimen.DiaInMembrane[3] = ctx->specimen.DiaInMembrane[2];
+	//ctx->specimen.DiaOutMembrane[3] = ctx->specimen.DiaOutMembrane[2];
+	//ctx->specimen.HeightInMembrane[3] = ctx->specimen.HeightInMembrane[2];
+	//ctx->specimen.HeightOutMembrane[3] = ctx->specimen.HeightOutMembrane[2];
+	ctx->specimen.DiaInMembrane[3] = ctx->phys.diameter_in - ctx->specimen.MembraneThickness / 2.0;
+	ctx->specimen.DiaOutMembrane[3] = ctx->phys.diameter_out + ctx->specimen.MembraneThickness / 2.0;
+	ctx->specimen.HeightInMembrane[3] = ctx->phys.height;
+	ctx->specimen.HeightOutMembrane[3] = ctx->phys.height;
 
 	//---Initialize Displacement transducer---
-	Cal_c[5] -= Phyout[5]; // initialize ez
-	//Cal_c[18]=Cal_c[18]-Phyout[18];
-	Cal_c[13] -= Phyout[13]; // initialize ev
+	ctx->ai.cal.c[5] -= ctx->ai.phy[5]; // initialize ez
+	//ctx->ai.cal.c[18]=ctx->ai.cal.c[18]-ctx->ai.phy[18];
+	ctx->ai.cal.c[13] -= ctx->ai.phy[13]; // initialize ev
 	Load();
 	OnBUTTONToPresent3();
 }
 
 void CSpecimen::OnBUTTONToPresent1() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONUpdate();
-	SpecimenData.DiameterIn[0] = SpecimenData.DiameterIn[1];
-	SpecimenData.DiameterOut[0] = SpecimenData.DiameterOut[1];
-	SpecimenData.Height[0] = SpecimenData.Height[1];
-	SpecimenData.Volume[0] = SpecimenData.Volume[1];
-	SpecimenData.DiaInMembrane[0] = SpecimenData.DiaInMembrane[1];
-	SpecimenData.DiaOutMembrane[0] = SpecimenData.DiaOutMembrane[1];
-	SpecimenData.HeightInMembrane[0] = SpecimenData.HeightInMembrane[1];
-	SpecimenData.HeightOutMembrane[0] = SpecimenData.HeightOutMembrane[1];
+	ctx->specimen.DiameterIn[0] = ctx->specimen.DiameterIn[1];
+	ctx->specimen.DiameterOut[0] = ctx->specimen.DiameterOut[1];
+	ctx->specimen.Height[0] = ctx->specimen.Height[1];
+	ctx->specimen.Volume[0] = ctx->specimen.Volume[1];
+	ctx->specimen.DiaInMembrane[0] = ctx->specimen.DiaInMembrane[1];
+	ctx->specimen.DiaOutMembrane[0] = ctx->specimen.DiaOutMembrane[1];
+	ctx->specimen.HeightInMembrane[0] = ctx->specimen.HeightInMembrane[1];
+	ctx->specimen.HeightOutMembrane[0] = ctx->specimen.HeightOutMembrane[1];
 	Load();
 }
 
 void CSpecimen::OnBUTTONToPresent2() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONUpdate();
-	SpecimenData.DiameterIn[0] = SpecimenData.DiameterIn[2];
-	SpecimenData.DiameterOut[0] = SpecimenData.DiameterOut[2];
-	SpecimenData.Height[0] = SpecimenData.Height[2];
-	SpecimenData.Volume[0] = SpecimenData.Volume[2];
-	SpecimenData.DiaInMembrane[0] = SpecimenData.DiaInMembrane[2];
-	SpecimenData.DiaOutMembrane[0] = SpecimenData.DiaOutMembrane[2];
-	SpecimenData.HeightInMembrane[0] = SpecimenData.HeightInMembrane[2];
-	SpecimenData.HeightOutMembrane[0] = SpecimenData.HeightOutMembrane[2];
+	ctx->specimen.DiameterIn[0] = ctx->specimen.DiameterIn[2];
+	ctx->specimen.DiameterOut[0] = ctx->specimen.DiameterOut[2];
+	ctx->specimen.Height[0] = ctx->specimen.Height[2];
+	ctx->specimen.Volume[0] = ctx->specimen.Volume[2];
+	ctx->specimen.DiaInMembrane[0] = ctx->specimen.DiaInMembrane[2];
+	ctx->specimen.DiaOutMembrane[0] = ctx->specimen.DiaOutMembrane[2];
+	ctx->specimen.HeightInMembrane[0] = ctx->specimen.HeightInMembrane[2];
+	ctx->specimen.HeightOutMembrane[0] = ctx->specimen.HeightOutMembrane[2];
 	Load();
 }
 
 void CSpecimen::OnBUTTONToPresent3() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONUpdate();
-	SpecimenData.DiameterIn[0] = SpecimenData.DiameterIn[3];
-	SpecimenData.DiameterOut[0] = SpecimenData.DiameterOut[3];
-	SpecimenData.Height[0] = SpecimenData.Height[3];
-	SpecimenData.Volume[0] = SpecimenData.Volume[3];
-	SpecimenData.DiaInMembrane[0] = SpecimenData.DiaInMembrane[3];
-	SpecimenData.DiaOutMembrane[0] = SpecimenData.DiaOutMembrane[3];
-	SpecimenData.HeightInMembrane[0] = SpecimenData.HeightInMembrane[3];
-	SpecimenData.HeightOutMembrane[0] = SpecimenData.HeightOutMembrane[3];
+	ctx->specimen.DiameterIn[0] = ctx->specimen.DiameterIn[3];
+	ctx->specimen.DiameterOut[0] = ctx->specimen.DiameterOut[3];
+	ctx->specimen.Height[0] = ctx->specimen.Height[3];
+	ctx->specimen.Volume[0] = ctx->specimen.Volume[3];
+	ctx->specimen.DiaInMembrane[0] = ctx->specimen.DiaInMembrane[3];
+	ctx->specimen.DiaOutMembrane[0] = ctx->specimen.DiaOutMembrane[3];
+	ctx->specimen.HeightInMembrane[0] = ctx->specimen.HeightInMembrane[3];
+	ctx->specimen.HeightOutMembrane[0] = ctx->specimen.HeightOutMembrane[3];
 	Load();
 }
 

@@ -277,6 +277,7 @@ struct DigitShowContext {
 	int    NumSmallCyclic;
 	double StepTime;
 	int    StepDisplay;
+	int    AmpID;                            // current amplifier / channel ID in calibration dialogs
 
 	// Control targets
 	struct {

@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "DigitShowBasic.h"
 #include "CalibrationFactor.h"
+#include "DigitShowContext.h"
 
 #include "CalibrationAmp.h"
 
@@ -16,13 +17,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CCalibrationFactor ダイアログ
 // CDigitShowBasicView
-extern	CString		NameP[32];
-extern	float		Vout[32];	
-extern	double		Phyout[32];				
-extern	double		Cal_a[32],Cal_b[32],Cal_c[32];				
-extern	int			AdMaxCH;
-		int			AmpID;
-
 CCalibrationFactor::CCalibrationFactor(CWnd* pParent /*=NULL*/)
 	: CDialog(CCalibrationFactor::IDD, pParent)
 {
@@ -70,7 +64,7 @@ CCalibrationFactor::CCalibrationFactor(CWnd* pParent /*=NULL*/)
 }
 
 void CCalibrationFactor::DoDataExchange(CDataExchange* pDX)
-{
+{	DigitShowContext* ctx = GetContext();
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CCalibrationFactor)
 	DDX_Control(pDX, IDC_BUTTON_Amp15, m_Amp15);
@@ -219,7 +213,7 @@ END_MESSAGE_MAP()
 // CCalibrationFactor メッセージ ハンドラ
 
 BOOL CCalibrationFactor::OnInitDialog() 
-{
+{	DigitShowContext* ctx = GetContext();
 	CDialog::OnInitDialog();
 	
 	// TODO: Add extra initialization here
@@ -230,7 +224,7 @@ BOOL CCalibrationFactor::OnInitDialog()
 }
 
 void CCalibrationFactor::OnBUTTONChannel() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: Add your control notification handler code here
 	if(m_DChannel == "Ch.00-15")	m_DChannel = _T("Ch.16-31");
 	else							m_DChannel = _T("Ch.00-15");
@@ -238,275 +232,275 @@ void CCalibrationFactor::OnBUTTONChannel()
 }
 
 void CCalibrationFactor::Load()
-{
+{	DigitShowContext* ctx = GetContext();
 	pDoc -> AD_INPUT();
 	pDoc -> Cal_Physical();
 	if( m_DChannel == "Ch.00-15"){ 
-		m_CH00 = "CH00: "+NameP[0];		m_Amp00.SetWindowText("Amp.00");	
-		m_CH01 = "CH01: "+NameP[1];		m_Amp01.SetWindowText("Amp.01");	
-		m_CH02 = "CH02: "+NameP[2];		m_Amp02.SetWindowText("Amp.02");	
-		m_CH03 = "CH03: "+NameP[3];		m_Amp03.SetWindowText("Amp.03");	
-		m_CH04 = "CH04: "+NameP[4];		m_Amp04.SetWindowText("Amp.04");	
-		m_CH05 = "CH05: "+NameP[5];		m_Amp05.SetWindowText("Amp.05");	
-		m_CH06 = "CH06: "+NameP[6];		m_Amp06.SetWindowText("Amp.06");	
-		m_CH07 = "CH07: "+NameP[7];		m_Amp07.SetWindowText("Amp.07");	
-		m_CH08 = "CH08: "+NameP[8];		m_Amp08.SetWindowText("Amp.08");	
-		m_CH09 = "CH09: "+NameP[9];		m_Amp09.SetWindowText("Amp.09");	
-		m_CH10 = "CH10: "+NameP[10];	m_Amp10.SetWindowText("Amp.10");	
-		m_CH11 = "CH11: "+NameP[11];	m_Amp11.SetWindowText("Amp.11");	
-		m_CH12 = "CH12: "+NameP[12];	m_Amp12.SetWindowText("Amp.12");	
-		m_CH13 = "CH13: "+NameP[13];	m_Amp13.SetWindowText("Amp.13");	
-		m_CH14 = "CH14: "+NameP[14];	m_Amp14.SetWindowText("Amp.14");	
-		m_CH15 = "CH15: "+NameP[15];	m_Amp15.SetWindowText("Amp.15");	
-		m_CFA00=Cal_a[0];	m_CFB00=Cal_b[0];	m_CFC00=Cal_c[0];	m_CFP00.Format("%11.5f",Phyout[0]);	
-		m_CFA01=Cal_a[1];	m_CFB01=Cal_b[1];	m_CFC01=Cal_c[1];	m_CFP01.Format("%11.5f",Phyout[1]);	
-		m_CFA02=Cal_a[2];	m_CFB02=Cal_b[2];	m_CFC02=Cal_c[2];	m_CFP02.Format("%11.5f",Phyout[2]);	
-		m_CFA03=Cal_a[3];	m_CFB03=Cal_b[3];	m_CFC03=Cal_c[3];	m_CFP03.Format("%11.5f",Phyout[3]);	
-		m_CFA04=Cal_a[4];	m_CFB04=Cal_b[4];	m_CFC04=Cal_c[4];	m_CFP04.Format("%11.5f",Phyout[4]);	
-		m_CFA05=Cal_a[5];	m_CFB05=Cal_b[5];	m_CFC05=Cal_c[5];	m_CFP05.Format("%11.5f",Phyout[5]);	
-		m_CFA06=Cal_a[6];	m_CFB06=Cal_b[6];	m_CFC06=Cal_c[6];	m_CFP06.Format("%11.5f",Phyout[6]);	
-		m_CFA07=Cal_a[7];	m_CFB07=Cal_b[7];	m_CFC07=Cal_c[7];	m_CFP07.Format("%11.5f",Phyout[7]);	
-		m_CFA08=Cal_a[8];	m_CFB08=Cal_b[8];	m_CFC08=Cal_c[8];	m_CFP08.Format("%11.5f",Phyout[8]);	
-		m_CFA09=Cal_a[9];	m_CFB09=Cal_b[9];	m_CFC09=Cal_c[9];	m_CFP09.Format("%11.5f",Phyout[9]);	
-		m_CFA10=Cal_a[10];	m_CFB10=Cal_b[10];	m_CFC10=Cal_c[10];	m_CFP10.Format("%11.5f",Phyout[10]);	
-		m_CFA11=Cal_a[11];	m_CFB11=Cal_b[11];	m_CFC11=Cal_c[11];	m_CFP11.Format("%11.5f",Phyout[11]);	
-		m_CFA12=Cal_a[12];	m_CFB12=Cal_b[12];	m_CFC12=Cal_c[12];	m_CFP12.Format("%11.5f",Phyout[12]);	
-		m_CFA13=Cal_a[13];	m_CFB13=Cal_b[13];	m_CFC13=Cal_c[13];	m_CFP13.Format("%11.5f",Phyout[13]);	
-		m_CFA14=Cal_a[14];	m_CFB14=Cal_b[14];	m_CFC14=Cal_c[14];	m_CFP14.Format("%11.5f",Phyout[14]);	
-		m_CFA15=Cal_a[15];	m_CFB15=Cal_b[15];	m_CFC15=Cal_c[15];	m_CFP15.Format("%11.5f",Phyout[15]);	
+		m_CH00 = "CH00: "+ctx->NameP[0];		m_Amp00.SetWindowText("Amp.00");	
+		m_CH01 = "CH01: "+ctx->NameP[1];		m_Amp01.SetWindowText("Amp.01");	
+		m_CH02 = "CH02: "+ctx->NameP[2];		m_Amp02.SetWindowText("Amp.02");	
+		m_CH03 = "CH03: "+ctx->NameP[3];		m_Amp03.SetWindowText("Amp.03");	
+		m_CH04 = "CH04: "+ctx->NameP[4];		m_Amp04.SetWindowText("Amp.04");	
+		m_CH05 = "CH05: "+ctx->NameP[5];		m_Amp05.SetWindowText("Amp.05");	
+		m_CH06 = "CH06: "+ctx->NameP[6];		m_Amp06.SetWindowText("Amp.06");	
+		m_CH07 = "CH07: "+ctx->NameP[7];		m_Amp07.SetWindowText("Amp.07");	
+		m_CH08 = "CH08: "+ctx->NameP[8];		m_Amp08.SetWindowText("Amp.08");	
+		m_CH09 = "CH09: "+ctx->NameP[9];		m_Amp09.SetWindowText("Amp.09");	
+		m_CH10 = "CH10: "+ctx->NameP[10];	m_Amp10.SetWindowText("Amp.10");	
+		m_CH11 = "CH11: "+ctx->NameP[11];	m_Amp11.SetWindowText("Amp.11");	
+		m_CH12 = "CH12: "+ctx->NameP[12];	m_Amp12.SetWindowText("Amp.12");	
+		m_CH13 = "CH13: "+ctx->NameP[13];	m_Amp13.SetWindowText("Amp.13");	
+		m_CH14 = "CH14: "+ctx->NameP[14];	m_Amp14.SetWindowText("Amp.14");	
+		m_CH15 = "CH15: "+ctx->NameP[15];	m_Amp15.SetWindowText("Amp.15");	
+		m_CFA00=ctx->ai.cal.a[0];	m_CFB00=ctx->ai.cal.b[0];	m_CFC00=ctx->ai.cal.c[0];	m_CFP00.Format("%11.5f",ctx->ai.phy[0]);	
+		m_CFA01=ctx->ai.cal.a[1];	m_CFB01=ctx->ai.cal.b[1];	m_CFC01=ctx->ai.cal.c[1];	m_CFP01.Format("%11.5f",ctx->ai.phy[1]);	
+		m_CFA02=ctx->ai.cal.a[2];	m_CFB02=ctx->ai.cal.b[2];	m_CFC02=ctx->ai.cal.c[2];	m_CFP02.Format("%11.5f",ctx->ai.phy[2]);	
+		m_CFA03=ctx->ai.cal.a[3];	m_CFB03=ctx->ai.cal.b[3];	m_CFC03=ctx->ai.cal.c[3];	m_CFP03.Format("%11.5f",ctx->ai.phy[3]);	
+		m_CFA04=ctx->ai.cal.a[4];	m_CFB04=ctx->ai.cal.b[4];	m_CFC04=ctx->ai.cal.c[4];	m_CFP04.Format("%11.5f",ctx->ai.phy[4]);	
+		m_CFA05=ctx->ai.cal.a[5];	m_CFB05=ctx->ai.cal.b[5];	m_CFC05=ctx->ai.cal.c[5];	m_CFP05.Format("%11.5f",ctx->ai.phy[5]);	
+		m_CFA06=ctx->ai.cal.a[6];	m_CFB06=ctx->ai.cal.b[6];	m_CFC06=ctx->ai.cal.c[6];	m_CFP06.Format("%11.5f",ctx->ai.phy[6]);	
+		m_CFA07=ctx->ai.cal.a[7];	m_CFB07=ctx->ai.cal.b[7];	m_CFC07=ctx->ai.cal.c[7];	m_CFP07.Format("%11.5f",ctx->ai.phy[7]);	
+		m_CFA08=ctx->ai.cal.a[8];	m_CFB08=ctx->ai.cal.b[8];	m_CFC08=ctx->ai.cal.c[8];	m_CFP08.Format("%11.5f",ctx->ai.phy[8]);	
+		m_CFA09=ctx->ai.cal.a[9];	m_CFB09=ctx->ai.cal.b[9];	m_CFC09=ctx->ai.cal.c[9];	m_CFP09.Format("%11.5f",ctx->ai.phy[9]);	
+		m_CFA10=ctx->ai.cal.a[10];	m_CFB10=ctx->ai.cal.b[10];	m_CFC10=ctx->ai.cal.c[10];	m_CFP10.Format("%11.5f",ctx->ai.phy[10]);	
+		m_CFA11=ctx->ai.cal.a[11];	m_CFB11=ctx->ai.cal.b[11];	m_CFC11=ctx->ai.cal.c[11];	m_CFP11.Format("%11.5f",ctx->ai.phy[11]);	
+		m_CFA12=ctx->ai.cal.a[12];	m_CFB12=ctx->ai.cal.b[12];	m_CFC12=ctx->ai.cal.c[12];	m_CFP12.Format("%11.5f",ctx->ai.phy[12]);	
+		m_CFA13=ctx->ai.cal.a[13];	m_CFB13=ctx->ai.cal.b[13];	m_CFC13=ctx->ai.cal.c[13];	m_CFP13.Format("%11.5f",ctx->ai.phy[13]);	
+		m_CFA14=ctx->ai.cal.a[14];	m_CFB14=ctx->ai.cal.b[14];	m_CFC14=ctx->ai.cal.c[14];	m_CFP14.Format("%11.5f",ctx->ai.phy[14]);	
+		m_CFA15=ctx->ai.cal.a[15];	m_CFB15=ctx->ai.cal.b[15];	m_CFC15=ctx->ai.cal.c[15];	m_CFP15.Format("%11.5f",ctx->ai.phy[15]);	
 	}
 	else{
-		m_CH00 = "CH16: "+NameP[16];	m_Amp00.SetWindowText("Amp.16");	
-		m_CH01 = "CH17: "+NameP[17];	m_Amp01.SetWindowText("Amp.17");	
-		m_CH02 = "CH18: "+NameP[18];	m_Amp02.SetWindowText("Amp.18");	
-		m_CH03 = "CH19: "+NameP[19];	m_Amp03.SetWindowText("Amp.19");	
-		m_CH04 = "CH20: "+NameP[20];	m_Amp04.SetWindowText("Amp.20");	
-		m_CH05 = "CH21: "+NameP[21];	m_Amp05.SetWindowText("Amp.21");	
-		m_CH06 = "CH22: "+NameP[22];	m_Amp06.SetWindowText("Amp.22");	
-		m_CH07 = "CH23: "+NameP[23];	m_Amp07.SetWindowText("Amp.23");	
-		m_CH08 = "CH24: "+NameP[24];	m_Amp08.SetWindowText("Amp.24");	
-		m_CH09 = "CH25: "+NameP[25];	m_Amp09.SetWindowText("Amp.25");	
-		m_CH10 = "CH26: "+NameP[26];	m_Amp10.SetWindowText("Amp.26");	
-		m_CH11 = "CH27: "+NameP[27];	m_Amp11.SetWindowText("Amp.27");	
-		m_CH12 = "CH28: "+NameP[28];	m_Amp12.SetWindowText("Amp.28");	
-		m_CH13 = "CH29: "+NameP[29];	m_Amp13.SetWindowText("Amp.29");	
-		m_CH14 = "CH30: "+NameP[30];	m_Amp14.SetWindowText("Amp.30");	
-		m_CH15 = "CH31: "+NameP[31];	m_Amp15.SetWindowText("Amp.31");	
-		m_CFA00=Cal_a[16];	m_CFB00=Cal_b[16];	m_CFC00=Cal_c[16];	m_CFP00.Format("%11.5f",Phyout[16]);	
-		m_CFA01=Cal_a[17];	m_CFB01=Cal_b[17];	m_CFC01=Cal_c[17];	m_CFP01.Format("%11.5f",Phyout[17]);	
-		m_CFA02=Cal_a[18];	m_CFB02=Cal_b[18];	m_CFC02=Cal_c[18];	m_CFP02.Format("%11.5f",Phyout[18]);	
-		m_CFA03=Cal_a[19];	m_CFB03=Cal_b[19];	m_CFC03=Cal_c[19];	m_CFP03.Format("%11.5f",Phyout[19]);	
-		m_CFA04=Cal_a[20];	m_CFB04=Cal_b[20];	m_CFC04=Cal_c[20];	m_CFP04.Format("%11.5f",Phyout[20]);	
-		m_CFA05=Cal_a[21];	m_CFB05=Cal_b[21];	m_CFC05=Cal_c[21];	m_CFP05.Format("%11.5f",Phyout[21]);	
-		m_CFA06=Cal_a[22];	m_CFB06=Cal_b[22];	m_CFC06=Cal_c[22];	m_CFP06.Format("%11.5f",Phyout[22]);	
-		m_CFA07=Cal_a[23];	m_CFB07=Cal_b[23];	m_CFC07=Cal_c[23];	m_CFP07.Format("%11.5f",Phyout[23]);	
-		m_CFA08=Cal_a[24];	m_CFB08=Cal_b[24];	m_CFC08=Cal_c[24];	m_CFP08.Format("%11.5f",Phyout[24]);	
-		m_CFA09=Cal_a[25];	m_CFB09=Cal_b[25];	m_CFC09=Cal_c[25];	m_CFP09.Format("%11.5f",Phyout[25]);	
-		m_CFA10=Cal_a[26];	m_CFB10=Cal_b[26];	m_CFC10=Cal_c[26];	m_CFP10.Format("%11.5f",Phyout[26]);	
-		m_CFA11=Cal_a[27];	m_CFB11=Cal_b[27];	m_CFC11=Cal_c[27];	m_CFP11.Format("%11.5f",Phyout[27]);	
-		m_CFA12=Cal_a[28];	m_CFB12=Cal_b[28];	m_CFC12=Cal_c[28];	m_CFP12.Format("%11.5f",Phyout[28]);	
-		m_CFA13=Cal_a[29];	m_CFB13=Cal_b[29];	m_CFC13=Cal_c[29];	m_CFP13.Format("%11.5f",Phyout[29]);	
-		m_CFA14=Cal_a[30];	m_CFB14=Cal_b[30];	m_CFC14=Cal_c[30];	m_CFP14.Format("%11.5f",Phyout[30]);	
-		m_CFA15=Cal_a[31];	m_CFB15=Cal_b[31];	m_CFC15=Cal_c[31];	m_CFP15.Format("%11.5f",Phyout[31]);	
+		m_CH00 = "CH16: "+ctx->NameP[16];	m_Amp00.SetWindowText("Amp.16");	
+		m_CH01 = "CH17: "+ctx->NameP[17];	m_Amp01.SetWindowText("Amp.17");	
+		m_CH02 = "CH18: "+ctx->NameP[18];	m_Amp02.SetWindowText("Amp.18");	
+		m_CH03 = "CH19: "+ctx->NameP[19];	m_Amp03.SetWindowText("Amp.19");	
+		m_CH04 = "CH20: "+ctx->NameP[20];	m_Amp04.SetWindowText("Amp.20");	
+		m_CH05 = "CH21: "+ctx->NameP[21];	m_Amp05.SetWindowText("Amp.21");	
+		m_CH06 = "CH22: "+ctx->NameP[22];	m_Amp06.SetWindowText("Amp.22");	
+		m_CH07 = "CH23: "+ctx->NameP[23];	m_Amp07.SetWindowText("Amp.23");	
+		m_CH08 = "CH24: "+ctx->NameP[24];	m_Amp08.SetWindowText("Amp.24");	
+		m_CH09 = "CH25: "+ctx->NameP[25];	m_Amp09.SetWindowText("Amp.25");	
+		m_CH10 = "CH26: "+ctx->NameP[26];	m_Amp10.SetWindowText("Amp.26");	
+		m_CH11 = "CH27: "+ctx->NameP[27];	m_Amp11.SetWindowText("Amp.27");	
+		m_CH12 = "CH28: "+ctx->NameP[28];	m_Amp12.SetWindowText("Amp.28");	
+		m_CH13 = "CH29: "+ctx->NameP[29];	m_Amp13.SetWindowText("Amp.29");	
+		m_CH14 = "CH30: "+ctx->NameP[30];	m_Amp14.SetWindowText("Amp.30");	
+		m_CH15 = "CH31: "+ctx->NameP[31];	m_Amp15.SetWindowText("Amp.31");	
+		m_CFA00=ctx->ai.cal.a[16];	m_CFB00=ctx->ai.cal.b[16];	m_CFC00=ctx->ai.cal.c[16];	m_CFP00.Format("%11.5f",ctx->ai.phy[16]);	
+		m_CFA01=ctx->ai.cal.a[17];	m_CFB01=ctx->ai.cal.b[17];	m_CFC01=ctx->ai.cal.c[17];	m_CFP01.Format("%11.5f",ctx->ai.phy[17]);	
+		m_CFA02=ctx->ai.cal.a[18];	m_CFB02=ctx->ai.cal.b[18];	m_CFC02=ctx->ai.cal.c[18];	m_CFP02.Format("%11.5f",ctx->ai.phy[18]);	
+		m_CFA03=ctx->ai.cal.a[19];	m_CFB03=ctx->ai.cal.b[19];	m_CFC03=ctx->ai.cal.c[19];	m_CFP03.Format("%11.5f",ctx->ai.phy[19]);	
+		m_CFA04=ctx->ai.cal.a[20];	m_CFB04=ctx->ai.cal.b[20];	m_CFC04=ctx->ai.cal.c[20];	m_CFP04.Format("%11.5f",ctx->ai.phy[20]);	
+		m_CFA05=ctx->ai.cal.a[21];	m_CFB05=ctx->ai.cal.b[21];	m_CFC05=ctx->ai.cal.c[21];	m_CFP05.Format("%11.5f",ctx->ai.phy[21]);	
+		m_CFA06=ctx->ai.cal.a[22];	m_CFB06=ctx->ai.cal.b[22];	m_CFC06=ctx->ai.cal.c[22];	m_CFP06.Format("%11.5f",ctx->ai.phy[22]);	
+		m_CFA07=ctx->ai.cal.a[23];	m_CFB07=ctx->ai.cal.b[23];	m_CFC07=ctx->ai.cal.c[23];	m_CFP07.Format("%11.5f",ctx->ai.phy[23]);	
+		m_CFA08=ctx->ai.cal.a[24];	m_CFB08=ctx->ai.cal.b[24];	m_CFC08=ctx->ai.cal.c[24];	m_CFP08.Format("%11.5f",ctx->ai.phy[24]);	
+		m_CFA09=ctx->ai.cal.a[25];	m_CFB09=ctx->ai.cal.b[25];	m_CFC09=ctx->ai.cal.c[25];	m_CFP09.Format("%11.5f",ctx->ai.phy[25]);	
+		m_CFA10=ctx->ai.cal.a[26];	m_CFB10=ctx->ai.cal.b[26];	m_CFC10=ctx->ai.cal.c[26];	m_CFP10.Format("%11.5f",ctx->ai.phy[26]);	
+		m_CFA11=ctx->ai.cal.a[27];	m_CFB11=ctx->ai.cal.b[27];	m_CFC11=ctx->ai.cal.c[27];	m_CFP11.Format("%11.5f",ctx->ai.phy[27]);	
+		m_CFA12=ctx->ai.cal.a[28];	m_CFB12=ctx->ai.cal.b[28];	m_CFC12=ctx->ai.cal.c[28];	m_CFP12.Format("%11.5f",ctx->ai.phy[28]);	
+		m_CFA13=ctx->ai.cal.a[29];	m_CFB13=ctx->ai.cal.b[29];	m_CFC13=ctx->ai.cal.c[29];	m_CFP13.Format("%11.5f",ctx->ai.phy[29]);	
+		m_CFA14=ctx->ai.cal.a[30];	m_CFB14=ctx->ai.cal.b[30];	m_CFC14=ctx->ai.cal.c[30];	m_CFP14.Format("%11.5f",ctx->ai.phy[30]);	
+		m_CFA15=ctx->ai.cal.a[31];	m_CFB15=ctx->ai.cal.b[31];	m_CFC15=ctx->ai.cal.c[31];	m_CFP15.Format("%11.5f",ctx->ai.phy[31]);	
 	}
 	UpdateData(FALSE);
 }
 
 void CCalibrationFactor::OnBUTTONCFUpdate() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	UpdateData(TRUE);
 	if(m_DChannel == "Ch.00-15"){
-		Cal_a[0]=m_CFA00;	Cal_b[0]=m_CFB00;	Cal_c[0]=m_CFC00;	
-		Cal_a[1]=m_CFA01;	Cal_b[1]=m_CFB01;	Cal_c[1]=m_CFC01;	
-		Cal_a[2]=m_CFA02;	Cal_b[2]=m_CFB02;	Cal_c[2]=m_CFC02;	
-		Cal_a[3]=m_CFA03;	Cal_b[3]=m_CFB03;	Cal_c[3]=m_CFC03;	
-		Cal_a[4]=m_CFA04;	Cal_b[4]=m_CFB04;	Cal_c[4]=m_CFC04;	
-		Cal_a[5]=m_CFA05;	Cal_b[5]=m_CFB05;	Cal_c[5]=m_CFC05;	
-		Cal_a[6]=m_CFA06;	Cal_b[6]=m_CFB06;	Cal_c[6]=m_CFC06;	
-		Cal_a[7]=m_CFA07;	Cal_b[7]=m_CFB07;	Cal_c[7]=m_CFC07;	
-		Cal_a[8]=m_CFA08;	Cal_b[8]=m_CFB08;	Cal_c[8]=m_CFC08;	
-		Cal_a[9]=m_CFA09;	Cal_b[9]=m_CFB09;	Cal_c[9]=m_CFC09;	
-		Cal_a[10]=m_CFA10;	Cal_b[10]=m_CFB10;	Cal_c[10]=m_CFC10;	
-		Cal_a[11]=m_CFA11;	Cal_b[11]=m_CFB11;	Cal_c[11]=m_CFC11;	
-		Cal_a[12]=m_CFA12;	Cal_b[12]=m_CFB12;	Cal_c[12]=m_CFC12;	
-		Cal_a[13]=m_CFA13;	Cal_b[13]=m_CFB13;	Cal_c[13]=m_CFC13;	
-		Cal_a[14]=m_CFA14;	Cal_b[14]=m_CFB14;	Cal_c[14]=m_CFC14;	
-		Cal_a[15]=m_CFA15;	Cal_b[15]=m_CFB15;	Cal_c[15]=m_CFC15;	
+		ctx->ai.cal.a[0]=m_CFA00;	ctx->ai.cal.b[0]=m_CFB00;	ctx->ai.cal.c[0]=m_CFC00;	
+		ctx->ai.cal.a[1]=m_CFA01;	ctx->ai.cal.b[1]=m_CFB01;	ctx->ai.cal.c[1]=m_CFC01;	
+		ctx->ai.cal.a[2]=m_CFA02;	ctx->ai.cal.b[2]=m_CFB02;	ctx->ai.cal.c[2]=m_CFC02;	
+		ctx->ai.cal.a[3]=m_CFA03;	ctx->ai.cal.b[3]=m_CFB03;	ctx->ai.cal.c[3]=m_CFC03;	
+		ctx->ai.cal.a[4]=m_CFA04;	ctx->ai.cal.b[4]=m_CFB04;	ctx->ai.cal.c[4]=m_CFC04;	
+		ctx->ai.cal.a[5]=m_CFA05;	ctx->ai.cal.b[5]=m_CFB05;	ctx->ai.cal.c[5]=m_CFC05;	
+		ctx->ai.cal.a[6]=m_CFA06;	ctx->ai.cal.b[6]=m_CFB06;	ctx->ai.cal.c[6]=m_CFC06;	
+		ctx->ai.cal.a[7]=m_CFA07;	ctx->ai.cal.b[7]=m_CFB07;	ctx->ai.cal.c[7]=m_CFC07;	
+		ctx->ai.cal.a[8]=m_CFA08;	ctx->ai.cal.b[8]=m_CFB08;	ctx->ai.cal.c[8]=m_CFC08;	
+		ctx->ai.cal.a[9]=m_CFA09;	ctx->ai.cal.b[9]=m_CFB09;	ctx->ai.cal.c[9]=m_CFC09;	
+		ctx->ai.cal.a[10]=m_CFA10;	ctx->ai.cal.b[10]=m_CFB10;	ctx->ai.cal.c[10]=m_CFC10;	
+		ctx->ai.cal.a[11]=m_CFA11;	ctx->ai.cal.b[11]=m_CFB11;	ctx->ai.cal.c[11]=m_CFC11;	
+		ctx->ai.cal.a[12]=m_CFA12;	ctx->ai.cal.b[12]=m_CFB12;	ctx->ai.cal.c[12]=m_CFC12;	
+		ctx->ai.cal.a[13]=m_CFA13;	ctx->ai.cal.b[13]=m_CFB13;	ctx->ai.cal.c[13]=m_CFC13;	
+		ctx->ai.cal.a[14]=m_CFA14;	ctx->ai.cal.b[14]=m_CFB14;	ctx->ai.cal.c[14]=m_CFC14;	
+		ctx->ai.cal.a[15]=m_CFA15;	ctx->ai.cal.b[15]=m_CFB15;	ctx->ai.cal.c[15]=m_CFC15;	
 	}
 	else{
-		Cal_a[16]=m_CFA00;	Cal_b[16]=m_CFB00;	Cal_c[16]=m_CFC00;	
-		Cal_a[17]=m_CFA01;	Cal_b[17]=m_CFB01;	Cal_c[17]=m_CFC01;	
-		Cal_a[18]=m_CFA02;	Cal_b[18]=m_CFB02;	Cal_c[18]=m_CFC02;	
-		Cal_a[19]=m_CFA03;	Cal_b[19]=m_CFB03;	Cal_c[19]=m_CFC03;	
-		Cal_a[20]=m_CFA04;	Cal_b[20]=m_CFB04;	Cal_c[20]=m_CFC04;	
-		Cal_a[21]=m_CFA05;	Cal_b[21]=m_CFB05;	Cal_c[21]=m_CFC05;	
-		Cal_a[22]=m_CFA06;	Cal_b[22]=m_CFB06;	Cal_c[22]=m_CFC06;	
-		Cal_a[23]=m_CFA07;	Cal_b[23]=m_CFB07;	Cal_c[23]=m_CFC07;	
-		Cal_a[24]=m_CFA08;	Cal_b[24]=m_CFB08;	Cal_c[24]=m_CFC08;	
-		Cal_a[25]=m_CFA09;	Cal_b[25]=m_CFB09;	Cal_c[25]=m_CFC09;	
-		Cal_a[26]=m_CFA10;	Cal_b[26]=m_CFB10;	Cal_c[26]=m_CFC10;	
-		Cal_a[27]=m_CFA11;	Cal_b[27]=m_CFB11;	Cal_c[27]=m_CFC11;	
-		Cal_a[28]=m_CFA12;	Cal_b[28]=m_CFB12;	Cal_c[28]=m_CFC12;	
-		Cal_a[29]=m_CFA13;	Cal_b[29]=m_CFB13;	Cal_c[29]=m_CFC13;	
-		Cal_a[30]=m_CFA14;	Cal_b[30]=m_CFB14;	Cal_c[30]=m_CFC14;	
-		Cal_a[31]=m_CFA15;	Cal_b[31]=m_CFB15;	Cal_c[31]=m_CFC15;	
+		ctx->ai.cal.a[16]=m_CFA00;	ctx->ai.cal.b[16]=m_CFB00;	ctx->ai.cal.c[16]=m_CFC00;	
+		ctx->ai.cal.a[17]=m_CFA01;	ctx->ai.cal.b[17]=m_CFB01;	ctx->ai.cal.c[17]=m_CFC01;	
+		ctx->ai.cal.a[18]=m_CFA02;	ctx->ai.cal.b[18]=m_CFB02;	ctx->ai.cal.c[18]=m_CFC02;	
+		ctx->ai.cal.a[19]=m_CFA03;	ctx->ai.cal.b[19]=m_CFB03;	ctx->ai.cal.c[19]=m_CFC03;	
+		ctx->ai.cal.a[20]=m_CFA04;	ctx->ai.cal.b[20]=m_CFB04;	ctx->ai.cal.c[20]=m_CFC04;	
+		ctx->ai.cal.a[21]=m_CFA05;	ctx->ai.cal.b[21]=m_CFB05;	ctx->ai.cal.c[21]=m_CFC05;	
+		ctx->ai.cal.a[22]=m_CFA06;	ctx->ai.cal.b[22]=m_CFB06;	ctx->ai.cal.c[22]=m_CFC06;	
+		ctx->ai.cal.a[23]=m_CFA07;	ctx->ai.cal.b[23]=m_CFB07;	ctx->ai.cal.c[23]=m_CFC07;	
+		ctx->ai.cal.a[24]=m_CFA08;	ctx->ai.cal.b[24]=m_CFB08;	ctx->ai.cal.c[24]=m_CFC08;	
+		ctx->ai.cal.a[25]=m_CFA09;	ctx->ai.cal.b[25]=m_CFB09;	ctx->ai.cal.c[25]=m_CFC09;	
+		ctx->ai.cal.a[26]=m_CFA10;	ctx->ai.cal.b[26]=m_CFB10;	ctx->ai.cal.c[26]=m_CFC10;	
+		ctx->ai.cal.a[27]=m_CFA11;	ctx->ai.cal.b[27]=m_CFB11;	ctx->ai.cal.c[27]=m_CFC11;	
+		ctx->ai.cal.a[28]=m_CFA12;	ctx->ai.cal.b[28]=m_CFB12;	ctx->ai.cal.c[28]=m_CFC12;	
+		ctx->ai.cal.a[29]=m_CFA13;	ctx->ai.cal.b[29]=m_CFB13;	ctx->ai.cal.c[29]=m_CFC13;	
+		ctx->ai.cal.a[30]=m_CFA14;	ctx->ai.cal.b[30]=m_CFB14;	ctx->ai.cal.c[30]=m_CFC14;	
+		ctx->ai.cal.a[31]=m_CFA15;	ctx->ai.cal.b[31]=m_CFB15;	ctx->ai.cal.c[31]=m_CFC15;	
 	}
 }
 
 
 void CCalibrationFactor::OnBUTTONZero00() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
-	if(m_DChannel == "Ch.00-15")	Cal_c[0]=Cal_c[0]-Phyout[0];
-	else							Cal_c[16]=Cal_c[16]-Phyout[16];
+	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[0]=ctx->ai.cal.c[0]-ctx->ai.phy[0];
+	else							ctx->ai.cal.c[16]=ctx->ai.cal.c[16]-ctx->ai.phy[16];
 	Load();
 }
 
 void CCalibrationFactor::OnBUTTONZero01() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
-	if(m_DChannel == "Ch.00-15")	Cal_c[1]=Cal_c[1]-Phyout[1];
-	else							Cal_c[17]=Cal_c[17]-Phyout[17];
+	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[1]=ctx->ai.cal.c[1]-ctx->ai.phy[1];
+	else							ctx->ai.cal.c[17]=ctx->ai.cal.c[17]-ctx->ai.phy[17];
 	Load();
 }
 
 void CCalibrationFactor::OnBUTTONZero02() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
-	if(m_DChannel == "Ch.00-15")	Cal_c[2]=Cal_c[2]-Phyout[2];
-	else							Cal_c[18]=Cal_c[18]-Phyout[18];
+	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[2]=ctx->ai.cal.c[2]-ctx->ai.phy[2];
+	else							ctx->ai.cal.c[18]=ctx->ai.cal.c[18]-ctx->ai.phy[18];
 	Load();
 }
 
 void CCalibrationFactor::OnBUTTONZero03() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
-	if(m_DChannel == "Ch.00-15")	Cal_c[3]=Cal_c[3]-Phyout[3];
-	else							Cal_c[19]=Cal_c[19]-Phyout[19];
+	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[3]=ctx->ai.cal.c[3]-ctx->ai.phy[3];
+	else							ctx->ai.cal.c[19]=ctx->ai.cal.c[19]-ctx->ai.phy[19];
 	Load();	
 }
 
 void CCalibrationFactor::OnBUTTONZero04() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
-	if(m_DChannel == "Ch.00-15")	Cal_c[4]=Cal_c[4]-Phyout[4];
-	else							Cal_c[20]=Cal_c[20]-Phyout[20];
+	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[4]=ctx->ai.cal.c[4]-ctx->ai.phy[4];
+	else							ctx->ai.cal.c[20]=ctx->ai.cal.c[20]-ctx->ai.phy[20];
 	Load();	
 }
 
 void CCalibrationFactor::OnBUTTONZero05() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
-	if(m_DChannel == "Ch.00-15")	Cal_c[5]=Cal_c[5]-Phyout[5];
-	else							Cal_c[21]=Cal_c[21]-Phyout[21];
+	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[5]=ctx->ai.cal.c[5]-ctx->ai.phy[5];
+	else							ctx->ai.cal.c[21]=ctx->ai.cal.c[21]-ctx->ai.phy[21];
 	Load();
 }
 
 void CCalibrationFactor::OnBUTTONZero06() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
-	if(m_DChannel == "Ch.00-15")	Cal_c[6]=Cal_c[6]-Phyout[6];
-	else							Cal_c[22]=Cal_c[22]-Phyout[22];
+	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[6]=ctx->ai.cal.c[6]-ctx->ai.phy[6];
+	else							ctx->ai.cal.c[22]=ctx->ai.cal.c[22]-ctx->ai.phy[22];
 	Load();
 }
 
 void CCalibrationFactor::OnBUTTONZero07() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
-	if(m_DChannel == "Ch.00-15")	Cal_c[7]=Cal_c[7]-Phyout[7];
-	else							Cal_c[23]=Cal_c[23]-Phyout[23];
+	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[7]=ctx->ai.cal.c[7]-ctx->ai.phy[7];
+	else							ctx->ai.cal.c[23]=ctx->ai.cal.c[23]-ctx->ai.phy[23];
 	Load();
 }
 
 void CCalibrationFactor::OnBUTTONZero08() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
-	if(m_DChannel == "Ch.00-15")	Cal_c[8]=Cal_c[8]-Phyout[8];
-	else							Cal_c[24]=Cal_c[24]-Phyout[24];
+	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[8]=ctx->ai.cal.c[8]-ctx->ai.phy[8];
+	else							ctx->ai.cal.c[24]=ctx->ai.cal.c[24]-ctx->ai.phy[24];
 	Load();
 }
 
 void CCalibrationFactor::OnBUTTONZero09() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
-	if(m_DChannel == "Ch.00-15")	Cal_c[9]=Cal_c[9]-Phyout[9];
-	else							Cal_c[25]=Cal_c[25]-Phyout[25];
+	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[9]=ctx->ai.cal.c[9]-ctx->ai.phy[9];
+	else							ctx->ai.cal.c[25]=ctx->ai.cal.c[25]-ctx->ai.phy[25];
 	Load();
 }
 
 void CCalibrationFactor::OnBUTTONZero10() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
-	if(m_DChannel == "Ch.00-15")	Cal_c[10]=Cal_c[10]-Phyout[10];
-	else							Cal_c[26]=Cal_c[26]-Phyout[26];
+	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[10]=ctx->ai.cal.c[10]-ctx->ai.phy[10];
+	else							ctx->ai.cal.c[26]=ctx->ai.cal.c[26]-ctx->ai.phy[26];
 	Load();
 }
 
 void CCalibrationFactor::OnBUTTONZero11() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
-	if(m_DChannel == "Ch.00-15")	Cal_c[11]=Cal_c[11]-Phyout[11];
-	else							Cal_c[27]=Cal_c[27]-Phyout[27];
+	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[11]=ctx->ai.cal.c[11]-ctx->ai.phy[11];
+	else							ctx->ai.cal.c[27]=ctx->ai.cal.c[27]-ctx->ai.phy[27];
 	Load();	
 }
 
 void CCalibrationFactor::OnBUTTONZero12() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
-	if(m_DChannel == "Ch.00-15")	Cal_c[12]=Cal_c[12]-Phyout[12];
-	else							Cal_c[28]=Cal_c[28]-Phyout[28];
+	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[12]=ctx->ai.cal.c[12]-ctx->ai.phy[12];
+	else							ctx->ai.cal.c[28]=ctx->ai.cal.c[28]-ctx->ai.phy[28];
 	Load();	
 }
 
 void CCalibrationFactor::OnBUTTONZero13() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
-	if(m_DChannel == "Ch.00-15")	Cal_c[13]=Cal_c[13]-Phyout[13];
-	else							Cal_c[29]=Cal_c[29]-Phyout[29];
+	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[13]=ctx->ai.cal.c[13]-ctx->ai.phy[13];
+	else							ctx->ai.cal.c[29]=ctx->ai.cal.c[29]-ctx->ai.phy[29];
 	Load();	
 }
 
 void CCalibrationFactor::OnBUTTONZero14() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
-	if(m_DChannel == "Ch.00-15")	Cal_c[14]=Cal_c[14]-Phyout[14];
-	else							Cal_c[30]=Cal_c[30]-Phyout[30];
+	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[14]=ctx->ai.cal.c[14]-ctx->ai.phy[14];
+	else							ctx->ai.cal.c[30]=ctx->ai.cal.c[30]-ctx->ai.phy[30];
 	Load();	
 }
 
 void CCalibrationFactor::OnBUTTONZero15() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	OnBUTTONCFUpdate();
-	if(m_DChannel == "Ch.00-15")	Cal_c[15]=Cal_c[15]-Phyout[15];
-	else							Cal_c[31]=Cal_c[31]-Phyout[31];
+	if(m_DChannel == "Ch.00-15")	ctx->ai.cal.c[15]=ctx->ai.cal.c[15]-ctx->ai.phy[15];
+	else							ctx->ai.cal.c[31]=ctx->ai.cal.c[31]-ctx->ai.phy[31];
 	Load();
 }
 
 void CCalibrationFactor::OnBUTTONAmp00() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
-	if(m_DChannel == "Ch.00-15")	AmpID=0;
-	else							AmpID=16;
-	if( AmpID<=AdMaxCH ){
+	if(m_DChannel == "Ch.00-15")	ctx->AmpID=0;
+	else							ctx->AmpID=16;
+	if( ctx->AmpID<=ctx->AdMaxCH ){
 		CCalibrationAmp CalibrationAmp;
 		nResult = CalibrationAmp.DoModal();
 		if(nResult==IDOK)	Load();
@@ -514,13 +508,13 @@ void CCalibrationFactor::OnBUTTONAmp00()
 }
 
 void CCalibrationFactor::OnBUTTONAmp01() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
-	if(m_DChannel == "Ch.00-15")	AmpID=1;
-	else							AmpID=17;
-	if( AmpID<=AdMaxCH ){
+	if(m_DChannel == "Ch.00-15")	ctx->AmpID=1;
+	else							ctx->AmpID=17;
+	if( ctx->AmpID<=ctx->AdMaxCH ){
 		CCalibrationAmp CalibrationAmp;
 		nResult = CalibrationAmp.DoModal();
 		if(nResult==IDOK)	Load();
@@ -528,13 +522,13 @@ void CCalibrationFactor::OnBUTTONAmp01()
 }
 
 void CCalibrationFactor::OnBUTTONAmp02() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
-	if(m_DChannel == "Ch.00-15")	AmpID=2;
-	else							AmpID=18;
-	if( AmpID<=AdMaxCH ){
+	if(m_DChannel == "Ch.00-15")	ctx->AmpID=2;
+	else							ctx->AmpID=18;
+	if( ctx->AmpID<=ctx->AdMaxCH ){
 		CCalibrationAmp CalibrationAmp;
 		nResult = CalibrationAmp.DoModal();
 		if(nResult==IDOK)	Load();
@@ -542,13 +536,13 @@ void CCalibrationFactor::OnBUTTONAmp02()
 }
 
 void CCalibrationFactor::OnBUTTONAmp03() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
-	if(m_DChannel == "Ch.00-15")	AmpID=3;
-	else							AmpID=19;
-	if( AmpID<=AdMaxCH ){
+	if(m_DChannel == "Ch.00-15")	ctx->AmpID=3;
+	else							ctx->AmpID=19;
+	if( ctx->AmpID<=ctx->AdMaxCH ){
 		CCalibrationAmp CalibrationAmp;
 		nResult = CalibrationAmp.DoModal();
 		if(nResult==IDOK)	Load();
@@ -556,13 +550,13 @@ void CCalibrationFactor::OnBUTTONAmp03()
 }
 
 void CCalibrationFactor::OnBUTTONAmp04() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
-	if(m_DChannel == "Ch.00-15")	AmpID=4;
-	else							AmpID=20;
-	if( AmpID<=AdMaxCH ){
+	if(m_DChannel == "Ch.00-15")	ctx->AmpID=4;
+	else							ctx->AmpID=20;
+	if( ctx->AmpID<=ctx->AdMaxCH ){
 		CCalibrationAmp CalibrationAmp;
 		nResult = CalibrationAmp.DoModal();
 		if(nResult==IDOK)	Load();
@@ -570,13 +564,13 @@ void CCalibrationFactor::OnBUTTONAmp04()
 }
 
 void CCalibrationFactor::OnBUTTONAmp05() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
-	if(m_DChannel == "Ch.00-15")	AmpID=5;
-	else							AmpID=21;
-	if( AmpID<=AdMaxCH ){
+	if(m_DChannel == "Ch.00-15")	ctx->AmpID=5;
+	else							ctx->AmpID=21;
+	if( ctx->AmpID<=ctx->AdMaxCH ){
 		CCalibrationAmp CalibrationAmp;
 		nResult = CalibrationAmp.DoModal();
 		if(nResult==IDOK)	Load();
@@ -584,13 +578,13 @@ void CCalibrationFactor::OnBUTTONAmp05()
 }
 
 void CCalibrationFactor::OnBUTTONAmp06() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
-	if(m_DChannel == "Ch.00-15")	AmpID=6;
-	else							AmpID=22;
-	if( AmpID<=AdMaxCH ){
+	if(m_DChannel == "Ch.00-15")	ctx->AmpID=6;
+	else							ctx->AmpID=22;
+	if( ctx->AmpID<=ctx->AdMaxCH ){
 		CCalibrationAmp CalibrationAmp;
 		nResult = CalibrationAmp.DoModal();
 		if(nResult==IDOK)	Load();
@@ -598,13 +592,13 @@ void CCalibrationFactor::OnBUTTONAmp06()
 }
 
 void CCalibrationFactor::OnBUTTONAmp07() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
-	if(m_DChannel == "Ch.00-15")	AmpID=7;
-	else							AmpID=23;
-	if( AmpID<=AdMaxCH ){
+	if(m_DChannel == "Ch.00-15")	ctx->AmpID=7;
+	else							ctx->AmpID=23;
+	if( ctx->AmpID<=ctx->AdMaxCH ){
 		CCalibrationAmp CalibrationAmp;
 		nResult = CalibrationAmp.DoModal();
 		if(nResult==IDOK)	Load();
@@ -612,13 +606,13 @@ void CCalibrationFactor::OnBUTTONAmp07()
 }
 
 void CCalibrationFactor::OnBUTTONAmp08() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
-	if(m_DChannel == "Ch.00-15")	AmpID=8;
-	else							AmpID=24;
-	if( AmpID<=AdMaxCH ){
+	if(m_DChannel == "Ch.00-15")	ctx->AmpID=8;
+	else							ctx->AmpID=24;
+	if( ctx->AmpID<=ctx->AdMaxCH ){
 		CCalibrationAmp CalibrationAmp;
 		nResult = CalibrationAmp.DoModal();
 		if(nResult==IDOK)	Load();
@@ -626,13 +620,13 @@ void CCalibrationFactor::OnBUTTONAmp08()
 }
 
 void CCalibrationFactor::OnBUTTONAmp09() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
-	if(m_DChannel == "Ch.00-15")	AmpID=9;
-	else							AmpID=25;
-	if( AmpID<=AdMaxCH ){
+	if(m_DChannel == "Ch.00-15")	ctx->AmpID=9;
+	else							ctx->AmpID=25;
+	if( ctx->AmpID<=ctx->AdMaxCH ){
 		CCalibrationAmp CalibrationAmp;
 		nResult = CalibrationAmp.DoModal();
 		if(nResult==IDOK)	Load();
@@ -640,13 +634,13 @@ void CCalibrationFactor::OnBUTTONAmp09()
 }
 
 void CCalibrationFactor::OnBUTTONAmp10() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
-	if(m_DChannel == "Ch.00-15")	AmpID=10;
-	else							AmpID=26;
-	if( AmpID<=AdMaxCH ){
+	if(m_DChannel == "Ch.00-15")	ctx->AmpID=10;
+	else							ctx->AmpID=26;
+	if( ctx->AmpID<=ctx->AdMaxCH ){
 		CCalibrationAmp CalibrationAmp;
 		nResult = CalibrationAmp.DoModal();
 		if(nResult==IDOK)	Load();
@@ -654,13 +648,13 @@ void CCalibrationFactor::OnBUTTONAmp10()
 }
 
 void CCalibrationFactor::OnBUTTONAmp11() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
-	if(m_DChannel == "Ch.00-15")	AmpID=11;
-	else							AmpID=27;
-	if( AmpID<=AdMaxCH ){
+	if(m_DChannel == "Ch.00-15")	ctx->AmpID=11;
+	else							ctx->AmpID=27;
+	if( ctx->AmpID<=ctx->AdMaxCH ){
 		CCalibrationAmp CalibrationAmp;
 		nResult = CalibrationAmp.DoModal();
 		if(nResult==IDOK)	Load();
@@ -668,13 +662,13 @@ void CCalibrationFactor::OnBUTTONAmp11()
 }
 
 void CCalibrationFactor::OnBUTTONAmp12() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
-	if(m_DChannel == "Ch.00-15")	AmpID=12;
-	else							AmpID=28;
-	if( AmpID<=AdMaxCH ){
+	if(m_DChannel == "Ch.00-15")	ctx->AmpID=12;
+	else							ctx->AmpID=28;
+	if( ctx->AmpID<=ctx->AdMaxCH ){
 		CCalibrationAmp CalibrationAmp;
 		nResult = CalibrationAmp.DoModal();
 		if(nResult==IDOK)	Load();
@@ -682,13 +676,13 @@ void CCalibrationFactor::OnBUTTONAmp12()
 }
 
 void CCalibrationFactor::OnBUTTONAmp13() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
-	if(m_DChannel == "Ch.00-15")	AmpID=13;
-	else							AmpID=29;
-	if( AmpID<=AdMaxCH ){
+	if(m_DChannel == "Ch.00-15")	ctx->AmpID=13;
+	else							ctx->AmpID=29;
+	if( ctx->AmpID<=ctx->AdMaxCH ){
 		CCalibrationAmp CalibrationAmp;
 		nResult = CalibrationAmp.DoModal();
 		if(nResult==IDOK)	Load();
@@ -696,13 +690,13 @@ void CCalibrationFactor::OnBUTTONAmp13()
 }
 
 void CCalibrationFactor::OnBUTTONAmp14() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
-	if(m_DChannel == "Ch.00-15")	AmpID=14;
-	else							AmpID=30;
-	if( AmpID<=AdMaxCH ){
+	if(m_DChannel == "Ch.00-15")	ctx->AmpID=14;
+	else							ctx->AmpID=30;
+	if( ctx->AmpID<=ctx->AdMaxCH ){
 		CCalibrationAmp CalibrationAmp;
 		nResult = CalibrationAmp.DoModal();
 		if(nResult==IDOK)	Load();
@@ -710,13 +704,13 @@ void CCalibrationFactor::OnBUTTONAmp14()
 }
 
 void CCalibrationFactor::OnBUTTONAmp15() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 	int		nResult;
 
-	if(m_DChannel == "Ch.00-15")	AmpID=15;
-	else							AmpID=31;
-	if( AmpID<=AdMaxCH ){
+	if(m_DChannel == "Ch.00-15")	ctx->AmpID=15;
+	else							ctx->AmpID=31;
+	if( ctx->AmpID<=ctx->AdMaxCH ){
 		CCalibrationAmp CalibrationAmp;
 		nResult = CalibrationAmp.DoModal();
 		if(nResult==IDOK)	Load();
@@ -725,7 +719,7 @@ void CCalibrationFactor::OnBUTTONAmp15()
 
 
 void CCalibrationFactor::OnBUTTONCFSave() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 
 	CString	pFileName;
@@ -740,14 +734,14 @@ void CCalibrationFactor::OnBUTTONCFSave()
 		FileCalData = fopen((LPCSTR)pFileName , "w" );
 		fprintf(FileCalData,"32 \n");
 		for(i=0;i<32;i++){
-			fprintf(FileCalData,"%d	%lf	%lf	%lf\n",i,Cal_a[i],Cal_b[i],Cal_c[i]);
+			fprintf(FileCalData,"%d	%lf	%lf	%lf\n",i,ctx->ai.cal.a[i],ctx->ai.cal.b[i],ctx->ai.cal.c[i]);
 		}
 		fclose(FileCalData);
 	}	
 }
 
 void CCalibrationFactor::OnBUTTONCFLoadFile() 
-{
+{	DigitShowContext* ctx = GetContext();
 	// TODO: この位置にコントロール通知ハンドラ用のコードを追加してください
 
 	CString	pFileName;
@@ -762,7 +756,7 @@ void CCalibrationFactor::OnBUTTONCFLoadFile()
 		FileCalData = fopen((LPCSTR)pFileName , "r" );
 		fscanf(FileCalData,"%d",&l);
 		for(i=0;i<l;i++){
-			fscanf(FileCalData,"%d%lf%lf%lf",&m,&Cal_a[i],&Cal_b[i],&Cal_c[i]);
+			fscanf(FileCalData,"%d%lf%lf%lf",&m,&ctx->ai.cal.a[i],&ctx->ai.cal.b[i],&ctx->ai.cal.c[i]);
 		}
 		fclose(FileCalData);
 		Load();
